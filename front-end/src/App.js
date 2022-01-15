@@ -1,12 +1,9 @@
 import { useState } from "react";
 import {
-  ActionIcon,
   AppShell,
   Box,
-  Burger,
   Header,
   Image,
-  MediaQuery,
   Navbar,
   Text,
   useMantineTheme,
@@ -26,6 +23,7 @@ function App() {
       fixed
       navbar={
         <Navbar
+          style={{ backgroundColor: "#F9FAFC" }}
           padding="md"
           // Breakpoint at which navbar will be hidden if hidden prop is true
           hiddenBreakpoint="sm"
@@ -34,9 +32,40 @@ function App() {
           // when viewport size is less than theme.breakpoints.sm navbar width is 100%
           // viewport size > theme.breakpoints.sm – width is 300px
           // viewport size > theme.breakpoints.lg – width is 400px
-          width={{ sm: 300, lg: 400 }}
+          width={{ sm: 200, lg: 300 }}
+          // for removing the border to the right of the NavBar
+          sx={{ borderRight: "none" }}
+          // adding the background color to the NavBar
         >
-          <Text>Application navbar</Text>
+          <div style={{ paddingBottom: "2em" }}>
+            <h1>
+              <span style={{ color: "#F76902" }}>IST</span> CAGE
+            </h1>
+            <h3>
+              <span style={{ color: "#F76902" }}>Hours</span> <br />
+              of Operation
+            </h3>
+            <hr style={{ width: "1.5em", color: "#F76902", marginLeft: 0 }} />
+            <Text>Monday - Friday: XXXXXX</Text>
+            <Text>Saturday: XXXXXX</Text>
+            <Text>Sunday: XXXXXX</Text>
+          </div>
+
+          <div>
+            <h3>
+              <span style={{ color: "#F76902" }}>Contact</span> <br />
+              Information
+            </h3>
+            <hr style={{ width: "1.5em", color: "#F76902", marginLeft: 0 }} />
+            <Text>
+              {" "}
+              This is just a bunch of random text that I decided to type out in
+              hopes that this code might actually work for me, but let's be
+              honest with ourselves. Do we really think that's going to happen?
+              Absolutely not. Despite looking adversity in its ugly face,
+              however, we may still find hope.{" "}
+            </Text>
+          </div>
         </Navbar>
       }
       header={
@@ -50,8 +79,10 @@ function App() {
               justifyContent: "space-between",
             }}
           >
+            {/* RIT Logo */}
             <Image src="RIT_Logo.png" width="100%" height={70}></Image>
 
+            {/* Containing Orange Box for user icon, username, and dropdown icon */}
             <Box
               sx={(theme) => ({
                 display: "flex",

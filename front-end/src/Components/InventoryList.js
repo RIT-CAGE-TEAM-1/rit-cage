@@ -1,20 +1,10 @@
-import { render } from "@testing-library/react";
-import { React, Component } from "react";
+import { React } from "react";
 import { useState } from "react";
-import {
-  AppShell,
-  Box,
-  Header,
-  Image,
-  Input,
-  Navbar,
-  Text,
-  useMantineTheme,
-  Table,
-  Checkbox,
-  Button,
-} from "@mantine/core";
+import { Table, Checkbox, Button } from "@mantine/core";
+import { FaTrash } from "react-icons/fa";
+import { BsFilter } from "react-icons/bs";
 
+// Temporary  table contents
 const elements = [
   { name: "iPhone XR", id: 1234565, location: "Golisano" },
   { name: "iPhone 11", id: 9876543, location: "Saunders" },
@@ -54,12 +44,13 @@ const elements = [
   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
 ];
 
+// Displays the Table contents
 function InventoryList() {
   const [currentCount, setCurrentCount] = useState(0);
 
   const rows = elements.map((element, index) => (
     <tr key={`${index} - ${element.name}}`}>
-      <td>
+      <td style={{ width: "2em" }}>
         <Checkbox
           color="orange"
           onChange={(e) => {
@@ -69,38 +60,59 @@ function InventoryList() {
           }}
         />
       </td>
-      <td>{element.name}</td>
-      <td>{element.id}</td>
+      <td style={{ width: "12em" }}>{element.name}</td>
+      <td style={{ width: "8em" }}>{element.id}</td>
       <td>{element.location}</td>
     </tr>
   ));
 
+  // Displays the Inventory title
+  // Displays the All, Damaged, and Tagged Buttons on the left side of the screen
+  // Displays the Deselect All, Report Issue, Delete, Filter, and New Item buttons on the right side of the screen
   function InventoryHeader() {
+    const [selected, setSelected] = useState("All");
+
+    const inventorySelectors = ["All", "Damaged", "Tagged"];
+
     return (
       <>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
+            paddingBottom: "1.5em",
           }}
         >
-          {/* Div for separating buttons on the left side from right side */}
+          {/* Left side buttons and title */}
           <div>
             <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".5em" }}>
               Inventory
             </h1>
-            <Button variant="subtle" color="dark">
-              All
-            </Button>
-            <Button variant="subtle" color="dark">
-              Damaged
-            </Button>
-            <Button variant="subtle" color="dark">
-              Tagged
-            </Button>
+
+            {/* Selected / Unselected Buttons */}
+            {inventorySelectors.map((element) =>
+              selected === element ? (
+                <Button
+                  variant="subtle"
+                  color="dark"
+                  onClick={() => setSelected(element)}
+                  style={{ borderBottom: "3px solid orange" }}
+                >
+                  {element}
+                </Button>
+              ) : (
+                <Button
+                  variant="subtle"
+                  color="dark"
+                  onClick={() => setSelected(element)}
+                >
+                  {element}
+                </Button>
+              )
+            )}
           </div>
 
-          {/* Div for separating buttons on the right side from left side */}
+          {/* Right Side Buttons */}
           <div
             style={{
               paddingRight: ".5em",
@@ -113,17 +125,35 @@ function InventoryList() {
             <Button variant="subtle" color="orange">
               Deselect All
             </Button>
-            <Button variant="outline" color="dark">
+            <Button
+              variant="outline"
+              color="dark"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
               Report Issue
             </Button>
-            <Button variant="outline" color="dark">
+            <Button
+              variant="outline"
+              color="dark"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
+              <FaTrash style={{ paddingRight: ".5em" }} />
               Delete
             </Button>
-            <Button variant="outline" color="dark">
+            <Button
+              variant="outline"
+              color="dark"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
+              <BsFilter style={{ paddingRight: ".5em" }} />
               Filter
             </Button>
-            <Button variant="outline" color="dark">
-              New Item
+            <Button
+              variant="outline"
+              color="dark"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
+              Create New Item
             </Button>
           </div>
         </div>
@@ -137,7 +167,7 @@ function InventoryList() {
       <Table highlightOnHover>
         <thead>
           <tr>
-            <th />
+            <th style={{ paddingRight: "0px" }} />
 
             <th>Name</th>
 

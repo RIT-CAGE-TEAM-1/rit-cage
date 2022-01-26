@@ -19,6 +19,46 @@ import { BsList } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 
 function AdminShell(props) {
+  const [selected, setSelected] = useState("Inventory");
+
+  const elements = [
+    {
+      name: "Home",
+      icon: <AiFillHome style={{ paddingRight: "1em" }} />,
+      iconSelected: (
+        <AiFillHome style={{ paddingRight: "1em", color: "#F76902" }} />
+      ),
+    },
+    {
+      name: "Inventory",
+      icon: <MdInventory2 style={{ paddingRight: "1em" }} />,
+      iconSelected: (
+        <MdInventory2 style={{ paddingRight: "1em", color: "#F76902" }} />
+      ),
+    },
+    {
+      name: "Orders",
+      icon: <BsList style={{ paddingRight: "1em" }} />,
+      selectedIcon: (
+        <BsList style={{ paddingRight: "1em", color: "#F76902" }} />
+      ),
+    },
+    {
+      name: "Users",
+      icon: <FaUsers style={{ paddingRight: "1em" }} />,
+      iconSelected: (
+        <FaUsers style={{ paddingRight: "1em", color: "#F76902" }} />
+      ),
+    },
+    {
+      name: "Help",
+      icon: <IoDocumentText style={{ paddingRight: "1em" }} />,
+      IoDocumentText: (
+        <FaUsers style={{ paddingRight: "1em", color: "#F76902" }} />
+      ),
+    },
+  ];
+
   return (
     <AppShell
       // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
@@ -45,95 +85,43 @@ function AdminShell(props) {
               <span style={{ color: "#F76902" }}>IST</span> CAGE
             </h1>
 
-            {/* Home Tab */}
-            <Box
-              sx={(theme) => ({
-                display: "flex",
-                color: "#333333",
-                textAlign: "center",
-                height: "2.5em",
-                cursor: "pointer",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: 120,
-              })}
-            >
-              {/* Icon and Text */}
-              <AiFillHome style={{ paddingRight: "1em" }} />
-              <h3> Home </h3>
-            </Box>
-
-            {/* Inventory Tab */}
-            <Box
-              sx={(theme) => ({
-                display: "flex",
-                color: "#333333",
-                textAlign: "center",
-                height: "2.5em",
-                cursor: "pointer",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: 120,
-              })}
-            >
-              {/* Icon and Text */}
-              <MdInventory2 style={{ paddingRight: "1em" }} />
-              <h3> Inventory </h3>
-            </Box>
-
-            {/* Orders Tab */}
-            <Box
-              sx={(theme) => ({
-                display: "flex",
-                color: "#333333",
-                textAlign: "center",
-                height: "2.5em",
-                cursor: "pointer",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: 120,
-              })}
-            >
-              {/* Icon and Text */}
-              <BsList style={{ paddingRight: "1em" }} />
-              <h3> Orders </h3>
-            </Box>
-
-            {/* Users Tab */}
-            <Box
-              sx={(theme) => ({
-                display: "flex",
-                color: "#333333",
-                textAlign: "center",
-                height: "2.5em",
-                cursor: "pointer",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: 120,
-              })}
-            >
-              {/* Icon and Text */}
-              <FaUsers style={{ paddingRight: "1em" }} />
-              <h3> Users </h3>
-            </Box>
-
-            {/* Help Tab */}
-            <Box
-              sx={(theme) => ({
-                display: "flex",
-                color: "#333333",
-                textAlign: "center",
-                height: "2.5em",
-                cursor: "pointer",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                width: 120,
-              })}
-            >
-              {/* Icon and Text */}
-              <IoDocumentText style={{ paddingRight: "1em" }} />
-              <h3> Help </h3>
-            </Box>
+            {elements.map((element) =>
+              element.name === selected ? (
+                <Box
+                  sx={(theme) => ({
+                    display: "flex",
+                    color: "#F76902",
+                    textAlign: "center",
+                    height: "2.5em",
+                    cursor: "pointer",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    width: 120,
+                  })}
+                >
+                  {/* Icon and Text */}
+                  {element.iconSelected}
+                  <h3> {element.name} </h3>
+                </Box>
+              ) : (
+                <Box
+                  sx={(theme) => ({
+                    display: "flex",
+                    color: "#333333",
+                    textAlign: "center",
+                    height: "2.5em",
+                    cursor: "pointer",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    width: 120,
+                  })}
+                >
+                  {/* Icon and Text */}
+                  {element.icon}
+                  <h3> {element.name} </h3>
+                </Box>
+              )
+            )}
           </div>
         </Navbar>
       }
@@ -191,7 +179,6 @@ function AdminShell(props) {
       }
     >
       {/* Content Area */}
-      {/* Insert Inventory Shit Here */}
       {props.children}
     </AppShell>
   );

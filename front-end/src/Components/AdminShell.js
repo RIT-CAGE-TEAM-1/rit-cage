@@ -18,6 +18,7 @@ import { MdInventory2 } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 
+// navBar for admin
 function AdminShell(props) {
   const [selected, setSelected] = useState("Inventory");
 

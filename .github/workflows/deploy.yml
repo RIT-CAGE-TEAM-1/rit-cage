@@ -1,5 +1,8 @@
 name: Deploy frontend
 
+env:
+  CI: ""
+
 on:
   push:
     branches: [ deploy ]

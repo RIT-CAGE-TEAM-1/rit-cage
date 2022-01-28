@@ -20,4 +20,5 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build --if-present
-    - run: cp -r /home/actions-runner/frontend/rit-cage/rit-cage /home/actions-runner/frontend/rit-cage/backend/rit-cage
+    - run: cp -r /home/actions-runner/frontend/rit-cage/rit-cage /home/actions-runner/frontend/rit-cage/backend/
+    - run: cd /home/actions-runner/frontend/rit-cage/backend/

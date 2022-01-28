@@ -21,7 +21,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: |
+        working-directory: /home/actions-runner/frontend/rit-cage/backend
         npm i
         npm run build --if-present
-        working-directory: /home/actions-runner/frontend/rit-cage/backend
 

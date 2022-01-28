@@ -7,9 +7,6 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: /home/actions-runner/frontend/rit-cage/backend
 
     strategy:
       matrix:
@@ -24,4 +21,5 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build --if-present
-
+    - run: cd /home/actions-runner/frontend/rit-cage
+    - run: cp -a  rit-cage/. /home/backend

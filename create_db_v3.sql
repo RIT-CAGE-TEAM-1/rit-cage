@@ -183,16 +183,18 @@ CREATE TABLE IF NOT EXISTS `cage`.`reservation_item` (
   `reservation_id` INT NOT NULL,
   `item_id` INT NULL,
   `kit_instance_id` INT NULL,
+  `item_model_id` INT NULL,
   PRIMARY KEY (`reservation_item_id`, `reservation_id`),
   INDEX `bundle_item_item_fk_idx` (`item_id` ASC) VISIBLE,
   INDEX `reservation_item_reservation_fk_idx` (`reservation_id` ASC) VISIBLE,
   INDEX `reservation_item_kit_instance_fk_idx` (`kit_instance_id` ASC) VISIBLE,
+  INDEX `reservation_item_item_item_model_id_fk_idx` (`item_model_id` ASC) VISIBLE,
   CONSTRAINT `reservation_item_reservation_fk`
     FOREIGN KEY (`reservation_id`)
     REFERENCES `cage`.`reservation` (`reservation_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `reservation_item_item_fk`
+  CONSTRAINT `reservation_item_item_item_id_fk`
     FOREIGN KEY (`item_id`)
     REFERENCES `cage`.`item` (`item_id`)
     ON DELETE NO ACTION
@@ -200,6 +202,11 @@ CREATE TABLE IF NOT EXISTS `cage`.`reservation_item` (
   CONSTRAINT `reservation_item_kit_instance_fk`
     FOREIGN KEY (`kit_instance_id`)
     REFERENCES `cage`.`kit_instance` (`kit_instance_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `reservation_item_item_item_model_id_fk`
+    FOREIGN KEY (`item_model_id`)
+    REFERENCES `cage`.`item` (`item_model_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

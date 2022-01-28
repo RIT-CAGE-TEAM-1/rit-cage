@@ -9,10 +9,8 @@ on:
 
 jobs:
   build:
-
     runs-on: self-hosted
-    run:
-      working-directory: /home/actions-runner/frontend/rit-cage/frontend
+    working-directory: /home/actions-runner/frontend/rit-cage/frontend
 
     strategy:
       matrix:

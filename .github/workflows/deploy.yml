@@ -1,5 +1,6 @@
 name: Backend-Deploy
-
+env:
+  CI: ""
 on:
   push:
     branches: [ deploy-backend ]

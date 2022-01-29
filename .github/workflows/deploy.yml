@@ -3,10 +3,6 @@ on:
   push:
     branches: [ deploy-backend ]
 
-defaults:
-  run:
-    working-directory: /opt/webserver
-
 jobs:
   build:
     runs-on: self-hosted
@@ -24,6 +20,7 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build --if-present
-    # - run: cp -a /home/actions-runner/frontend/rit-cage/. /opt/webserver
-    # - run: cd /opt/webserver
+    - run: cd /opt/webserver
+    - run: cp -a /home/actions-runner/frontend/rit-cage/rit-cage/. /opt/webserver
+
     # - run: pm2 restart Backend

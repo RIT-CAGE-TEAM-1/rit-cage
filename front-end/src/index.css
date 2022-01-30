@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.titleFont {
+  font-family: "Neue Haas Grotesk Display Bold";
+  src: url("./fonts/NeueHaasGroteskDisplay/NeueHaasGroteskDisplayBold.ttf")
+    format("truetype");
+}
+
+.restOfFonts {
+  font-family: "Neue Haas Grotesk Display Medium";
+  src: url("./fonts/NeueHaasGroteskDisplay/NeueHaasGroteskDisplayMedium.ttf")
+    format("truetype");
+}

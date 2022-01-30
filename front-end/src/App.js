@@ -17,7 +17,7 @@ function App() {
     try {
       const response = await api.get('/test');
 
-      console.log('response');
+      console.log('RESPONSE: ' + response.data);
     } catch (error) {
       console.log(error);
     }

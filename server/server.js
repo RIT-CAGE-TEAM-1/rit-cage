@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 
 // app config
 const app = express();
 app.use(express.json()); //Used to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
+app.use(cors())
 
 // error handler middleware
 app.use(function(error, req, res, next) {
@@ -13,8 +15,8 @@ app.use(function(error, req, res, next) {
     res.status(500).send({ success: false, error: error.message })
 });
 
-app.get('/test', (req, res) => {
-    res.send({ success:true });
+app.get('/', (req, res) =>{
+    res.send("<h1>Welcome to the Cage API</h1>");
 });
 
 app.use('/api', require('./routes'));

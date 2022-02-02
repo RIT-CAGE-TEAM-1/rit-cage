@@ -22,8 +22,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       paddingLeft: "1em",
       width: "30%",
     },
-    addDescButton: {
-      paddingLeft: "1.5em",
+    addClassButton: {
       marginBottom: "2.5em",
       marginTop: "1em",
       textDecoration: "underline",
@@ -106,6 +105,8 @@ function MultiForms() {
 function NewItemForm() {
   const { classes } = useStyles();
   const [quantityCount, setQuantityCount] = useState(1);
+  const [checkboxesOpen, setCheckboxesOpen] = useState(true);
+  const [classRestrictOpen, setClassRestrictOpen] = useState(false);
 
   // Reusable InventoryHeader for title and buttons
   function ContentHeader() {
@@ -245,14 +246,18 @@ function NewItemForm() {
             <h5 style={{ color: "#F76902" }}>Non-visible Fields</h5>
             <IoMdArrowDropdown
               style={{ color: "#F76902", fontSize: "1.3em" }}
+              onClick={() => setCheckboxesOpen(!checkboxesOpen)}
             />
           </div>
-          <Checkbox
-            label="Available"
-            color="orange"
-            style={{ paddingBottom: ".5em" }}
-          />
-          <Checkbox label="Active" color="orange" />
+          {/* Group to hide/show the Available and Active checkboxes */}
+          <div style={!checkboxesOpen ? { display: "none" } : undefined}>
+            <Checkbox
+              label="Available"
+              color="orange"
+              style={{ paddingBottom: ".5em" }}
+            />
+            <Checkbox label="Active" color="orange" />
+          </div>
 
           <hr
             style={{
@@ -268,7 +273,15 @@ function NewItemForm() {
             <h5 style={{ color: "#F76902", paddingRight: "1em" }}>
               Restriction to Class
             </h5>
-            <Checkbox color="orange" />
+            <Checkbox
+              color="orange"
+              onClick={() => setClassRestrictOpen(!classRestrictOpen)}
+            />
+          </div>
+          {/* Group for showing/hiding the first class restriction input field */}
+          <div style={!classRestrictOpen ? { display: "none" } : undefined}>
+            <Input placeholder="XXXX###"></Input>
+            <h5 className={classes.addClassButton}>Add Class</h5>
           </div>
         </div>
       </div>

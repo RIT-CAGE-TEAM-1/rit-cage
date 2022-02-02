@@ -72,7 +72,7 @@ function InventoryList() {
   function InventoryHeader() {
     const [selected, setSelected] = useState("All");
 
-    const inventorySelectors = ["All", "Damaged", "Tagged"];
+    const inventorySelectors = ["All", "Tagged"];
 
     return (
       <>
@@ -127,18 +127,17 @@ function InventoryList() {
             </Button>
             <Button
               variant="outline"
-              color="dark"
+              color="orange"
               style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
             >
-              Report Issue
+              Create New Item
             </Button>
             <Button
               variant="outline"
-              color="dark"
+              color="orange"
               style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
             >
-              <FaTrash style={{ paddingRight: ".5em" }} />
-              Delete
+              Report Incident
             </Button>
             <Button
               variant="outline"
@@ -153,7 +152,8 @@ function InventoryList() {
               color="dark"
               style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
             >
-              Create New Item
+              <FaTrash style={{ paddingRight: ".5em" }} />
+              Delete
             </Button>
           </div>
         </div>

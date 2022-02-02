@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NewItemInputGroup from "./NewItemInputGroup";
 import { Button, Input, createStyles, Checkbox } from "@mantine/core";
 import {
@@ -59,6 +59,48 @@ const useStyles = createStyles((theme, _params, getRef) => {
     },
   };
 });
+
+function MultiForms() {
+  const { classes } = useStyles();
+
+  return (
+    <>
+      {/* Container for placing Serial Number group and Condition group next to one another */}
+      <div className={classes.flexStartAndCenter}>
+        {/* container for serial number title and input box */}
+        <div style={{ width: "50%" }}>
+          <h5
+            className={classes.inputLabel}
+            style={{ marginTop: ".5em", width: "100%" }}
+          >
+            Serial Number*
+          </h5>
+          <Input
+            style={{ width: "100%", paddingLeft: "1.3em" }}
+            placeholder="Number"
+          />
+        </div>
+
+        {/* container for condition title and dropdown */}
+        <div style={{ paddingLeft: "1.5em", width: "30%" }}>
+          <h5 className={classes.inputLabel} style={{ marginTop: ".5em" }}>
+            Condition*
+          </h5>
+          <Input
+            component="select"
+            rightSection={<RiArrowDropDownLine />}
+            style={{ paddingLeft: "1.3em" }}
+            placeholder="Number"
+          >
+            <option value="Broken">Broken</option>
+            <option value="Poor">Poor</option>
+            <option value="Good">Good</option>
+          </Input>
+        </div>
+      </div>
+    </>
+  );
+}
 
 // Form for adding one, or multiple items
 function NewItemForm() {
@@ -135,18 +177,30 @@ function NewItemForm() {
             inputTitle="Category*"
             options={["Computing Device", "Wiring"]}
           />
-
           {/* Type input title and dropdown */}
           <NewItemInputGroup
             inputTitle="Type*"
             options={["Cell Phone", "Laptop"]}
           />
-
           {/* Model input title and dropdown */}
           <NewItemInputGroup
             inputTitle="Model*"
             options={["iPhone 6", "iPhone 7", "iPhone 8"]}
           />
+
+          {/* Additional Comments title and input field */}
+          <div style={{ width: "80%", paddingTop: "1.5em" }}>
+            <h5
+              className={classes.inputLabel}
+              style={{ marginTop: ".5em", width: "100%" }}
+            >
+              Additional Comments
+            </h5>
+            <Input
+              style={{ width: "100%", paddingLeft: "1.3em" }}
+              placeholder="Text"
+            />
+          </div>
 
           <hr className={classes.hrStyle} />
 
@@ -157,7 +211,13 @@ function NewItemForm() {
             </h5>
             <AiFillMinusCircle
               className={classes.quantityBttns}
-              onClick={() => setQuantityCount(quantityCount - 1)}
+              onClick={() => {
+                if (quantityCount === 1) {
+                  setQuantityCount(1);
+                } else {
+                  setQuantityCount(quantityCount - 1);
+                }
+              }}
             />
             <p className={classes.quantityCountBox}>{quantityCount}</p>
             <AiFillPlusCircle
@@ -166,43 +226,13 @@ function NewItemForm() {
             />
           </div>
 
-          {/* Container for placing Serial Number group and Condition group next to one another */}
-          <div className={classes.flexStartAndCenter}>
-            {/* container for serial number title and input box */}
-            <div style={{ width: "50%" }}>
-              <h5
-                className={classes.inputLabel}
-                style={{ marginTop: ".5em", width: "100%" }}
-              >
-                Serial Number*
-              </h5>
-              <Input
-                style={{ width: "100%", paddingLeft: "1.3em" }}
-                placeholder="Number"
-              />
-            </div>
-
-            {/* container for condition title and dropdown */}
-            <div style={{ paddingLeft: "1.5em", width: "30%" }}>
-              <h5 className={classes.inputLabel} style={{ marginTop: ".5em" }}>
-                Condition*
-              </h5>
-              <Input
-                component="select"
-                rightSection={<RiArrowDropDownLine />}
-                style={{ paddingLeft: "1.3em" }}
-                placeholder="Number"
-              >
-                <option value="Broken">Broken</option>
-                <option value="Poor">Poor</option>
-                <option value="Good">Good</option>
-              </Input>
-            </div>
-          </div>
+          {[...Array(quantityCount)].map((q, i) => {
+            return <MultiForms />;
+          })}
 
           {/* Create Item button */}
           <div className={classes.createButtonStyle}>
-            <Button color="orange" radius="xl">
+            <Button color="orange" radius="xl" style={{ marginBottom: "5em" }}>
               Create Item
             </Button>
           </div>

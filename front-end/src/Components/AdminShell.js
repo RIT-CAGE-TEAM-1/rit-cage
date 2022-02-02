@@ -140,15 +140,22 @@ function AdminShell(props) {
             }}
           >
             {/* RIT Logo */}
-            <Image src="RIT_Logo.png" width="100%" height={70}></Image>
+            <Image
+              src="RIT_Logo.png"
+              width="100%"
+              height={40}
+              style={{
+                paddingLeft: "3em",
+              }}
+            ></Image>
 
-            {/* Search Bar */}
+            {/* Search Bar
             <Input
               icon={<AiOutlineSearch />}
               placeholder="Search"
               radius="xl"
               style={{ flexGrow: "2" }}
-            />
+            /> */}
 
             {/* Containing Orange Box for user icon, username, and dropdown icon */}
             <Box

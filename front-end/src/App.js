@@ -1,6 +1,7 @@
 import AdminShell from "./Components/AdminShell";
 import InventoryList from "./Components/InventoryList";
 import NewItemForm from "./Components/NewItemForm";
+import Dashboard from "./Components/Dashboard";
 
 import api from "./api";
 import { useEffect } from "react";
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <AdminShell>
-      <NewItemForm />
+      <InventoryList />
     </AdminShell>
   );
 }

@@ -65,7 +65,10 @@ function MultiForms() {
   return (
     <>
       {/* Container for placing Serial Number group and Condition group next to one another */}
-      <div className={classes.flexStartAndCenter}>
+      <div
+        className={classes.flexStartAndCenter}
+        style={{ paddingBottom: "1em" }}
+      >
         {/* container for serial number title and input box */}
         <div style={{ width: "50%" }}>
           <h5
@@ -133,7 +136,7 @@ function NewItemForm() {
             />
             <h1
               style={{ color: "#F76902", margin: 0, paddingLeft: ".5em" }}
-              className={classes.titleFont}
+              // className={classes.titleFont}
             >
               Create New Item
             </h1>

@@ -1,52 +1,69 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { useState } from "react";
 import { Table, Checkbox, Button } from "@mantine/core";
 import { FaTrash } from "react-icons/fa";
 import { BsFilter } from "react-icons/bs";
+import api from '../api';
 
 // Temporary  table contents
-const elements = [
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-  { name: "iPhone XR", id: 1234565, location: "Golisano" },
-  { name: "iPhone 11", id: 9876543, location: "Saunders" },
-  { name: "MacBook Pro", id: 1928374, location: "Heaven" },
-];
+// const elements = [
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+//   { name: "iPhone XR", id: 1234565, location: "Golisano" },
+//   { name: "iPhone 11", id: 9876543, location: "Saunders" },
+//   { name: "MacBook Pro", id: 1928374, location: "Heaven" },
+// ];
 
 // Displays the Table contents
 function InventoryList() {
   const [currentCount, setCurrentCount] = useState(0);
+  const [ elements, setElements ] = useState([]);
+
+  useEffect(() => {
+    getItems()
+  }, []);
+
+  const getItems = async () => {
+    try {
+      const response = await api.get('/items');
+      console.log('ITEMS RESPONSE: ' + JSON.stringify(response.data));
+      
+      setElements(response.data.items)
+    } catch (error) {
+      console.log("ERROR: " + error);
+    }
+  };
 
   const rows = elements.map((element, index) => (
     <tr key={`${index} - ${element.name}}`}>

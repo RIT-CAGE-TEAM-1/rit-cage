@@ -10,6 +10,7 @@ import {
 } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { IoMdArrowDropdown } from "react-icons/io";
+import api from "../api";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   return {
@@ -115,6 +116,15 @@ function NewItemForm() {
   function ContentHeader() {
     // const [selected, setSelected] = useState("Add One Item");
     // const createNewItemSelectors = ["Add One Item", "Add Multiple Items"];
+
+    const onSubmit = async () => {
+      try {
+        const formData = {};
+        await api.post('/items', formData);
+      } catch (error) {
+        console.log(`ERROR: ${error}`);
+      }
+    };
 
     return (
       <>

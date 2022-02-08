@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Table, Checkbox, Button } from "@mantine/core";
 import { FaTrash } from "react-icons/fa";
 import { BsFilter } from "react-icons/bs";
-import api from '../api';
+import api from "../api";
+import { useNavigate } from "react-router-dom";
 
 // Temporary  table contents
 // const elements = [
@@ -48,26 +49,43 @@ import api from '../api';
 // Displays the Table contents
 function InventoryList() {
   const [currentCount, setCurrentCount] = useState(0);
-  const [ elements, setElements ] = useState([]);
+  const [elements, setElements] = useState([]);
 
   useEffect(() => {
-    getItems()
+    getItems();
   }, []);
 
   const getItems = async () => {
     try {
-      const response = await api.get('/items');
-      console.log('ITEMS RESPONSE: ' + JSON.stringify(response.data));
-      
-      setElements(response.data.items)
+      const response = await api.get("/items");
+      console.log("ITEMS RESPONSE: " + JSON.stringify(response.data));
+
+      setElements(response.data.items);
     } catch (error) {
       console.log("ERROR: " + error);
     }
   };
 
+  // const ControlledCheckBox = () => {
+  //   const [checked, setChecked] = useState(false);
+  //   return (
+  //     <Checkbox
+  //       color="orange"
+  //       checked={checked}
+  //       onChange={() => {
+  //         const newVal = !checked;
+  //         setChecked(newVal);
+  //         if (newVal) setCurrentCount(currentCount + 1);
+  //         else setCurrentCount(currentCount - 1);
+  //       }}
+  //     />
+  //   );
+  // };
+
   const rows = elements.map((element, index) => (
     <tr key={`${index} - ${element.name}}`}>
       <td style={{ width: "2em" }}>
+        {/* <ControlledCheckBox /> */}
         <Checkbox
           color="orange"
           onChange={(e) => {
@@ -90,6 +108,8 @@ function InventoryList() {
     const [selected, setSelected] = useState("All");
 
     const inventorySelectors = ["All", "Tagged"];
+
+    const navigate = useNavigate();
 
     return (
       <>
@@ -146,6 +166,9 @@ function InventoryList() {
               variant="outline"
               color="orange"
               style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+              onClick={() => {
+                navigate("/create");
+              }}
             >
               Create New Item
             </Button>

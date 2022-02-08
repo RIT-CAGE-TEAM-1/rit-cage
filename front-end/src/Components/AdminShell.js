@@ -13,18 +13,22 @@ import {
 } from "@mantine/core";
 import { IoPersonCircle, IoDocumentText } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { AiFillHome, AiOutlineSearch } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { MdInventory2 } from "react-icons/md";
 import { BsList } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // navBar for admin
 function AdminShell(props) {
   const [selected, setSelected] = useState("Inventory");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const elements = [
+  const navOptions = [
     {
       name: "Home",
+      pathname: "/",
       icon: <AiFillHome style={{ paddingRight: "1em" }} />,
       iconSelected: (
         <AiFillHome style={{ paddingRight: "1em", color: "#F76902" }} />
@@ -32,6 +36,7 @@ function AdminShell(props) {
     },
     {
       name: "Inventory",
+      pathname: "/inventory",
       icon: <MdInventory2 style={{ paddingRight: "1em" }} />,
       iconSelected: (
         <MdInventory2 style={{ paddingRight: "1em", color: "#F76902" }} />
@@ -39,13 +44,15 @@ function AdminShell(props) {
     },
     {
       name: "Orders",
+      pathname: "/orders",
       icon: <BsList style={{ paddingRight: "1em" }} />,
-      selectedIcon: (
+      iconSelected: (
         <BsList style={{ paddingRight: "1em", color: "#F76902" }} />
       ),
     },
     {
       name: "Users",
+      pathname: "/users",
       icon: <FaUsers style={{ paddingRight: "1em" }} />,
       iconSelected: (
         <FaUsers style={{ paddingRight: "1em", color: "#F76902" }} />
@@ -53,9 +60,10 @@ function AdminShell(props) {
     },
     {
       name: "Help",
+      pathname: "/help",
       icon: <IoDocumentText style={{ paddingRight: "1em" }} />,
-      IoDocumentText: (
-        <FaUsers style={{ paddingRight: "1em", color: "#F76902" }} />
+      iconSelected: (
+        <IoDocumentText style={{ paddingRight: "1em", color: "#F76902" }} />
       ),
     },
   ];
@@ -86,43 +94,49 @@ function AdminShell(props) {
               <span style={{ color: "#F76902" }}>IST</span> CAGE
             </h1>
 
-            {elements.map((element) =>
-              element.name === selected ? (
-                <Box
-                  sx={(theme) => ({
-                    display: "flex",
-                    color: "#F76902",
-                    textAlign: "center",
-                    height: "2.5em",
-                    cursor: "pointer",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    width: 120,
-                  })}
-                >
-                  {/* Icon and Text */}
-                  {element.iconSelected}
-                  <h3> {element.name} </h3>
-                </Box>
-              ) : (
-                <Box
-                  sx={(theme) => ({
-                    display: "flex",
-                    color: "#333333",
-                    textAlign: "center",
-                    height: "2.5em",
-                    cursor: "pointer",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    width: 120,
-                  })}
-                >
-                  {/* Icon and Text */}
-                  {element.icon}
-                  <h3> {element.name} </h3>
-                </Box>
-              )
-            )}
+            {navOptions.map((navOption) => (
+              <div
+                onClick={() => {
+                  navigate(navOption.pathname);
+                }}
+              >
+                {navOption.pathname === location.pathname ? (
+                  <Box
+                    sx={(theme) => ({
+                      display: "flex",
+                      color: "#F76902",
+                      textAlign: "center",
+                      height: "2.5em",
+                      cursor: "pointer",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      width: 120,
+                    })}
+                  >
+                    {/* Icon and Text */}
+                    {navOption.iconSelected}
+                    <h3> {navOption.name} </h3>
+                  </Box>
+                ) : (
+                  <Box
+                    sx={(theme) => ({
+                      display: "flex",
+                      color: "#333333",
+                      textAlign: "center",
+                      height: "2.5em",
+                      cursor: "pointer",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      width: 120,
+                    })}
+                  >
+                    {/* Icon and Text */}
+                    {navOption.icon}
+                    <h3> {navOption.name} </h3>
+                  </Box>
+                )}
+              </div>
+            ))}
           </div>
         </Navbar>
       }

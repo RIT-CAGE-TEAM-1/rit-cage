@@ -1,6 +1,27 @@
 import { React } from "react";
 import { createStyles, Button } from "@mantine/core";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const useStyles = createStyles((theme, _params, getRef) => {
   return {
@@ -26,6 +47,58 @@ function Dashboard() {
   const date = d.getDate();
 
   const { classes } = useStyles();
+
+  const labels = ["January", "February", "March", "April", "May", "June"];
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "My First dataset",
+        backgroundColor: "#F76902",
+        borderColor: "#F76902",
+        data: [0, 52, 5, 2, 20, 30, 45],
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    elements: {
+      point: {
+        radius: 0,
+      },
+      line: {
+        tension: 0.5,
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: false,
+        text: "graph",
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+        ticks: {
+          display: false,
+        },
+      },
+    },
+  };
 
   return (
     <>
@@ -99,7 +172,7 @@ function Dashboard() {
         }}
       >
         {/* Flex column for items on the left */}
-        <div>
+        <div style={{ width: "100%" }}>
           <div style={{ flexDirection: "column", paddingRight: "1em" }}>
             {/* Container for items above the graph*/}
             <div
@@ -108,7 +181,10 @@ function Dashboard() {
                 paddingRight: "1em",
               }}
             >
-              <div className={classes.flexStartAndCenter}>
+              <div
+                className={classes.flexStartAndCenter}
+                style={{ marginTop: "1em" }}
+              >
                 <h4
                   style={{
                     fontWeight: "100",
@@ -138,9 +214,12 @@ function Dashboard() {
                 paddingLeft: "2em",
                 paddingBottom: ".5em",
                 paddingRight: "1em",
+                paddingTop: "1em",
+                width: "96%",
+                borderTop: "1px solid #333333",
               }}
             >
-              <div className={classes.flexStartAndCenter}></div>
+              <Line options={options} data={data} />
             </div>
           </div>
         </div>

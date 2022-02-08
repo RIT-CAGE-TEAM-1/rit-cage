@@ -11,6 +11,7 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { IoMdArrowDropdown } from "react-icons/io";
 import api from "../api";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   return {
@@ -111,6 +112,7 @@ function NewItemForm() {
   const [quantityCount, setQuantityCount] = useState(1);
   const [checkboxesOpen, setCheckboxesOpen] = useState(true);
   const [classRestrictOpen, setClassRestrictOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Reusable InventoryHeader for title and buttons
   function ContentHeader() {
@@ -120,7 +122,7 @@ function NewItemForm() {
     const onSubmit = async () => {
       try {
         const formData = {};
-        await api.post('/items', formData);
+        await api.post("/items", formData);
       } catch (error) {
         console.log(`ERROR: ${error}`);
       }
@@ -143,6 +145,10 @@ function NewItemForm() {
                 fontSize: "1.5em",
                 color: "#F76902",
               }}
+              onClick={() => {
+                navigate("/inventory");
+              }}
+              cursor="pointer"
             />
             <h1
               style={{ color: "#F76902", margin: 0, paddingLeft: ".5em" }}

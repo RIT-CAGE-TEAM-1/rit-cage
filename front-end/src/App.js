@@ -3,6 +3,14 @@ import InventoryList from "./Components/InventoryList";
 import NewItemForm from "./Components/NewItemForm";
 import Dashboard from "./Components/Dashboard";
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
+
 import api from "./api";
 import { useEffect } from "react";
 
@@ -12,7 +20,7 @@ function App() {
 
   useEffect(() => {
     testApi();
-  });
+  }, []);
 
   const testApi = async () => {
     try {
@@ -25,9 +33,24 @@ function App() {
   };
 
   return (
-    <AdminShell>
-      <InventoryList />
-    </AdminShell>
+    <BrowserRouter>
+      <AdminShell>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="inventory" element={<InventoryList />} />
+          <Route path="create" element={<NewItemForm />} />
+          {/* No match route */}
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>Not implemented yet</p>
+              </main>
+            }
+          />
+        </Routes>
+      </AdminShell>
+    </BrowserRouter>
   );
 }
 

@@ -82,8 +82,7 @@ function URTable() {
       highlightOnHover
       style={{
         marginLeft: "1em",
-        paddingRight: "3em",
-        width: "98%",
+        width: "97%",
         marginBottom: "2em",
       }}
     >
@@ -247,7 +246,7 @@ function Dashboard() {
       {/* Flex container for Upcoming Reservations title and dropdown, and "Reserve Item" button and "Item Return" button */}
       <div className={classes.flexSpaceBetween} style={{ width: "98%" }}>
         {/* Upcoming Reservations Dropdown title and icon */}
-        <div className={classes.flexStartAndCenter} style={{ width: "50%" }}>
+        <div className={classes.flexStartAndCenter}>
           <h3 style={{ paddingLeft: "1em" }}>Upcoming Reservations</h3>
           <RiArrowDropDownLine
             size={25}
@@ -289,7 +288,7 @@ function Dashboard() {
       />
 
       {/* Flex container for Overdue Items title and dropdown */}
-      <div className={classes.flexStartAndCenter} style={{ width: "96%" }}>
+      <div className={classes.flexStartAndCenter}>
         <h3 style={{ paddingLeft: "1em" }}>Overdue Items</h3>
         <RiArrowDropDownLine
           size={25}
@@ -446,33 +445,34 @@ function Dashboard() {
       {/*  */}
       {/*  */}
       {/* Reports Section */}
-      <h1
-        style={{
-          color: "#333333",
-          margin: 0,
-          paddingLeft: ".5em",
-          paddingBottom: ".2em",
-          paddingTop: "2em",
-          width: "96%",
-        }}
-      >
-        Reports
-      </h1>
+      <div>
+        <h1
+          style={{
+            color: "#333333",
+            margin: 0,
+            paddingLeft: ".5em",
+            paddingBottom: ".2em",
+            paddingTop: "2em",
+          }}
+        >
+          Reports
+        </h1>
 
-      <Select
-        style={{
-          paddingLeft: "1em",
-          width: "12%",
-          paddingBottom: "1em",
-        }}
-        placeholder="Pick one"
-        data={[
-          { value: "allTime", label: "All Time" },
-          { value: "last24", label: "Last 24 Hours" },
-          { value: "lastWeek", label: "Last Week" },
-          { value: "lastMonth", label: "Last Month" },
-        ]}
-      />
+        <Select
+          style={{
+            paddingLeft: "1em",
+            width: "12%",
+            paddingBottom: "1em",
+          }}
+          placeholder="Pick one"
+          data={[
+            { value: "allTime", label: "All Time" },
+            { value: "last24", label: "Last 24 Hours" },
+            { value: "lastWeek", label: "Last Week" },
+            { value: "lastMonth", label: "Last Month" },
+          ]}
+        />
+      </div>
 
       {/* Flex container for left and right items*/}
       <div
@@ -481,14 +481,13 @@ function Dashboard() {
           marginLeft: "1em",
           borderTop: "1px solid #ACACAC",
           borderBottom: "1px solid #ACACAC",
-          width: "97%",
           marginBottom: "2em",
           marginRight: "2em",
         }}
       >
         {/* Flex column for items on the left */}
-        <div style={{ width: "50%" }}>
-          <div style={{ flexDirection: "column", paddingRight: "1em" }}>
+        <div style={{ width: "48%" }}>
+          <div style={{ flexDirection: "column" }}>
             <h3 style={{ fontWeight: "100", paddingLeft: "2em" }}>
               Peak Reservation Hours
             </h3>
@@ -497,9 +496,7 @@ function Dashboard() {
               style={{
                 paddingLeft: "1em",
                 paddingBottom: ".5em",
-                paddingRight: "1em",
                 paddingTop: "1em",
-                width: "96%",
               }}
             >
               <Line options={options} data={data} />
@@ -510,7 +507,6 @@ function Dashboard() {
           <div
             style={{
               flexDirection: "column",
-              paddingRight: "1em",
               borderTop: "1px solid #ACACAC",
             }}
           >
@@ -521,9 +517,7 @@ function Dashboard() {
               style={{
                 paddingLeft: "2em",
                 paddingBottom: ".5em",
-                paddingRight: "1em",
                 paddingTop: "1em",
-                width: "96%",
               }}
             >
               <Line options={options} data={data} />

@@ -72,7 +72,7 @@ function MultiForms() {
         style={{ paddingBottom: "1em" }}
       >
         {/* container for serial number title and input box */}
-        <div style={{ width: "50%" }}>
+        <div style={{ width: "30%" }}>
           <h5
             className={classes.inputLabel}
             style={{ marginTop: ".5em", width: "100%" }}
@@ -86,7 +86,7 @@ function MultiForms() {
         </div>
 
         {/* container for condition title and dropdown */}
-        <div style={{ paddingLeft: "1.5em", width: "30%" }}>
+        <div style={{ paddingLeft: "1.5em", width: "15%" }}>
           <h5 className={classes.inputLabel} style={{ marginTop: ".5em" }}>
             Condition*
           </h5>
@@ -100,6 +100,15 @@ function MultiForms() {
             <option value="Poor">Poor</option>
             <option value="Good">Good</option>
           </Input>
+        </div>
+        <div style={{ paddingLeft: "1.5em", width: "31%" }}>
+          <h5 className={classes.inputLabel} style={{ marginTop: ".5em" }}>
+            Additional Comments
+          </h5>
+          <Input
+            style={{ width: "100%", paddingLeft: "1.3em" }}
+            placeholder="Text"
+          />
         </div>
       </div>
     </>
@@ -156,28 +165,6 @@ function NewItemForm() {
             >
               Create New Item
             </h1>
-
-            {/* Selected / Unselected Buttons */}
-            {/* {createNewItemSelectors.map((element) =>
-              selected === element ? (
-                <Button
-                  variant="subtle"
-                  color="dark"
-                  onClick={() => setSelected(element)}
-                  style={{ borderBottom: "3px solid orange" }}
-                >
-                  {element}
-                </Button>
-              ) : (
-                <Button
-                  variant="subtle"
-                  color="dark"
-                  onClick={() => setSelected(element)}
-                >
-                  {element}
-                </Button>
-              )
-            )} */}
           </div>
         </div>
       </>
@@ -210,7 +197,7 @@ function NewItemForm() {
 
           {/* Additional Comments title and input field */}
           <div style={{ width: "80%", paddingTop: "1.5em" }}>
-            <h5
+            {/* <h5
               className={classes.inputLabel}
               style={{ marginTop: ".5em", width: "100%" }}
             >
@@ -219,7 +206,7 @@ function NewItemForm() {
             <Input
               style={{ width: "100%", paddingLeft: "1.3em" }}
               placeholder="Text"
-            />
+            /> */}
           </div>
 
           <hr className={classes.hrStyle} />

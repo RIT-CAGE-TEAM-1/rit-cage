@@ -19,6 +19,32 @@ import { BsList } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 
+// Active + Inactive Home Logos
+import home_icon from "../images/home_icon.svg";
+import home_logo_active from "../images/home_logo_active.svg";
+
+// Active + Inactive Inventory Logos
+import inventory_logo from "../images/inventory_logo.svg";
+import inventory_logo_active from "../images/inventory_logo_active.svg";
+
+// Active + Inactive Orders Logos
+import orders_icon from "../images/orders_icon.svg";
+import orders_icon_active from "../images/orders_icon_active.svg";
+
+// Active + Inactive Users Logos
+import users_icon from "../images/users_icon.svg";
+import users_icon_active from "../images/users_icon_active.svg";
+
+// Active + Inactive Help Logos
+import help_icon from "../images/help_icon.svg";
+import help_icon_active from "../images/help_icon_active.svg";
+
+// IST Cage Logo
+import cage_logo from "../images/ISTCAGE_logo.svg";
+
+// RIT Logo
+import rit_logo from "../images/RIT_logo.svg";
+
 // navBar for admin
 function AdminShell(props) {
   const [selected, setSelected] = useState("Inventory");
@@ -29,41 +55,87 @@ function AdminShell(props) {
     {
       name: "Home",
       pathname: "/",
-      icon: <AiFillHome style={{ paddingRight: "1em" }} />,
+      icon: (
+        <img src={home_icon} alt="Home Icon" style={{ paddingRight: "1em" }} />
+      ),
       iconSelected: (
-        <AiFillHome style={{ paddingRight: "1em", color: "#F76902" }} />
+        <img
+          src={home_logo_active}
+          alt="Active Home Icon"
+          style={{ paddingRight: "1em" }}
+        />
       ),
     },
     {
       name: "Inventory",
       pathname: "/inventory",
-      icon: <MdInventory2 style={{ paddingRight: "1em" }} />,
+      icon: (
+        <img
+          src={inventory_logo}
+          alt="Inventory Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
+      ),
       iconSelected: (
-        <MdInventory2 style={{ paddingRight: "1em", color: "#F76902" }} />
+        <img
+          src={inventory_logo_active}
+          alt="Active Inventory Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
       ),
     },
     {
       name: "Orders",
       pathname: "/orders",
-      icon: <BsList style={{ paddingRight: "1em" }} />,
+      icon: (
+        <img
+          src={orders_icon}
+          alt="Orders Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
+      ),
       iconSelected: (
-        <BsList style={{ paddingRight: "1em", color: "#F76902" }} />
+        <img
+          src={orders_icon_active}
+          alt="Active Orders Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
       ),
     },
     {
       name: "Users",
       pathname: "/users",
-      icon: <FaUsers style={{ paddingRight: "1em" }} />,
+      icon: (
+        <img
+          src={users_icon}
+          alt="Users Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
+      ),
       iconSelected: (
-        <FaUsers style={{ paddingRight: "1em", color: "#F76902" }} />
+        <img
+          src={users_icon_active}
+          alt="Active Users Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
       ),
     },
     {
       name: "Help",
       pathname: "/help",
-      icon: <IoDocumentText style={{ paddingRight: "1em" }} />,
+      icon: (
+        <img
+          src={help_icon}
+          alt="Help Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
+      ),
       iconSelected: (
-        <IoDocumentText style={{ paddingRight: "1em", color: "#F76902" }} />
+        <img
+          src={help_icon_active}
+          alt="Active Help Icon"
+          style={{ paddingRight: "1em", height: "40%" }}
+        />
       ),
     },
   ];
@@ -89,10 +161,17 @@ function AdminShell(props) {
           // for removing the border to the right of the NavBar
           sx={{ borderRight: "none" }}
         >
-          <div style={{ paddingBottom: "2em" }}>
-            <h1>
-              <span style={{ color: "#F76902" }}>IST</span> CAGE
-            </h1>
+          <div style={{ paddingBottom: "2em", alignItems: "center" }}>
+            <img
+              src={cage_logo}
+              alt="IST Cage Icon"
+              style={{
+                paddingRight: "1em",
+                paddingTop: "1em",
+                paddingBottom: "2em",
+                height: "8%",
+              }}
+            />
 
             {navOptions.map((navOption) => (
               <div
@@ -154,14 +233,13 @@ function AdminShell(props) {
             }}
           >
             {/* RIT Logo */}
-            <Image
-              src="RIT_Logo.png"
-              width="100%"
+            <img
+              src={rit_logo}
               height={40}
               style={{
                 paddingLeft: "3em",
               }}
-            ></Image>
+            />
 
             {/* Search Bar
             <Input

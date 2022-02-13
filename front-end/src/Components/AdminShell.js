@@ -1,22 +1,9 @@
-import { render } from "@testing-library/react";
 import { React, Component } from "react";
-import { useState } from "react";
-import {
-  AppShell,
-  Box,
-  Header,
-  Image,
-  Input,
-  Navbar,
-  Text,
-  useMantineTheme,
-} from "@mantine/core";
-import { IoPersonCircle, IoDocumentText } from "react-icons/io5";
+import { AppShell, Box, Header, Navbar, Text, Input } from "@mantine/core";
+import { IoPersonCircle } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { AiFillHome } from "react-icons/ai";
-import { MdInventory2 } from "react-icons/md";
-import { BsList } from "react-icons/bs";
-import { FaUsers } from "react-icons/fa";
+import { AiOutlineSearch } from "react-icons/ai";
+
 import { useLocation, useNavigate } from "react-router-dom";
 
 // Active + Inactive Home Logos
@@ -47,7 +34,6 @@ import rit_logo from "../images/RIT_logo.svg";
 
 // navBar for admin
 function AdminShell(props) {
-  const [selected, setSelected] = useState("Inventory");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -139,6 +125,20 @@ function AdminShell(props) {
       ),
     },
   ];
+
+  function OptSearchBar() {
+    if (location.pathname == "/inventory") {
+      return (
+        <Input
+          icon={<AiOutlineSearch />}
+          placeholder="Search"
+          radius="xl"
+          style={{ width: "73%" }}
+        />
+      );
+    }
+    return null;
+  }
 
   return (
     <AppShell
@@ -241,13 +241,8 @@ function AdminShell(props) {
               }}
             />
 
-            {/* Search Bar
-            <Input
-              icon={<AiOutlineSearch />}
-              placeholder="Search"
-              radius="xl"
-              style={{ flexGrow: "2" }}
-            /> */}
+            {/* Optional Search for Inventory Page */}
+            <OptSearchBar />
 
             {/* Containing Orange Box for user icon, username, and dropdown icon */}
             <Box

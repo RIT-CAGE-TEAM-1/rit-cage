@@ -96,9 +96,9 @@ function MultiForms() {
             style={{ paddingLeft: "1.3em" }}
             placeholder="Number"
           >
-            <option value="Broken">Broken</option>
+            <option value="Broken">Good</option>
             <option value="Poor">Poor</option>
-            <option value="Good">Good</option>
+            <option value="Good">Broken</option>
           </Input>
         </div>
         <div style={{ paddingLeft: "1.5em", width: "31%" }}>

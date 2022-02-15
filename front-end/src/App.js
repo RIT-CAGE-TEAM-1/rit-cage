@@ -2,6 +2,7 @@ import AdminShell from "./Components/AdminShell";
 import InventoryList from "./Components/InventoryList";
 import NewItemForm from "./Components/NewItemForm";
 import Dashboard from "./Components/Dashboard";
+import Documentation from "./Components/Documentation";
 
 import {
   BrowserRouter as Router,
@@ -39,6 +40,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="inventory" element={<InventoryList />} />
           <Route path="create" element={<NewItemForm />} />
+          <Route path="help" element={<Documentation />} />
           {/* No match route */}
           <Route
             path="*"

@@ -151,6 +151,7 @@ function NewItemForm() {
             <AiOutlineArrowLeft
               style={{
                 paddingLeft: ".5em",
+                paddingBottom: "1em",
                 fontSize: "1.5em",
                 color: "#F76902",
               }}

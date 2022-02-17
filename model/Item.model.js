@@ -51,6 +51,16 @@ class ItemModel {
             await mysql.query(stmt, [ id ]);
         } catch (error) { throw new Error(error); }
     }
+
+    static async getByName(searchQuery, connection=null) {
+        try {
+            const mysql = connection? connection : pool;
+
+            const stmt = 'SELECT FROM item WHERE'
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 
 module.exports = ItemModel;

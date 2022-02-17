@@ -14,7 +14,14 @@ router.post('/', async (req, res, next) => {
 // get all inventory items
 router.get('/', async (req, res, next) => {
     try {
-        const items = await Item.getAll();
+        const searchQuery = req.query.search;
+        let items = null;
+
+        if (searchQuery) {
+            items = await Item.getByName(searchQuery);
+        } else {
+            items = await Item.getAll();
+        }
 
         res.send({ success:true, items });
     } catch (error) { next(error); }

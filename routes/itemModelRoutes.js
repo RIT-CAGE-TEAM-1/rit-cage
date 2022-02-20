@@ -18,6 +18,8 @@ router.get('/', async (req, res, next) => {
     } catch (error) { next(error); }
 });
 
+// --
+
 // get an item model by id
 router.get('/:id', async (req, res, next) => {
     try {
@@ -26,8 +28,6 @@ router.get('/:id', async (req, res, next) => {
         res.send({ success: true, item });
     } catch (error) { next(error); }
 });
-
-// --
 
 // create an item
 router.post('/', async (req, res, next) => {

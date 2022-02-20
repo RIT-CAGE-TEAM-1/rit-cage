@@ -6,7 +6,12 @@ class ItemModelModel {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'SELECT * FROM item_model';
+            const stmt = `SELECT 
+                    item_model.*, 
+                    COUNT(item.item_model_id) AS count 
+                FROM item_model INNER JOIN item 
+                USING(item_model_id) 
+                GROUP BY item.item_model_id;`;
             const results = await mysql.query(stmt);
 
             return results[0];

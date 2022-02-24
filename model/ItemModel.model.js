@@ -22,10 +22,10 @@ class ItemModelModel {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'SELECT * FROM item_model WHERE item_id = ?';
+            const stmt = `SELECT * FROM item_model WHERE item_model_id = ?`;
             const results = await mysql.query(stmt, [ id ]);
 
-            return results[0];
+            return results[0][0];
         } catch (error) { throw new Error(error); }
     }
 

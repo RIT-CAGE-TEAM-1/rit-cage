@@ -1,6 +1,7 @@
-// CURRENT ROUTE: /api/items~
+// CURRENT ROUTE: /api/items-models~
 const router = require('express').Router();
 const ItemModel = require('../model/ItemModel.model');
+const Item = require('../model/Item.model');
 
 // get all item models
 router.get('/', async (req, res, next) => {
@@ -23,9 +24,13 @@ router.get('/', async (req, res, next) => {
 // get an item model by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const item = await ItemModel.get(req.params.id);
+        const itemModelId = req.params.id;
+        const itemModel = await ItemModel.get(itemModelId);
+        const items = await Item.getAllByItemModelId(itemModelId)
 
-        res.send({ success: true, item });
+        itemModel.items = items;
+
+        res.send({ success: true, itemModel });
     } catch (error) { next(error); }
 });
 

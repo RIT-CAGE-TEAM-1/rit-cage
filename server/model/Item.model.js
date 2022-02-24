@@ -10,12 +10,12 @@ class ItemModel {
         } catch (error) { throw new Error(error); }
     }
 
-    static async getAll(data, connection=null) {
+    static async getAllByItemModelId(itemModelId, connection=null) {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'SELECT * FROM item';
-            const results = await mysql.query(stmt);
+            const stmt = `SELECT * FROM item WHERE item_model_id = ?`;
+            const results = await mysql.query(stmt, [ itemModelId ]);
 
             return results[0];
         } catch (error) { throw new Error(error); }

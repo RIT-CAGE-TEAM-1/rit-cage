@@ -6,7 +6,7 @@ class ItemTypeModel {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'SELECT * FROM item_model';
+            const stmt = 'SELECT * FROM item_type';
 
             const results = await mysql.query(stmt)
 

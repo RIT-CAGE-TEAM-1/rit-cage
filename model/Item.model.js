@@ -15,10 +15,9 @@ class ItemModel {
                     available,
                     active,
                     location,
-                    item_condition,
                     serial,
                     item_condition
-                ) VALUES (?,?,?,?,?,?,?,?,?,?, ?)`;
+                ) VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
             await mysql.query(stmt, item);
         } catch (error) { throw new Error(error); }
     }
@@ -37,7 +36,6 @@ class ItemModel {
                     available,
                     active,
                     location,
-                    item_condition,
                     serial,
                     item_condition
                 ) VALUES ?`;

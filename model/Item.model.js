@@ -1,20 +1,66 @@
 const pool = require('./db');
 
 class ItemModel {
-    static async create(item, connection=null) {
+    static async createOne(item, connection=null) {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'INSERT INTO item SET ?';
+            const stmt = `INSERT INTO item(
+                    item_category_id, 
+                    item_type_id, 
+                    item_model_id,
+                    barcode,
+                    comments, 
+                    tags,
+                    available,
+                    active,
+                    location,
+                    item_condition,
+                    serial,
+                    item_condition
+                ) VALUES (?,?,?,?,?,?,?,?,?,?, ?)`;
             await mysql.query(stmt, item);
         } catch (error) { throw new Error(error); }
     }
 
-    static async getAllByItemModelId(itemModelId, connection=null) {
+    static async createMany(items, connection=null) {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = `SELECT * FROM item WHERE item_model_id = ?`;
+            const stmt = `INSERT INTO item(
+                    item_category_id, 
+                    item_type_id, 
+                    item_model_id,
+                    barcode,
+                    comments, 
+                    tags,
+                    available,
+                    active,
+                    location,
+                    item_condition,
+                    serial,
+                    item_condition
+                ) VALUES ?`;
+
+                await mysql.query(stmt, [ items ]);
+        } catch (error) { throw new Error(error) }
+    }
+
+    static async getEventsAndLogs(itemModelId, connection=null) {
+        try {
+            const mysql = connection? connection : pool;
+
+            const stmt = `SELECT 
+                r.status, 
+                i.item_model_id, 
+                i.serial, 
+                i.item_condition, 
+                r.reservation_date
+            FROM item i
+            RIGHT JOIN reservation_item ri ON i.item_id = ri.item_id
+            RIGHT JOIN reservation r ON r.reservation_id = ri.reservation_id 
+            WHERE r.reservation_date >= curdate() 
+            ORDER BY r.reservation_date`;
             const results = await mysql.query(stmt, [ itemModelId ]);
 
             return results[0];

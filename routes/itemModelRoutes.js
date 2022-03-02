@@ -26,9 +26,9 @@ router.get('/:id', async (req, res, next) => {
     try {
         const itemModelId = req.params.id;
         const itemModel = await ItemModel.get(itemModelId);
-        const items = await Item.getAllByItemModelId(itemModelId)
+        const events_and_logs = await Item.getEventsAndLogs(itemModelId)
 
-        itemModel.items = items;
+        itemModel.events_and_logs = events_and_logs;
 
         res.send({ success: true, itemModel });
     } catch (error) { next(error); }

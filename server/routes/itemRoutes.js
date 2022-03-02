@@ -5,7 +5,21 @@ const Item = require('../model/Item.model');
 // create an item
 router.post('/', async (req, res, next) => {
     try {
-        await Item.create(req.body)
+        const { serials, ...item } = req.body;
+
+        const items = [];
+        for (let i=0; i<serials.length; i++) {
+            let serialsList = Object.values(serials[i]);
+            let itemList = Object.values(item);
+
+            items.push([ ...itemList, ...serialsList ]);
+        }
+
+        if (items.length > 1) {
+            await Item.createMany(items);
+        } else {
+            await Item.createOne(items[0])
+        }
 
         res.send({ success:true });
     } catch (error) { next(error); }

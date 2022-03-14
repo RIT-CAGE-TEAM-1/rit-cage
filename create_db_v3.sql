@@ -339,6 +339,11 @@ CREATE TABLE IF NOT EXISTS `cage`.`item_restriction` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- HOTFIX
+RENAME TABLE kit_intance_item TO kit_instance_item;
+ALTER TABLE kit_instance_item RENAME COLUMN kit_intance_id TO kit_instance_id;
+ALTER TABLE kit_instance_item RENAME COLUMN kit_intance_item_id TO kit_instance_item_id;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

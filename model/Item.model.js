@@ -69,8 +69,34 @@ class ItemModel {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'SELECT * FROM item WHERE item_id = ?';
+            const stmt = `SELECT 
+                item.item_id,
+                item_category.category_name,
+                item_type.type_name,
+                item.barcode,
+                item.comments,
+                item.tags,
+                item.available,
+                item.active,
+                item.location,
+                item.item_condition,
+                item.serial
+            FROM item 
+            INNER JOIN item_category USING(item_category_id)
+            INNER JOIN item_type USING(item_type_id)
+            WHERE item_id = ?`;
             const results = await mysql.query(stmt, [ id ]);
+
+            return results[0];
+        } catch (error) { throw new Error(error); }
+    }
+
+    static async getAllAvailable(itemModelId, conn=null) {
+        try {
+            const mysql = conn? conn : pool;
+
+            const stmt = `SELECT * FROM item WHERE item_model_id = ? AND available = 1`;
+            const results = await mysql.query(stmt, [ itemModelId ]);
 
             return results[0];
         } catch (error) { throw new Error(error); }

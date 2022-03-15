@@ -6,6 +6,14 @@ const ReservationItem = require('../model/ReservationItem.model');
 const User = require('../model/User.model');
 const Transaction = require('../model/transaction.model');
 
+const onSubmitCheckout = async (username, itemId) => {
+    try {
+        await api.post('/reservations', { username, itemId })
+    } catch (error) {
+        console.log('ERROR IN CHECKING ITEM OUT: ' + error);
+    }
+}
+
 router.post('/', async (req, res, next) => {
     try {
         const conn = await pool.getConnection();

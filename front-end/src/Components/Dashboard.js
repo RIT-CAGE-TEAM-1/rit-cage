@@ -107,7 +107,7 @@ function Dashboard() {
   const weekDay = d.toLocaleDateString(locale, { weekday: "long" });
   const month = d.toLocaleDateString(locale, { month: "long" });
   const date = d.getDate();
-  const labels = ["January", "February", "March", "April", "May", "June"];
+  const labels = ["12:00PM", "1:00PM", "2:00PM", "3:00PM", "4:00PM", "5:00PM"];
 
   const [upcomingReservesOpen, setUpcomingReservesOpen] = useState(false);
   const [overdueItemsOpen, setOverdueItemsOpen] = useState(false);

@@ -1,8 +1,9 @@
 import { React, Component } from "react";
+import { useState } from "react";
+
 import { AppShell, Box, Header, Navbar, Text, Input } from "@mantine/core";
 import { IoPersonCircle } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { AiOutlineSearch } from "react-icons/ai";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -42,13 +43,17 @@ function AdminShell(props) {
       name: "Home",
       pathname: "/",
       icon: (
-        <img src={home_icon} alt="Home Icon" style={{ paddingRight: "1em" }} />
+        <img
+          src={home_icon}
+          alt="Home Icon"
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
+        />
       ),
       iconSelected: (
         <img
           src={home_logo_active}
           alt="Active Home Icon"
-          style={{ paddingRight: "1em" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
     },
@@ -59,14 +64,14 @@ function AdminShell(props) {
         <img
           src={inventory_logo}
           alt="Inventory Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
       iconSelected: (
         <img
           src={inventory_logo_active}
           alt="Active Inventory Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
     },
@@ -77,14 +82,14 @@ function AdminShell(props) {
         <img
           src={orders_icon}
           alt="Orders Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
       iconSelected: (
         <img
           src={orders_icon_active}
           alt="Active Orders Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
     },
@@ -95,14 +100,14 @@ function AdminShell(props) {
         <img
           src={users_icon}
           alt="Users Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
       iconSelected: (
         <img
           src={users_icon_active}
           alt="Active Users Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
     },
@@ -113,37 +118,25 @@ function AdminShell(props) {
         <img
           src={help_icon}
           alt="Help Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
       iconSelected: (
         <img
           src={help_icon_active}
           alt="Active Help Icon"
-          style={{ paddingRight: "1em", height: "40%" }}
+          style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
     },
   ];
 
-  function OptSearchBar() {
-    if (location.pathname == "/inventory") {
-      return (
-        <Input
-          icon={<AiOutlineSearch />}
-          placeholder="Search"
-          radius="xl"
-          style={{ width: "73%" }}
-        />
-      );
-    }
-    return null;
-  }
+  const [opened, setOpened] = useState(false);
 
   return (
     <AppShell
       // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-      navbarOffsetBreakpoint="sm"
+      navbarOffsetBreakpoint="lg"
       // fixed prop on AppShell will be automatically added to Header and Navbar
       fixed
       navbar={
@@ -151,9 +144,9 @@ function AdminShell(props) {
           style={{ backgroundColor: "#F9FAFC" }}
           padding="md"
           // Breakpoint at which navbar will be hidden if hidden prop is true
-          hiddenBreakpoint="sm"
+          hiddenBreakpoint="lg"
           // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
-          // hidden={!opened}
+          hidden={!opened}
           // when viewport size is less than theme.breakpoints.sm navbar width is 100%
           // viewport size > theme.breakpoints.sm – width is 300px
           // viewport size > theme.breakpoints.lg – width is 400px
@@ -185,6 +178,7 @@ function AdminShell(props) {
                       display: "flex",
                       color: "#F76902",
                       textAlign: "center",
+                      paddingBottom: ".5em",
                       height: "2.5em",
                       cursor: "pointer",
                       justifyContent: "flex-start",
@@ -202,6 +196,7 @@ function AdminShell(props) {
                       display: "flex",
                       color: "#333333",
                       textAlign: "center",
+                      paddingBottom: ".5em",
                       height: "2.5em",
                       cursor: "pointer",
                       justifyContent: "flex-start",
@@ -240,9 +235,6 @@ function AdminShell(props) {
                 paddingLeft: "3em",
               }}
             />
-
-            {/* Optional Search for Inventory Page */}
-            <OptSearchBar />
 
             {/* Containing Orange Box for user icon, username, and dropdown icon */}
             <Box

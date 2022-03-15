@@ -3,6 +3,9 @@ import InventoryList from "./Components/InventoryList";
 import NewItemForm from "./Components/NewItemForm";
 import Dashboard from "./Components/Dashboard";
 import Documentation from "./Components/Documentation";
+import ItemSummary from "./Components/ItemSummary";
+import CheckoutList from "./Components/CheckoutList";
+import CheckoutItemSummary from "./Components/CheckoutItemSummary";
 
 import {
   BrowserRouter as Router,
@@ -12,7 +15,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 
-import api from "./api";
+import api from "./api/api";
 import { useEffect } from "react";
 
 function App() {
@@ -41,6 +44,12 @@ function App() {
           <Route path="inventory" element={<InventoryList />} />
           <Route path="create" element={<NewItemForm />} />
           <Route path="help" element={<Documentation />} />
+          <Route path="inventory/summary/:id" element={<ItemSummary />} />
+          <Route path="users" element={<CheckoutList />} />
+          <Route
+            path="users/checkoutForm/:id"
+            element={<CheckoutItemSummary />}
+          />
           {/* No match route */}
           <Route
             path="*"

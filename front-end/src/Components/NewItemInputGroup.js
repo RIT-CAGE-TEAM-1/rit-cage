@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { createStyles, Input, Textarea } from "@mantine/core";
+import { createStyles, Input, Select } from "@mantine/core";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { AiFillInfoCircle } from "react-icons/ai";
+import { useForm } from "@mantine/hooks";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   return {
@@ -14,15 +15,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
       paddingLeft: "1.3em",
       width: "80%",
     },
-    // addDescButton: {
-    //   paddingLeft: "1.5em",
-    //   marginBottom: "0",
-    //   marginTop: "1em",
-    //   textDecoration: "underline",
-    //   cursor: "pointer",
-    //   color: "#333333",
-    //   fontWeight: "500",
-    // },
     createButtonStyle: {
       paddingLeft: "1em",
       marginTop: "1.5em",
@@ -32,18 +24,18 @@ const useStyles = createStyles((theme, _params, getRef) => {
       justifyContent: "flex-start",
       alignItems: "center",
     },
-    // descBoxStyle: {
-    //   paddingLeft: "3em",
-    //   width: "30%",
-    // },
   };
 });
 
 // Component for an input field with a title and information bubble
 function NewItemInputGroup(props) {
-  const { inputTitle, options, inputStyles } = props;
+  const { inputTitle, options, inputStyles, form } = props;
   const { classes } = useStyles();
-  // const [descBoxOpen, setDescBoxOpen] = useState(false);
+
+  // const data = options.map((option) => ({
+  //   value: { option },
+  //   label: "huh",
+  // }));
 
   return (
     <>
@@ -60,6 +52,7 @@ function NewItemInputGroup(props) {
         rightSection={<RiArrowDropDownLine />}
         className={classes.inputBoxStyle}
         style={inputStyles}
+        {...form.getInputProps(inputTitle)}
       >
         {options.map((option) => (
           <option key={option} value={option}>
@@ -67,18 +60,6 @@ function NewItemInputGroup(props) {
           </option>
         ))}
       </Input>
-      {/* <h5
-        size="xs"
-        className={classes.addDescButton}
-        onClick={() => setDescBoxOpen(!descBoxOpen)}
-      >
-        Add Description
-      </h5>
-      <Textarea
-        label="Description"
-        className={classes.descBoxStyle}
-        style={!descBoxOpen ? { display: "none" } : undefined}
-      /> */}
     </>
   );
 }

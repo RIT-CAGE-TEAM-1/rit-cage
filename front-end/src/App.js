@@ -17,6 +17,7 @@ import {
 
 import api from "./api/api";
 import { useEffect } from "react";
+import CheckoutConfiirmation from "./Components/CheckoutConfirmation";
 
 function App() {
   // const [opened, setOpened] = useState(false);
@@ -49,6 +50,10 @@ function App() {
           <Route
             path="users/checkoutForm/:id"
             element={<CheckoutItemSummary />}
+          />
+          <Route
+            path="/checkoutConfirmation"
+            element={<CheckoutConfiirmation />}
           />
           {/* No match route */}
           <Route

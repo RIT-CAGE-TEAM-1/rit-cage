@@ -1,6 +1,6 @@
 import React from "react";
-import { AiOutlineArrowLeft, AiFillInfoCircle } from "react-icons/ai";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate, useParams } from "react-router-dom";
 import { TextInput, Textarea, Checkbox, Button } from "@mantine/core";
 import { useState } from "react";
 import { ItemAPI } from "../api/Items";
@@ -132,7 +132,7 @@ function CheckoutItemSummary() {
             type="submit"
             style={{ marginTop: "1.5em" }}
             onClick={() => {
-              navigate("/checkoutConfiirmation");
+              navigate("/checkoutConfirmation");
             }}
           >
             Reserve

@@ -1,14 +1,12 @@
 import { React, useEffect } from "react";
 import { useState } from "react";
-import { Table, Checkbox, Button, Input } from "@mantine/core";
+import { Table, Input } from "@mantine/core";
 import { ItemAPI } from "../api/Items";
 import { useNavigate } from "react-router-dom";
 import { useDebouncedValue } from "@mantine/hooks";
 import { AiOutlineSearch } from "react-icons/ai";
 
 function InventoryHeader({ searchTerm, setSearchTerm }) {
-  const navigate = useNavigate();
-
   return (
     <>
       <Input
@@ -68,14 +66,12 @@ function CheckoutList() {
   const rows = elements.map((element, index) => (
     <tr key={`${index} - ${element.model_name}}`}>
       <td
-        style={{ width: "30%" }}
         onClick={() => {
           navigate(`/users/checkoutForm/${element.item_model_id}`);
         }}
       >
         {element.model_name}
       </td>
-      <td>{element.count}</td>
     </tr>
   ));
 

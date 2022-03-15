@@ -34,6 +34,16 @@ router.get('/:id', async (req, res, next) => {
     } catch (error) { next(error); }
 });
 
+router.get('/:id/available', async (req, res, next) => {
+    try {
+        const availableItems = await Item.getAllAvailable(req.params.id);
+
+        res.send({ success: true, availableItems });
+    } catch (error) {
+        next(error);
+    }
+})
+
 // create an item
 router.post('/', async (req, res, next) => {
     try {

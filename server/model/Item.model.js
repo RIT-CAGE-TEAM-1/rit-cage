@@ -87,7 +87,7 @@ class ItemModel {
             WHERE item_id = ?`;
             const results = await mysql.query(stmt, [ id ]);
 
-            return results[0];
+            return results[0][0];
         } catch (error) { throw new Error(error); }
     }
 

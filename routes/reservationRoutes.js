@@ -5,6 +5,7 @@ const Reservation = require('../model/Reservation.model');
 const ReservationItem = require('../model/ReservationItem.model');
 const User = require('../model/User.model');
 const Transaction = require('../model/transaction.model');
+const Item = require('../model/Item.model');
 
 const onSubmitCheckout = async (username, itemId) => {
     try {
@@ -33,6 +34,7 @@ router.post('/', async (req, res, next) => {
 
             const reservationId = await Reservation.create(reservation, conn);
             await ReservationItem.create(reservationId, itemId, conn)
+            await Item.update(itemId, { available: 0 });
 
             await transaction.commit();
             res.send({ success: true });

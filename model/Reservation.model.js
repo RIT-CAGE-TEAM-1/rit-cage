@@ -1,6 +1,20 @@
 const pool = require('./db');
 
-class Reservation {
+class ReservationModel {
+
+    static async create(reservation, connection=null) {
+        try {
+            const mysql = connection? connection : pool;
+
+            const stmt = 'INSERT INTO reservation SET ?';
+            const results = await mysql.query(stmt, reservation);
+
+            return results[0].insertId;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+    
     static async getRecentsByDay(connection=null) {
         try {
             const mysql = connection? connection : pool;
@@ -20,4 +34,4 @@ class Reservation {
     }
 }
 
-module.exports = Reservation;
+module.exports = ReservationModel;

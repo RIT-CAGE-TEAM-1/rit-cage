@@ -84,21 +84,33 @@ class ItemModel {
             FROM item 
             INNER JOIN item_category USING(item_category_id)
             INNER JOIN item_type USING(item_type_id)
-            WHERE item_id = ?`;
+            WHERE item_id = ?
+            LIMIT 1`;
             const results = await mysql.query(stmt, [ id ]);
 
             return results[0][0];
         } catch (error) { throw new Error(error); }
     }
 
-    static async getAllAvailable(itemModelId, conn=null) {
+    static async getOneAvailable(itemModelId, conn=null) {
         try {
             const mysql = conn? conn : pool;
 
-            const stmt = `SELECT * FROM item WHERE item_model_id = ? AND available = 1`;
+            const stmt = `SELECT 
+                item.*,
+                item_category.category_name,
+                item_type.type_name,
+                item_model.model_name
+            FROM item 
+            INNER JOIN item_category USING(item_category_id)
+            INNER JOIN item_type USING(item_type_id)
+            INNER JOIN item_model using(item_model_id)
+            WHERE item.item_model_id = ? AND available = 1 
+            LIMIT 1`;
+
             const results = await mysql.query(stmt, [ itemModelId ]);
 
-            return results[0];
+            return results[0][0];
         } catch (error) { throw new Error(error); }
     }
 

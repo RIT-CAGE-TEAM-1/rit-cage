@@ -36,9 +36,11 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/available', async (req, res, next) => {
     try {
-        const availableItems = await Item.getAllAvailable(req.params.id);
+        const availableItem = await Item.getOneAvailable(req.params.id);
 
-        res.send({ success: true, availableItems });
+        availableItem.due_date = new Date(new Date().setHours(new Date().getHours() + 1)).toISOString().slice(0, 19).replace('T', ' ');
+
+        res.send({ success: true, availableItem });
     } catch (error) {
         next(error);
     }

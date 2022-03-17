@@ -3,13 +3,18 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { TextInput, Textarea, Checkbox, Button } from "@mantine/core";
 import { useState } from "react";
+import { useEffect } from "react";
 import { ItemAPI } from "../api/Items";
+import { useLocation } from "react-router-dom";
+import api from "../api/api";
 
 function CheckoutItemSummary() {
   const navigate = useNavigate();
   const params = useParams();
+  const location = useLocation();
 
   const [item, setItem] = useState();
+  const [itemInfo, setItemInfo] = useState();
 
   React.useEffect(() => {
     getItem(params.id);
@@ -29,6 +34,21 @@ function CheckoutItemSummary() {
       console.log(err);
     }
   };
+
+  const getAvailableItem = async (itemModelId) => {
+    try {
+      const response = await api.get(`/item-models/${itemModelId}/available`);
+      setItemInfo(response);
+      console.log("AVAILABLE ITEM RESPONSE: " + JSON.stringify(response.data));
+    } catch (error) {
+      console.log("ERROR IN getAvailableItem: " + error);
+    }
+  };
+  useEffect(() => {
+    getAvailableItem(location.state.itemModelId);
+    console.log("state info");
+    console.log(itemInfo);
+  }, []);
 
   return (
     <>
@@ -155,23 +175,29 @@ function CheckoutItemSummary() {
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <h5>Type: </h5>
             <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>
-              {item?.type ?? ""}
+              {itemInfo?.data.availableItem.type_name ?? ""}
             </h5>
           </div>
           {/* Containter for Category title and result */}
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <h5>Category: </h5>
-            <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>HARDCODED</h5>
+            <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>
+              {itemInfo?.data.availableItem.category_name ?? ""}
+            </h5>
           </div>
           {/* Containter for Serial Number title and result */}
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <h5>Serial Number: </h5>
-            <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>HARDCODED</h5>
+            <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>
+              {itemInfo?.data.availableItem.serial ?? ""}
+            </h5>
           </div>
           {/* Containter for Item Condition title and result */}
           <div style={{ display: "flex", justifyContent: "flex-start" }}>
             <h5>Item Condition: </h5>
-            <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>HARDCODED</h5>
+            <h5 style={{ marginLeft: "1em", fontWeight: "400" }}>
+              {itemInfo?.data.availableItem.item_condition ?? ""}
+            </h5>
           </div>
 
           {/* Return Date Section */}

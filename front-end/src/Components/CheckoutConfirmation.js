@@ -74,8 +74,8 @@ function CheckoutConfiirmation() {
           <h4 style={{ fontWeight: "600", marginTop: "0" }}> Category Name</h4>
         </div>
 
-        <h3 style={{ color: "#F76902" }}> Return Date: </h3>
-        <h4> xxxx </h4>
+        <h3 style={{ color: "#F76902", marginBottom: "0" }}> Return Date: </h3>
+        <h4 style={{ marginTop: "0" }}> xxxx </h4>
 
         <Button
           color="orange"

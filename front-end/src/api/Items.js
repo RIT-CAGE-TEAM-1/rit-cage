@@ -54,10 +54,19 @@ const getItemCount = async () => {
   }
 };
 
+const onSubmitCheckout = async (username, itemId) => {
+  try {
+    await api.post("/reservations", { username, itemId });
+  } catch (error) {
+    console.log("ERROR IN CHECKING ITEM OUT: " + error);
+  }
+};
+
 export const ItemAPI = {
   getItemModels,
   getItemTypes,
   getItemCategories,
   getItemCount,
   getItemModel,
+  onSubmitCheckout,
 };

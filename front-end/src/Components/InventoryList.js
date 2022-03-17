@@ -8,6 +8,7 @@ import { ItemAPI } from "../api/Items";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDebouncedValue } from "@mantine/hooks";
+import AdminShell from "./AdminShell";
 
 // Displays the Inventory title
 // Displays the All, Damaged, and Tagged Buttons on the left side of the screen
@@ -219,32 +220,34 @@ function InventoryList() {
 
   return (
     <>
-      <InventoryHeader
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        currentCount={currentCount}
-        setCurrentCount={setCurrentCount}
-        setCheckedItems={setCheckedItems}
-      />
-      {/* <>{searchTerm}</> */}
-      <Table highlightOnHover>
-        <thead>
-          <tr>
-            <th style={{ paddingRight: "0px" }} />
+      <AdminShell>
+        <InventoryHeader
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          currentCount={currentCount}
+          setCurrentCount={setCurrentCount}
+          setCheckedItems={setCheckedItems}
+        />
+        {/* <>{searchTerm}</> */}
+        <Table highlightOnHover>
+          <thead>
+            <tr>
+              <th style={{ paddingRight: "0px" }} />
 
-            <th>Model Name</th>
+              <th>Model Name</th>
 
-            {/* <th>Item Type</th>
+              {/* <th>Item Type</th>
 
             <th>Category</th>
 
             <th>Location</th> */}
 
-            <th>Count</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </AdminShell>
     </>
   );
 }

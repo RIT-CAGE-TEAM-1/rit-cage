@@ -19,6 +19,8 @@ import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { ItemAPI } from "../api/Items";
 import { useForm } from "@mantine/hooks";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import AdminShell from "./AdminShell";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   return {
@@ -68,59 +70,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-function MultiForms() {
-  const { classes } = useStyles();
-
-  return (
-    <>
-      {/* Container for placing Serial Number group and Condition group next to one another */}
-      <div
-        className={classes.flexStartAndCenter}
-        style={{ paddingBottom: "1em" }}
-      >
-        {/* container for serial number title and input box */}
-        <div style={{ width: "30%" }}>
-          <h5
-            className={classes.inputLabel}
-            style={{ marginTop: ".5em", width: "100%" }}
-          >
-            Serial Number*
-          </h5>
-          <TextInput
-            style={{ width: "100%", paddingLeft: "1.3em" }}
-            placeholder="Number"
-          />
-        </div>
-
-        {/* container for condition title and dropdown */}
-        <div style={{ paddingLeft: "1.5em", width: "15%" }}>
-          <h5 className={classes.inputLabel} style={{ marginTop: ".5em" }}>
-            Condition*
-          </h5>
-          <Select
-            placeholder="Pick One"
-            style={{ paddingLeft: "1.3em" }}
-            data={[
-              { value: "Good", label: "Good" },
-              { value: "Poor", label: "Poor" },
-              { value: "Broken", label: "Broken" },
-            ]}
-          />
-        </div>
-        <div style={{ paddingLeft: "1.5em", width: "31%" }}>
-          <h5 className={classes.inputLabel} style={{ marginTop: ".5em" }}>
-            Additional Comments
-          </h5>
-          <TextInput
-            style={{ width: "100%", paddingLeft: "1.3em" }}
-            placeholder="Text"
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-
 // Form for adding one, or multiple items
 function NewItemForm() {
   const { classes } = useStyles();
@@ -156,7 +105,14 @@ function NewItemForm() {
     }
   };
 
-  const onSubmit = async (category, type, model) => {
+  const onSubmit = async (
+    category,
+    type,
+    model,
+    serial,
+    condition,
+    comments
+  ) => {
     try {
       const returnedModels = await ItemAPI.getItemModels();
       const returnedTypes = await ItemAPI.getItemTypes();
@@ -179,15 +135,15 @@ function NewItemForm() {
         item_type_id: typeObj.item_type_id,
         item_model_id: modelObj.item_model_id,
         barcode: "",
-        comments: "",
+        comments: { comments },
         tags: "",
         available: 1,
         active: 1,
         location: "dlmsdksd",
         serials: [
           {
-            serial: "nag349nf",
-            item_condition: "good",
+            serial: { serial },
+            item_condition: { condition },
           },
         ],
       });
@@ -241,128 +197,213 @@ function NewItemForm() {
   }
 
   return (
-    <div>
-      <ContentHeader />
+    <AdminShell>
+      <div>
+        <ContentHeader />
 
-      <form
-        onSubmit={form.onSubmit((values) => {
-          console.log("submitted to DB");
-          onSubmit(values.Category, values.Type, values.Name);
-        })}
-      >
-        {/* Flex Container for two halves of screen */}
-        <div style={{ display: "flex", justifyContent: "flex-start" }}>
-          {/* Container for fields on left half of screen */}
-          <div style={{ width: "70%" }}>
-            {/* Category input title and dropdown */}
-            <NewItemInputGroup
-              inputTitle="Category"
-              options={itemCategories}
-              form={form}
-            />
-            {/* Type input title and dropdown */}
-            <NewItemInputGroup
-              inputTitle="Type"
-              options={itemTypes}
-              form={form}
-            />
-            {/* Model input title and dropdown */}
-            <NewItemInputGroup
-              inputTitle="Model"
-              options={itemModels}
-              form={form}
-            />
+        <form
+          onSubmit={form.onSubmit((values) => {
+            console.log("submitted to DB");
+            onSubmit(
+              values.Category,
+              values.Type,
+              values.Name,
+              values.Serial,
+              values.Condition,
+              values.Comments
+            );
+          })}
+        >
+          {/* Flex Container for two halves of screen */}
+          <div style={{ display: "flex", justifyContent: "flex-start" }}>
+            {/* Container for fields on left half of screen */}
+            <div style={{ width: "70%", paddingRight: "3em" }}>
+              {/* Category input title and dropdown */}
+              <Input
+                component="select"
+                rightSection={<RiArrowDropDownLine />}
+                {...form.getInputProps("Category")}
+                style={{ paddingLeft: "1em", marginBottom: "1em" }}
+              >
+                {itemCategories.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Input>
 
-            <hr className={classes.hrStyle} />
+              {/* Type input title and dropdown */}
+              <Input
+                component="select"
+                rightSection={<RiArrowDropDownLine />}
+                {...form.getInputProps("Type")}
+                style={{ paddingLeft: "1em", marginBottom: "1em" }}
+              >
+                {itemTypes.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Input>
 
-            {/* Quantity title and subtract and add buttons */}
-            <div className={classes.flexStartAndCenter}>
-              <h5 style={{ paddingLeft: "1.5em", fontWeight: "500" }}>
-                Quantity
-              </h5>
-              <AiFillMinusCircle
-                className={classes.quantityBttns}
-                onClick={() => {
-                  if (quantityCount === 1) {
-                    setQuantityCount(1);
-                  } else {
-                    setQuantityCount(quantityCount - 1);
-                  }
+              {/* Model input title and dropdown */}
+              <Input
+                component="select"
+                rightSection={<RiArrowDropDownLine />}
+                {...form.getInputProps("Model")}
+                style={{ paddingLeft: "1em", marginBottom: "1em" }}
+              >
+                {itemModels.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Input>
+
+              <hr className={classes.hrStyle} />
+
+              {/* Quantity title and subtract and add buttons */}
+              <div className={classes.flexStartAndCenter}>
+                <h5 style={{ paddingLeft: "1.5em", fontWeight: "500" }}>
+                  Quantity
+                </h5>
+                <AiFillMinusCircle
+                  className={classes.quantityBttns}
+                  onClick={() => {
+                    if (quantityCount === 1) {
+                      setQuantityCount(1);
+                    } else {
+                      setQuantityCount(quantityCount - 1);
+                    }
+                  }}
+                />
+                <p className={classes.quantityCountBox}>{quantityCount}</p>
+                <AiFillPlusCircle
+                  className={classes.quantityBttns}
+                  onClick={() => setQuantityCount(quantityCount + 1)}
+                />
+              </div>
+
+              {[...Array(quantityCount)].map((q, i) => {
+                return (
+                  <div
+                    className={classes.flexStartAndCenter}
+                    style={{ paddingBottom: "1em" }}
+                  >
+                    {/* container for serial number title and input box */}
+                    <div style={{ width: "30%" }}>
+                      <h5
+                        className={classes.inputLabel}
+                        style={{ marginTop: ".5em", width: "100%" }}
+                      >
+                        Serial Number*
+                      </h5>
+                      <TextInput
+                        style={{ width: "100%", paddingLeft: "1.3em" }}
+                        placeholder="Number"
+                        {...form.getInputProps("Serial")}
+                      />
+                    </div>
+
+                    {/* container for condition title and dropdown */}
+                    <div style={{ paddingLeft: "1.5em", width: "15%" }}>
+                      <h5
+                        className={classes.inputLabel}
+                        style={{ marginTop: ".5em" }}
+                      >
+                        Condition*
+                      </h5>
+                      <Select
+                        {...form.getInputProps("Condition")}
+                        placeholder="Pick One"
+                        style={{ paddingLeft: "1.3em" }}
+                        data={[
+                          { value: "Good", label: "Good" },
+                          { value: "Poor", label: "Poor" },
+                          { value: "Broken", label: "Broken" },
+                        ]}
+                      />
+                    </div>
+                    <div style={{ paddingLeft: "1.5em", width: "31%" }}>
+                      <h5
+                        className={classes.inputLabel}
+                        style={{ marginTop: ".5em" }}
+                      >
+                        Additional Comments
+                      </h5>
+                      <TextInput
+                        style={{ width: "100%", paddingLeft: "1.3em" }}
+                        placeholder="Text"
+                        {...form.getInputProps("Comments")}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Create Item button */}
+              <div className={classes.createButtonStyle}>
+                <Button
+                  color="orange"
+                  radius="xl"
+                  type="submit"
+                  style={{ marginBottom: "5em" }}
+                  onClick={onSubmit}
+                >
+                  Create Item
+                </Button>
+              </div>
+            </div>
+
+            {/* Container for fields on right side of screen */}
+            <div>
+              {/* Container for Non-Visible Fields Title and Dropdown Icon */}
+              <div className={classes.flexStartAndCenter}>
+                <h5 style={{ color: "#F76902" }}>Non-visible Fields</h5>
+                <IoMdArrowDropdown
+                  style={{ color: "#F76902", fontSize: "1.3em" }}
+                  onClick={() => setCheckboxesOpen(!checkboxesOpen)}
+                />
+              </div>
+              {/* Group to hide/show the Available and Active checkboxes */}
+              <div style={!checkboxesOpen ? { display: "none" } : undefined}>
+                <Checkbox
+                  label="Available"
+                  color="orange"
+                  style={{ paddingBottom: ".5em" }}
+                />
+                <Checkbox label="Active" color="orange" />
+              </div>
+
+              <hr
+                style={{
+                  color: "#F3F3F3",
+                  opacity: "40%",
+                  width: "100%",
+                  marginTop: "2em",
                 }}
               />
-              <p className={classes.quantityCountBox}>{quantityCount}</p>
-              <AiFillPlusCircle
-                className={classes.quantityBttns}
-                onClick={() => setQuantityCount(quantityCount + 1)}
-              />
-            </div>
 
-            {[...Array(quantityCount)].map((q, i) => {
-              return <MultiForms />;
-            })}
-
-            {/* Create Item button */}
-            <div className={classes.createButtonStyle}>
-              <Button
-                color="orange"
-                radius="xl"
-                type="submit"
-                style={{ marginBottom: "5em" }}
-                onClick={onSubmit}
-              >
-                Create Item
-              </Button>
+              {/* Container for Non-Visible Fields Title and Dropdown Icon */}
+              <div className={classes.flexStartAndCenter}>
+                <h5 style={{ color: "#F76902", paddingRight: "1em" }}>
+                  Restriction to Class
+                </h5>
+                <Checkbox
+                  color="orange"
+                  onClick={() => setClassRestrictOpen(!classRestrictOpen)}
+                />
+              </div>
+              {/* Group for showing/hiding the first class restriction input field */}
+              <div style={!classRestrictOpen ? { display: "none" } : undefined}>
+                <TextInput placeholder="XXXX###"></TextInput>
+                <h5 className={classes.addClassButton}>Add Class</h5>
+              </div>
             </div>
           </div>
-
-          {/* Container for fields on right side of screen */}
-          <div>
-            {/* Container for Non-Visible Fields Title and Dropdown Icon */}
-            <div className={classes.flexStartAndCenter}>
-              <h5 style={{ color: "#F76902" }}>Non-visible Fields</h5>
-              <IoMdArrowDropdown
-                style={{ color: "#F76902", fontSize: "1.3em" }}
-                onClick={() => setCheckboxesOpen(!checkboxesOpen)}
-              />
-            </div>
-            {/* Group to hide/show the Available and Active checkboxes */}
-            <div style={!checkboxesOpen ? { display: "none" } : undefined}>
-              <Checkbox
-                label="Available"
-                color="orange"
-                style={{ paddingBottom: ".5em" }}
-              />
-              <Checkbox label="Active" color="orange" />
-            </div>
-
-            <hr
-              style={{
-                color: "#F3F3F3",
-                opacity: "40%",
-                width: "100%",
-                marginTop: "2em",
-              }}
-            />
-
-            {/* Container for Non-Visible Fields Title and Dropdown Icon */}
-            <div className={classes.flexStartAndCenter}>
-              <h5 style={{ color: "#F76902", paddingRight: "1em" }}>
-                Restriction to Class
-              </h5>
-              <Checkbox
-                color="orange"
-                onClick={() => setClassRestrictOpen(!classRestrictOpen)}
-              />
-            </div>
-            {/* Group for showing/hiding the first class restriction input field */}
-            <div style={!classRestrictOpen ? { display: "none" } : undefined}>
-              <TextInput placeholder="XXXX###"></TextInput>
-              <h5 className={classes.addClassButton}>Add Class</h5>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </AdminShell>
   );
 }
 

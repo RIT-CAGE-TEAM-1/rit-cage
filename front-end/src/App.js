@@ -6,6 +6,7 @@ import Documentation from "./Components/Documentation";
 import ItemSummary from "./Components/ItemSummary";
 import CheckoutList from "./Components/CheckoutList";
 import CheckoutItemSummary from "./Components/CheckoutItemSummary";
+import Login from "./Components/Login";
 
 import {
   BrowserRouter as Router,
@@ -39,33 +40,32 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AdminShell>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="inventory" element={<InventoryList />} />
-          <Route path="create" element={<NewItemForm />} />
-          <Route path="help" element={<Documentation />} />
-          <Route path="inventory/summary/:id" element={<ItemSummary />} />
-          <Route path="users" element={<CheckoutList />} />
-          <Route
-            path="users/checkoutForm/:id"
-            element={<CheckoutItemSummary />}
-          />
-          <Route
-            path="/checkoutConfirmation"
-            element={<CheckoutConfiirmation />}
-          />
-          {/* No match route */}
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>Not implemented yet</p>
-              </main>
-            }
-          />
-        </Routes>
-      </AdminShell>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="inventory" element={<InventoryList />} />
+        <Route path="create" element={<NewItemForm />} />
+        <Route path="help" element={<Documentation />} />
+        <Route path="inventory/summary/:id" element={<ItemSummary />} />
+        <Route path="users" element={<CheckoutList />} />
+        <Route
+          path="users/checkoutForm/:id"
+          element={<CheckoutItemSummary />}
+        />
+        <Route
+          path="/checkoutConfirmation"
+          element={<CheckoutConfiirmation />}
+        />
+        {/* No match route */}
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>Not implemented yet</p>
+            </main>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }

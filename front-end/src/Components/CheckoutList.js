@@ -67,7 +67,9 @@ function CheckoutList() {
     <tr key={`${index} - ${element.model_name}}`}>
       <td
         onClick={() => {
-          navigate(`/users/checkoutForm/${element.item_model_id}`);
+          navigate(`/users/checkoutForm/${element.item_model_id}`, {
+            state: { itemModelId: element.item_model_id },
+          });
         }}
       >
         {element.model_name}
@@ -80,7 +82,6 @@ function CheckoutList() {
       <InventoryHeader
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        currentCount={currentCount}
         setCurrentCount={setCurrentCount}
         setCheckedItems={setCheckedItems}
       />

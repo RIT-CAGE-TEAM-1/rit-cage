@@ -41,7 +41,7 @@ function AdminShell(props) {
   const navOptions = [
     {
       name: "Home",
-      pathname: "/",
+      pathname: "/dashboard",
       icon: (
         <img
           src={home_icon}
@@ -128,6 +128,9 @@ function AdminShell(props) {
           style={{ paddingRight: "1em", width: "24px", height: "24px" }}
         />
       ),
+    },
+    {
+      pathname: "/",
     },
   ];
 

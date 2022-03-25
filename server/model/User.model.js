@@ -14,6 +14,19 @@ class UserModel {
             throw new Error(error);
         }
     }
+
+    static async getByUsername(username, conn) {
+        try {
+            const mysql = conn? conn : pool;
+
+            const stmt = 'SELECT * from user WHERE username = ?';
+            const results = await mysql.query(stmt, [ username ]);
+
+            return results[0][0];
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
 
 module.exports = UserModel;

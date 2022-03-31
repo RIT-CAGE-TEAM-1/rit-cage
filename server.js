@@ -30,8 +30,29 @@ app.get('/export-csv',function(req,res){
      res.status(200).end(csv);
   });
 });
+
+app.get('/export-common-csv',function(req,res){
+  db.query("SELECT im.model_name, COUNT(DISTINCT ri.reservation_item_id) AS count FROM reservation_item ri JOIN item i ON i.item_model_id = ri.item_model_id JOIN item_model im ON im.item_model_id = i.item_model_id GROUP BY im.model_name ORDER BY 2 DESC;", function (err, reservation, fields) {
+    if (err) throw err;
+    console.log("Most commonly reserved:");
+     
+    const jsonUsers = JSON.parse(JSON.stringify(reservation));
+    console.log(jsonUsers);
  
-// port must be set to 8080 because incoming http requests are routed from port 80 to port 8080
+    // Convert JSON to CSV data
+    const csvFields = ['model_name','count'];
+    const json2csvParser = new Json2csvParser({ csvFields });
+    const csv = json2csvParser.parse(reservation);
+ 
+    console.log(csv);
+ 
+     res.setHeader("Content-Type", "text/csv");
+     res.setHeader("Content-Disposition", "attachment; filename=mostCommonlyReserved_" + fileName);
+ 
+     res.status(200).end(csv);
+  });
+});
+ 
 app.listen(3000, function () {
     console.log('Log app is running on port 3000');
 });

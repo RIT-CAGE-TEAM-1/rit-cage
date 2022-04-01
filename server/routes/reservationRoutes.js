@@ -20,14 +20,14 @@ router.post('/', async (req, res, next) => {
 
             const reservation = {};
             reservation.due_date = new Date(new Date().setHours(new Date().getHours() + 1)).toISOString().slice(0, 19).replace('T', ' ');
-            reservation.reservation_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            // reservation.reservation_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
             reservation.checkout_date = new Date().toISOString().slice(0, 19).replace('T', ' ');
             reservation.user_id = userId;
             reservation.status = "out";
 
             const reservationId = await Reservation.create(reservation, conn);
             await ReservationItem.create(reservationId, itemId, conn)
-            await Item.update(itemId, { available: 0 });
+            await Item.update(itemId, { available: 0 }, conn);
 
             await transaction.commit();
             res.send({ success: true });
@@ -39,6 +39,8 @@ router.post('/', async (req, res, next) => {
             }
 
             next(error); 
+        } finally {
+            conn.release();
         }
     } catch(error) {
         next(error);

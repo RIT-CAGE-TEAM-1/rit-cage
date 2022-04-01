@@ -120,8 +120,6 @@ class ItemModel {
 
             const stmt = 'UPDATE item SET ? WHERE item_id = ?';
             await mysql.query(stmt, [ updatedItem, id ]);
-
-            return;
         } catch (error) { throw new Error(error); }
     }
 

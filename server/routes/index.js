@@ -7,6 +7,7 @@ router.use('/item-categories', require('./itemCategoryRoutes'));
 router.use('/item-types', require('./itemTypeRoutes'))
 router.use('/reservations', require('./reservationRoutes'))
 router.use('/users', require('./userRoutes'));
+router.use('/dashboard', require('./dashboardRoutes'));
 
 router.get('/test', (req, res) => {
     res.send({ success:true, message: 'The cage api is working!' });

@@ -7,8 +7,9 @@ import { useForm } from "@mantine/hooks";
 
 // Icons
 import { AiOutlineSearch } from "react-icons/ai";
+import api from "../api/api";
 
-function Login() {
+function Login({ setRole, setUser }) {
   const navigate = useNavigate();
 
   const form = useForm({
@@ -17,6 +18,24 @@ function Login() {
       Password: "",
     },
   });
+
+  const loginUser = async (username) => {
+    try {
+      const response = await api.post("/users/login", { username: username });
+      setRole(response.data.user.role);
+      setUser(response.data.user);
+      console.log("Logged in user: " + JSON.stringify(response.data.user.role));
+      if (response.data.user.role === "student") {
+        navigate("/studentList");
+      } else if (response.data.user.role === "employee") {
+        navigate("/dashboard");
+      } else if (response.data.user.role === "professor") {
+        navigate("/facultyInventory");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -91,7 +110,13 @@ function Login() {
             borderBottomRightRadius: 12,
           }}
         >
-          <form onSubmit={form.onSubmit((values) => console.log(values))}>
+          {/* Form for submitting username and password */}
+          <form
+            onSubmit={form.onSubmit((values) => {
+              console.log(values);
+              loginUser(values.Username);
+            })}
+          >
             <h1 style={{ fontWeight: "300", margin: "0" }}> RIT Login </h1>
             <h3
               style={{
@@ -146,6 +171,7 @@ function Login() {
                 Password
               </h3>
               <TextInput
+                type="password"
                 placeholder="Password"
                 style={{ margin: "0", width: "50%" }}
                 {...form.getInputProps("Password")}
@@ -157,9 +183,10 @@ function Login() {
               color="gray"
               style={{ marginTop: "1.5em" }}
               type="submit"
-              onClick={() => {
-                navigate("/dashboard");
-              }}
+              // onClick={() => {
+              //   loginUser(Username);
+              //   navigate("/dashboard");
+              // }}
             >
               Login
             </Button>

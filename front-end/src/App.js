@@ -1,4 +1,3 @@
-import AdminShell from "./Components/AdminShell";
 import InventoryList from "./Components/InventoryList";
 import NewItemForm from "./Components/NewItemForm";
 import Dashboard from "./Components/Dashboard";
@@ -8,21 +7,24 @@ import CheckoutList from "./Components/CheckoutList";
 import CheckoutItemSummary from "./Components/CheckoutItemSummary";
 import Login from "./Components/Login";
 
+import { useState } from "react";
+
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link,
   BrowserRouter,
 } from "react-router-dom";
 
 import api from "./api/api";
 import { useEffect } from "react";
 import CheckoutConfiirmation from "./Components/CheckoutConfirmation";
+import Cart from "./Components/Cart";
+import FacultyList from "./Components/FacultyList";
 
 function App() {
-  // const [opened, setOpened] = useState(false);
-  // const theme = useMantineTheme();
+  const [role, setRole] = useState("");
+  const [user, setUser] = useState();
 
   useEffect(() => {
     testApi();
@@ -41,21 +43,47 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="inventory" element={<InventoryList />} />
-        <Route path="create" element={<NewItemForm />} />
-        <Route path="help" element={<Documentation />} />
-        <Route path="inventory/summary/:id" element={<ItemSummary />} />
-        <Route path="users" element={<CheckoutList />} />
+        {/* Global Login */}
         <Route
-          path="users/checkoutForm/:id"
-          element={<CheckoutItemSummary />}
+          path="/"
+          element={<Login setRole={setRole} setUser={setUser} />}
         />
-        <Route
-          path="/checkoutConfirmation"
-          element={<CheckoutConfiirmation />}
-        />
+        {/* {role === "employee" && ( */}
+        <>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="inventory" element={<InventoryList />} />
+          <Route path="create" element={<NewItemForm />} />
+          <Route path="help" element={<Documentation />} />
+          <Route path="inventory/summary/:id" element={<ItemSummary />} />
+        </>
+        {/* )} */}
+
+        {/* Student Pages */}
+        {/* {role === "student" && ( */}
+        <>
+          <Route path="studentList" element={<CheckoutList user={user} />} />
+          <Route
+            path="studentList/checkoutForm/:id"
+            element={<CheckoutItemSummary user={user} />}
+          />
+          <Route
+            path="/checkoutConfirmation"
+            element={<CheckoutConfiirmation user={user} />}
+          />
+          <Route path="cart" element={<Cart user={user} />} />
+        </>
+        {/* )} */}
+
+        {/* Faculty Pages */}
+        {/* {role === "professor" && ( */}
+        <>
+          <Route
+            path="facultyInventory"
+            element={<FacultyList user={user} />}
+          />
+        </>
+        {/* )} */}
+
         {/* No match route */}
         <Route
           path="*"

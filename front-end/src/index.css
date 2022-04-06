@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -12,14 +10,19 @@ code {
     monospace;
 }
 
-.titleFont {
+@font-face {
   font-family: "Neue Haas Grotesk Display Bold";
-  src: url("./fonts/NeueHaasGroteskDisplay/NeueHaasGroteskDisplayBold.ttf")
+  src: url("fonts/NeueHaasGroteskDisplay/NeueHaasGroteskDisplayBold.ttf")
     format("truetype");
 }
-
+@font-face {
+  font-family: "Neue Haas Grotesk Display Medium";
+  src: url("fonts/NeueHaasGroteskDisplay/NeueHaasGroteskDisplayMedium.ttf")
+    format("truetype");
+}
+.titleFont {
+  font-family: "Neue Haas Grotesk Display Bold";
+}
 .restOfFonts {
   font-family: "Neue Haas Grotesk Display Medium";
-  src: url("./fonts/NeueHaasGroteskDisplay/NeueHaasGroteskDisplayMedium.ttf")
-    format("truetype");
 }

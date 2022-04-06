@@ -211,9 +211,6 @@ function InventoryList() {
       >
         {element.model_name}
       </td>
-      {/* <td>{element.model_types}</td>
-      <td>{element.category_name}</td>
-      <td>{element.location}</td> */}
       <td>{element.count}</td>
     </tr>
   ));

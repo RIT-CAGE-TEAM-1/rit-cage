@@ -9,7 +9,7 @@ import cage_logo from "../images/ISTCAGE_logo.svg";
 // RIT Logo
 import rit_logo from "../images/RIT_logo.svg";
 
-function StudentShell({ user, children }) {
+function FacultyShell({ user, children }) {
   return (
     <AppShell
       // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
@@ -31,14 +31,13 @@ function StudentShell({ user, children }) {
           // for removing the border to the right of the NavBar
           sx={{ borderRight: "none" }}
         >
-          <div style={{ paddingBottom: "2em" }}>
+          <div style={{ paddingBottom: "0" }}>
             <img
               src={cage_logo}
               alt="IST Cage Icon"
               style={{
                 paddingRight: "1em",
                 paddingTop: "1em",
-                paddingBottom: "2em",
                 height: "8%",
               }}
             />
@@ -52,22 +51,28 @@ function StudentShell({ user, children }) {
             <Text>Sunday: Closed</Text>
           </div>
 
-          <div>
+          <div style={{ marginTop: "0" }}>
             <h3>
               <span style={{ color: "#F76902" }}>Contact</span> <br />
               Information
             </h3>
             <hr style={{ width: "1.5em", color: "#F76902", marginLeft: 0 }} />
-            <Text
-              style={{
-                fontStyle: "italic",
-                textDecorationLine: "underline",
-              }}
-              onClick={() => {
-                window.open("https://checkout.cad.rit.edu/");
-              }}
-            >
-              Website
+            <Text>
+              This is just a bunch of random text that I decided to type out in
+              hopes that this code might actually work for me.
+            </Text>
+          </div>
+
+          <div style={{ marginTop: "0" }}>
+            <h3>
+              <span style={{ color: "#F76902" }}>Class</span> <br />
+              Kits
+            </h3>
+            <hr style={{ width: "1.5em", color: "#F76902", marginLeft: 0 }} />
+            <h3> Current Kits</h3>
+            <Text>
+              This is just a bunch of random text that I decided to type out in
+              hopes that this code might actually work for me.
             </Text>
           </div>
         </Navbar>
@@ -127,4 +132,4 @@ function StudentShell({ user, children }) {
   );
 }
 
-export default StudentShell;
+export default FacultyShell;

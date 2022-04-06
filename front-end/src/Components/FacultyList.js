@@ -1,16 +1,14 @@
 import { React, useEffect } from "react";
 import { useState } from "react";
-import { Table, Input, Checkbox, Button } from "@mantine/core";
+import { Table, Input } from "@mantine/core";
 import { ItemAPI } from "../api/Items";
 import { useNavigate } from "react-router-dom";
-import { useDebouncedValue, useSetState } from "@mantine/hooks";
+import { useDebouncedValue } from "@mantine/hooks";
 import { AiOutlineSearch } from "react-icons/ai";
+import FacultyShell from "./FacultyShell";
 import { FaShoppingCart } from "react-icons/fa";
-import StudentShell from "./StudentShell";
 
 function InventoryHeader({ searchTerm, setSearchTerm }) {
-  const navigate = useNavigate();
-
   return (
     <>
       <Input
@@ -33,32 +31,17 @@ function InventoryHeader({ searchTerm, setSearchTerm }) {
           paddingBottom: "1.5em",
         }}
       >
-        {/* Left side title */}
-        <div>
-          <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".3em" }}>
-            Inventory
-          </h1>
-        </div>
-
-        {/* Right side Add to Cart button */}
-        <div>
-          <Button
-            variant="outline"
-            color="orange"
-            style={{ boxShadow: "0px 3px 6px #D3D3D3", marginRight: "1em" }}
-            onClick={() => {
-              // navigate("/create");
-            }}
-          >
-            Add to Cart
-          </Button>
-        </div>
+        {/* Left side buttons and title */}
+        <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".5em" }}>
+          Inventory
+        </h1>
       </div>
     </>
   );
 }
 
-function CheckoutList({ user }) {
+function FacultyList({ user }) {
+  const [currentCount, setCurrentCount] = useState(0);
   const [elements, setElements] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm] = useDebouncedValue(searchTerm, 500);
@@ -83,48 +66,22 @@ function CheckoutList({ user }) {
   };
 
   const rows = elements.map((element, index) => (
-    <tr
-      key={`${index} - ${element.model_name}}`}
+    <tr key={`${index} - ${element.model_name}}`}>
+      <td
       // onClick={() => {
       //   navigate(`/studentList/checkoutForm/${element.item_model_id}`, {
       //     state: { itemModelId: element.item_model_id },
       //   });
       // }}
-    >
-      <td>
-        <Checkbox
-          label={element.model_name}
-          color="orange"
-          onChange={(e) => {
-            const isChecked = e.target.checked;
-            console.log("IS IT CHECKED? " + isChecked);
-            if (isChecked) {
-              setCheckedItems((prev) => [...prev, element]);
-              console.log(
-                "LIST OF SELECTED ITEMS" + JSON.stringify(checkedItems)
-              );
-            } else if (!isChecked) {
-              const found = checkedItems.findIndex((item) => {
-                return item.id === element.id;
-              });
-              setCheckedItems(checkedItems.splice(1, found));
-              // setCheckedItems(
-              //   checkedItems.filter((checkedItem) => checkedItem !== element)
-              // );
-              console.log(
-                "LIST OF SELECTED ITEMS" + JSON.stringify(checkedItems)
-              );
-            }
-          }}
-        />
+      >
+        {element.model_name}
       </td>
-      <td>{element.count}</td>
     </tr>
   ));
 
   return (
     <>
-      <StudentShell user={user}>
+      <FacultyShell user={user}>
         <div
           style={{
             position: "fixed",
@@ -151,6 +108,7 @@ function CheckoutList({ user }) {
         <InventoryHeader
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
+          setCurrentCount={setCurrentCount}
           setCheckedItems={setCheckedItems}
         />
         {/* <>{searchTerm}</> */}
@@ -158,14 +116,13 @@ function CheckoutList({ user }) {
           <thead>
             <tr>
               <th>Model Name</th>
-              <th>Quantity</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
         </Table>
-      </StudentShell>
+      </FacultyShell>
     </>
   );
 }
 
-export default CheckoutList;
+export default FacultyList;

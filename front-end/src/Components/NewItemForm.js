@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import NewItemInputGroup from "./NewItemInputGroup";
 import {
   Button,
   Input,
@@ -158,9 +157,6 @@ function NewItemForm() {
 
   // Reusable InventoryHeader for title and buttons
   function ContentHeader() {
-    // const [selected, setSelected] = useState("Add One Item");
-    // const createNewItemSelectors = ["Add One Item", "Add Multiple Items"];
-
     return (
       <>
         <div
@@ -219,6 +215,16 @@ function NewItemForm() {
             {/* Container for fields on left half of screen */}
             <div style={{ width: "70%", paddingRight: "3em" }}>
               {/* Category input title and dropdown */}
+              <h4
+                style={{
+                  marginTop: "0",
+                  marginBottom: ".5em",
+                  fontWeight: "450",
+                  marginLeft: "1em",
+                }}
+              >
+                Category
+              </h4>
               <Input
                 component="select"
                 rightSection={<RiArrowDropDownLine />}
@@ -233,6 +239,16 @@ function NewItemForm() {
               </Input>
 
               {/* Type input title and dropdown */}
+              <h4
+                style={{
+                  marginTop: "0",
+                  marginBottom: ".5em",
+                  fontWeight: "450",
+                  marginLeft: "1em",
+                }}
+              >
+                Type
+              </h4>
               <Input
                 component="select"
                 rightSection={<RiArrowDropDownLine />}
@@ -247,6 +263,16 @@ function NewItemForm() {
               </Input>
 
               {/* Model input title and dropdown */}
+              <h4
+                style={{
+                  marginTop: "0",
+                  marginBottom: ".5em",
+                  fontWeight: "450",
+                  marginLeft: "1em",
+                }}
+              >
+                Model
+              </h4>
               <Input
                 component="select"
                 rightSection={<RiArrowDropDownLine />}

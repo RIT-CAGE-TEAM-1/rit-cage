@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import { createStyles, Button, Table, Select } from "@mantine/core";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Line, Bar } from "react-chartjs-2";
@@ -13,9 +13,14 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useState } from "react";
+
+// Other Components
 import AdminShell from "./AdminShell";
 
+// Api import for base URL
+import api from "../api/api";
+
+// ChartJS Graphs and Elements
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -42,66 +47,87 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-// Table for Upcoming Reservations
-function URTable() {
-  const elements = [
-    {
-      reserveTime: "1/10/2022, 09:45 AM",
-      modelName: "Cisco 3560-24 w/ POE Switch",
-      serialNumber: "1234567876543",
-      itemCondition: "Good",
-      rentee: "jxd2928",
-    },
-    {
-      reserveTime: "1/10/2022, 10:30 AM",
-      modelName: "iPhone 6",
-      serialNumber: "3348437529882",
-      itemCondition: "Good",
-      rentee: "mxm7273",
-    },
-    {
-      reserveTime: "Item Returning",
-      modelName: "Cisco 2651 Router",
-      serialNumber: "458385935300",
-      itemCondition: "Good",
-      rentee: "fau2322",
-    },
-  ];
+function Dashboard() {
+  // getting dashboard statistics and data
+  const [elements, setElements] = useState([]);
 
-  // Code for rows for Upcoming Reservations and Overdue Items
-  const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.reserveTime}</td>
-      <td>{element.modelName}</td>
-      <td>{element.serialNumber}</td>
-      <td>{element.itemCondition}</td>
-      <td>{element.rentee}</td>
+  const getOverdueItems = async () => {
+    try {
+      const response = await api.get("/dashboard");
+      setElements(response.data.overdueItems);
+      console.log("Dashboard Statistics: " + JSON.stringify(response.data));
+    } catch (error) {
+      console.log("ERROR IN getAvailableItem: " + error);
+    }
+  };
+
+  // getting active rentees
+  const [numActiveRentees, setNumActiveRentees] = useState("0");
+
+  const getActiveRentees = async () => {
+    try {
+      const response = await api.get("/dashboard");
+      setNumActiveRentees(response.data.activeRentees);
+    } catch (error) {
+      console.log("ERROR IN getAvailableItem: " + error);
+    }
+  };
+
+  // getting rented items
+  const [numRentedItems, setNumRentedItems] = useState("0");
+
+  const getRentedItems = async () => {
+    try {
+      const response = await api.get("/dashboard");
+      setNumRentedItems(response.data.rentedItems);
+    } catch (error) {
+      console.log("ERROR IN getAvailableItem: " + error);
+    }
+  };
+
+  // Upcoming Reservations data
+  const [URElements, setURElements] = useState([]);
+
+  const getUpcomingReservations = async () => {
+    try {
+      const response = await api.get("/dashboard");
+      setURElements(response.data.upcomingReservations);
+    } catch (error) {
+      console.log("ERROR IN getAvailableItem: " + error);
+    }
+  };
+
+  // Frequently Reserved Items data
+  const [freqResItems, setFreqResItems] = useState([]);
+
+  const getFreqResItems = async () => {
+    try {
+      const response = await api.get("/dashboard");
+      setFreqResItems(response.data.frequentlyReservedItems);
+    } catch (error) {
+      console.log("ERROR IN getAvailableItem: " + error);
+    }
+  };
+
+  useEffect(() => {
+    getOverdueItems();
+    getActiveRentees();
+    getRentedItems();
+    getUpcomingReservations();
+    getFreqResItems();
+  }, []);
+
+  // Code for rows for Overdue Items
+  const rows = elements.map((element, index) => (
+    <tr key={`${index}`}>
+      <td>{element.reservation_date}</td>
+      <td>{element.model_name}</td>
+      <td>{element.serial}</td>
+      <td>{element.item_condition}</td>
+      <td>{element.username}</td>
     </tr>
   ));
-  return (
-    <Table
-      highlightOnHover
-      style={{
-        marginLeft: "1em",
-        width: "97%",
-        marginBottom: "2em",
-      }}
-    >
-      <thead>
-        <tr>
-          <th>Reservation Time</th>
-          <th>Model Name</th>
-          <th>Serial Number</th>
-          <th>Condition</th>
-          <th>Rentee</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
-  );
-}
 
-function Dashboard() {
   // items for getting the current month and day
   const locale = "en";
   const d = new Date();
@@ -277,7 +303,7 @@ function Dashboard() {
 
         {/* Container to show/hide contents of the Upcoming Reservaions table rows */}
         <div style={!upcomingReservesOpen ? { display: "none" } : undefined}>
-          <URTable />
+          {/* <URTable /> */}
         </div>
 
         <hr
@@ -300,7 +326,26 @@ function Dashboard() {
 
         {/* Container to show/hide contents of the Overdue Items table rows */}
         <div style={!overdueItemsOpen ? { display: "none" } : undefined}>
-          <URTable />
+          {/* <URTable /> */}
+          <Table
+            highlightOnHover
+            style={{
+              marginLeft: "1em",
+              width: "97%",
+              marginBottom: "2em",
+            }}
+          >
+            <thead>
+              <tr>
+                <th>Reservation Time</th>
+                <th>Model Name</th>
+                <th>Serial Number</th>
+                <th>Condition</th>
+                <th>Rentee</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
         </div>
 
         {/* Flex container for left and right items*/}
@@ -358,7 +403,7 @@ function Dashboard() {
                         marginTop: "0",
                       }}
                     >
-                      Orders
+                      Yesterday
                     </h4>
                     <RiArrowDropDownLine />
                   </div>
@@ -417,7 +462,7 @@ function Dashboard() {
                   View
                 </h4>
               </div>
-              <h1 style={{ marginTop: "0" }}>194</h1>
+              <h1 style={{ marginTop: "0" }}>{numActiveRentees.count}</h1>
             </div>
             {/* Container for Rented Items box */}
             <div
@@ -444,7 +489,7 @@ function Dashboard() {
                   View
                 </h4>
               </div>
-              <h1 style={{ marginTop: "0" }}>54</h1>
+              <h1 style={{ marginTop: "0" }}>{numRentedItems.count}</h1>
             </div>
           </div>
         </div>
@@ -512,27 +557,6 @@ function Dashboard() {
                 <Line options={options} data={data} />
               </div>
             </div>
-
-            {/* Container for bottom left graph and title */}
-            <div
-              style={{
-                flexDirection: "column",
-                borderTop: "1px solid #ACACAC",
-              }}
-            >
-              <h3 style={{ fontWeight: "100", paddingLeft: "2em" }}>
-                Frequently Overdue Items
-              </h3>
-              <div
-                style={{
-                  paddingLeft: "2em",
-                  paddingBottom: ".5em",
-                  paddingTop: "1em",
-                }}
-              >
-                <Line options={options} data={data} />
-              </div>
-            </div>
           </div>
           {/*  */}
           {/*  */}
@@ -565,25 +589,6 @@ function Dashboard() {
                 }}
               >
                 <Bar options={barOptions} data={barData} />
-              </div>
-            </div>
-            {/* Container for bottom right line Graph */}
-            <div
-              style={{
-                flexDirection: "column",
-                paddingRight: "1em",
-              }}
-            >
-              <h3 style={{ fontWeight: "100", paddingLeft: "2em" }}>Info</h3>
-              <div
-                style={{
-                  paddingLeft: "2em",
-                  paddingBottom: ".5em",
-                  paddingRight: "2em",
-                  paddingTop: "1em",
-                }}
-              >
-                <Line options={options} data={data} />
               </div>
             </div>
           </div>

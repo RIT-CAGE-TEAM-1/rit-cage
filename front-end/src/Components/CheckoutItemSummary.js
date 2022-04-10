@@ -89,7 +89,7 @@ function CheckoutItemSummary({ user }) {
   // Post the reservation to database
   const onSubmitCheckout = async (username, itemId) => {
     try {
-      await api.post("/reservations", { username, itemId });
+      await api.post("/reservations", [{ username, itemId }]);
       console.log("ON SUBMIT SUBMITTED");
     } catch (error) {
       console.log("ERROR IN RESERVING ITEM: " + error);

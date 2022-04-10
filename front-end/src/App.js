@@ -11,6 +11,7 @@ import Cart from "./Components/Cart";
 import FacultyList from "./Components/FacultyList";
 import UserList from "./Components/UserList";
 import AllReservations from "./Components/AllReservations";
+import { Provider } from "./Context/Context";
 
 import React, { useState, useEffect } from "react";
 
@@ -45,7 +46,7 @@ function App() {
   };
 
   return (
-    <GlobalProvider>
+    <Provider>
       <BrowserRouter>
         <Routes>
           {/* Global Login */}
@@ -106,7 +107,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </GlobalProvider>
+    </Provider>
   );
 }
 

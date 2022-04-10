@@ -23,6 +23,7 @@ import { FaShoppingCart } from "react-icons/fa";
 // Component Imports
 import StudentShell from "./StudentShell";
 import { GlobalContext } from "../Context/GlobalState";
+import { Context } from "../Context/Context";
 
 // CheckoutList({user})
 // Takes in a user value to know if the user is accessing the correct page
@@ -31,6 +32,9 @@ function CheckoutList({ user }) {
   // elements[]
   // Array that holds all of the available items
   const [elements, setElements] = useState([]);
+  // CART CONTEXT STATE ARRAY
+  const { cart, setCart } = useContext(Context);
+  console.log('CART: ' + JSON.stringify(cart));
 
   // searching values
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,7 +50,7 @@ function CheckoutList({ user }) {
   // get model names and count of each model and display it in the table
   const getInventory = async (searchTerm) => {
     try {
-      const items = await ItemAPI.getItemModels(searchTerm);
+      const items = await ItemAPI.getItemModelsAvailable(searchTerm);
       console.log(items);
       setElements(items);
     } catch (err) {
@@ -55,7 +59,7 @@ function CheckoutList({ user }) {
   };
 
   // array for checked items in the list
-  let selectedArray = [];
+  const [ selectedArray, setSelectedArray ] = useState([]);
 
   // State variable to set and access whether change has occured to disable/allow Add to Cart Button
   const [addToCartDisabled, setAddToCartDisabled] = useState(false);
@@ -87,18 +91,21 @@ function CheckoutList({ user }) {
             // );
             // adding to selectedArray[]
             if (isChecked) {
-              selectedArray.push(element);
+              // selectedArray.push(element);
+              setSelectedArray([ ...selectedArray, element ])
               // removing from selectedArray[]
             } else if (!isChecked) {
-              selectedArray = selectedArray.filter(function (
+              const newSelectedArray = selectedArray.filter(function (
                 value,
                 index,
                 arr
               ) {
                 return value != element;
               });
+
+              setSelectedArray(newSelectedArray);
             }
-            console.log(JSON.stringify(selectedArray));
+            console.log("selected array: " + JSON.stringify(selectedArray));
           }}
         />
       </td>
@@ -108,7 +115,6 @@ function CheckoutList({ user }) {
   ));
 
   const [selects, setSelects] = useState("");
-  const { addItemsToList } = useContext(GlobalContext);
 
   return (
     <>
@@ -153,10 +159,11 @@ function CheckoutList({ user }) {
               onClick={() => {
                 setAddToCartDisabled(true);
                 if (selectedArray.length != null) {
-                  selectedArray = selectedArray.map((x) => {
-                    return x.model_name;
-                  });
-                  addItemsToList({ selectedArray });
+                  // selectedArray = selectedArray.map((x) => {
+                  //   return x.model_name;
+                  // });
+                  // addItemsToList({ selectedArray });
+                  setCart(selectedArray)
                 }
               }}
             >

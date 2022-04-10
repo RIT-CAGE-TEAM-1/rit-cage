@@ -19,6 +19,15 @@ const getItemModels = async (searchTerm) => {
   }
 };
 
+const getItemModelsAvailable = async (searchTerm) => {
+  try {
+    const response = await api.get(`/item-models/available`);
+    return response.data.itemModels;
+  } catch (error) {
+    console.log("ERROR: " + error);
+  }
+};
+
 // getItemModel call
 // returns the item model given a specific ID
 const getItemModel = async (id) => {
@@ -78,6 +87,7 @@ const onSubmitCheckout = async (username, itemId) => {
 // calls each of these functions when used
 export const ItemAPI = {
   getItemModels,
+  getItemModelsAvailable,
   getItemTypes,
   getItemCategories,
   getItemCount,

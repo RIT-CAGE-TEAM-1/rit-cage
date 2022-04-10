@@ -19,7 +19,13 @@ router.get('/', async (req, res, next) => {
     } catch (error) { next(error); }
 });
 
-// --
+router.get('/available', async (req, res, next) => {
+    try {
+        itemModels = await ItemModel.getAllAvailable();
+
+        res.send({ success:true, itemModels });
+    } catch (error) { next(error); }
+});
 
 // get an item model by id
 router.get('/:id', async (req, res, next) => {
@@ -36,7 +42,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/available', async (req, res, next) => {
     try {
-        const availableItem = await Item.getOneAvailable(req.params.id);
+        const availableItem = await Item.getOneAvailableByItemModelId(req.params.id);
 
         availableItem.due_date = new Date(new Date().setHours(new Date().getHours() + 1)).toISOString().slice(0, 19).replace('T', ' ');
 

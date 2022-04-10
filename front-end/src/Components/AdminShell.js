@@ -9,7 +9,7 @@ import { AppShell, Box, Header, Navbar, Text, Input } from "@mantine/core";
 
 // Icon Imports
 import { IoPersonCircle } from "react-icons/io5";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { BiLogOut } from "react-icons/bi";
 
 // SVG Imports
 import home_icon from "../images/home_icon.svg";
@@ -275,7 +275,13 @@ function AdminShell(props) {
               <Text color="#FFFFFF">Employee</Text>
 
               {/* Dropdown Icon */}
-              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: ".3em" }} />
+              <BiLogOut
+                size="1.5em"
+                style={{ paddingLeft: "2em" }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
             </Box>
           </div>
         </Header>

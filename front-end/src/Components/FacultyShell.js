@@ -9,7 +9,7 @@ import { AppShell, Box, Header, Navbar, Text } from "@mantine/core";
 
 // Icon Imports
 import { IoPersonCircle } from "react-icons/io5";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { BiLogOut } from "react-icons/bi";
 
 // IST Cage Logo
 import cage_logo from "../images/ISTCAGE_logo.svg";
@@ -17,11 +17,16 @@ import cage_logo from "../images/ISTCAGE_logo.svg";
 // RIT Logo
 import rit_logo from "../images/RIT_logo.svg";
 
+// Navigational Imports
+import { useNavigate } from "react-router-dom";
+
 // FacultyShell({user, children})
 // Takes in "user" to verify the correct user is on the page
 // Takes in "children" to populate the content of the page
 // Displays the information bars at the top and left sides of the screen
 function FacultyShell({ user, children }) {
+  const navigate = useNavigate();
+
   return (
     <AppShell
       // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
@@ -137,7 +142,13 @@ function FacultyShell({ user, children }) {
               <Text color="#FFFFFF">{user.username}</Text>
 
               {/* Dropdown Icon */}
-              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: ".3em" }} />
+              <BiLogOut
+                size="1.5em"
+                style={{ paddingLeft: ".3em" }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              />
             </Box>
           </div>
         </Header>

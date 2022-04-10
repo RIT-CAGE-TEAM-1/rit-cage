@@ -9,6 +9,8 @@ import Login from "./Components/Login";
 import CheckoutConfiirmation from "./Components/CheckoutConfirmation";
 import Cart from "./Components/Cart";
 import FacultyList from "./Components/FacultyList";
+import UserList from "./Components/UserList";
+import AllReservations from "./Components/AllReservations";
 
 import React, { useState, useEffect } from "react";
 
@@ -56,6 +58,8 @@ function App() {
             <Route path="dashboard" element={<Dashboard user={user} />} />
             <Route path="inventory" element={<InventoryList user={user} />} />
             <Route path="create" element={<NewItemForm user={user} />} />
+            <Route path="users" element={<UserList user={user} />} />
+            <Route path="orders" element={<AllReservations user={user} />} />
             <Route path="help" element={<Documentation user={user} />} />
             <Route
               path="inventory/summary/:id"

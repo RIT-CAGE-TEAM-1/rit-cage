@@ -7,12 +7,9 @@ import {
   Checkbox,
   TextInput,
   Select,
+  NumberInput,
 } from "@mantine/core";
-import {
-  AiOutlineArrowLeft,
-  AiFillMinusCircle,
-  AiFillPlusCircle,
-} from "react-icons/ai";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { IoMdArrowDropdown } from "react-icons/io";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
@@ -83,9 +80,9 @@ function NewItemForm() {
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
-      Category: "Networking",
-      Type: "PC",
-      Name: "Dell Tower PC",
+      Category: "",
+      Type: "",
+      Name: "",
     },
   });
 
@@ -121,17 +118,17 @@ function NewItemForm() {
         (obj) => obj.category_name === category
       );
       console.log(categoryObj);
-      console.log("1");
+      console.log("Category OBJ");
 
       const typeObj = returnedTypes.itemTypes.find(
         (obj) => obj.type_name === type
       );
       console.log(typeObj);
-      console.log("2");
+      console.log("Type OBJ");
 
       const modelObj = returnedModels.find((obj) => obj.model_name === model);
       console.log(modelObj);
-      console.log("3");
+      console.log("Model OBJ");
 
       await api.post("/items", {
         item_category_id: categoryObj.item_category_id,
@@ -204,11 +201,10 @@ function NewItemForm() {
         <form
           onSubmit={form.onSubmit((values) => {
             console.log("submitted to DB");
-            console.log("VALUES = " + JSON.stringify(values));
             onSubmitItem(
               values.Category,
               values.Type,
-              values.Name,
+              values.Model,
               values.Serial,
               values.Condition,
               values.Comments
@@ -294,8 +290,22 @@ function NewItemForm() {
               <hr className={classes.hrStyle} />
 
               {/* Quantity title and subtract and add buttons */}
-              <div className={classes.flexStartAndCenter}>
-                <h5 style={{ paddingLeft: "1.5em", fontWeight: "500" }}>
+              <div
+                className={classes.flexStartAndCenter}
+                style={{ marginLeft: "1em", marginBottom: "2em" }}
+              >
+                <NumberInput
+                  defaultValue={1}
+                  min={1}
+                  placeholder="1"
+                  label="Quantity"
+                  required
+                  onChange={(e) => {
+                    console.log(e);
+                    setQuantityCount(e);
+                  }}
+                />
+                {/* <h5 style={{ paddingLeft: "1.5em", fontWeight: "500" }}>
                   Quantity
                 </h5>
                 <AiFillMinusCircle
@@ -312,7 +322,7 @@ function NewItemForm() {
                 <AiFillPlusCircle
                   className={classes.quantityBttns}
                   onClick={() => setQuantityCount(quantityCount + 1)}
-                />
+                /> */}
               </div>
 
               {[...Array(quantityCount)].map((q, i) => {
@@ -332,6 +342,7 @@ function NewItemForm() {
                       <TextInput
                         style={{ width: "100%", paddingLeft: "1.3em" }}
                         id={`Serial${quantityCount}`}
+                        key={"Serial" + quantityCount}
                         placeholder="Number"
                         {...form.getInputProps("Serial")}
                       />
@@ -380,7 +391,6 @@ function NewItemForm() {
                   radius="xl"
                   type="submit"
                   style={{ marginBottom: "5em" }}
-                  onClick={onSubmitItem}
                 >
                   Create Item
                 </Button>

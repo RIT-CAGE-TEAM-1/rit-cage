@@ -27,105 +27,14 @@ import AdminShell from "./AdminShell";
 // Displays the Inventory title
 // Displays the All, Damaged, and Tagged Buttons on the left side of the screen
 // Displays the Deselect All, Report Issue, Delete, Filter, and New Item buttons on the right side of the screen
-function InventoryHeader({
-  searchTerm,
-  setSearchTerm,
-  currentCount,
-  setCurrentCount,
-  setCheckedItems,
-}) {
-  const [selected, setSelected] = useState("All");
+// function InventoryHeader() {
 
-  const navigate = useNavigate();
+//   return (
+//     <>
 
-  return (
-    <>
-      <Input
-        icon={<AiOutlineSearch />}
-        placeholder="Search Item by Model Name"
-        radius="xl"
-        style={{
-          marginBottom: "1em",
-          marginTop: "1em",
-          marginLeft: "1em",
-          width: "98%",
-        }}
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.currentTarget.value)}
-      />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingBottom: "1.5em",
-        }}
-      >
-        {/* Left side buttons and title */}
-        <div>
-          <h1
-            style={{ color: "#F76902", marginTop: ".5em", paddingLeft: ".5em" }}
-          >
-            Inventory
-          </h1>
-        </div>
-
-        {/* Right Side Buttons */}
-        <div
-          style={{
-            paddingRight: ".5em",
-            display: "inline-flex",
-            gap: ".5em",
-            alignItems: "center",
-          }}
-        >
-          <h4 style={{ fontWeight: "500" }}>{currentCount} Selected </h4>
-          <Button
-            variant="subtle"
-            color="orange"
-            onClick={() => {
-              setCurrentCount("");
-            }}
-          >
-            Deselect All
-          </Button>
-          <Button
-            variant="outline"
-            color="orange"
-            style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-            onClick={() => {
-              navigate("/create");
-            }}
-          >
-            Create New Item
-          </Button>
-          <Button
-            variant="outline"
-            color="orange"
-            style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-          >
-            Report Incident
-          </Button>
-          <Button
-            variant="outline"
-            color="dark"
-            style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-          >
-            <BsFilter style={{ paddingRight: ".5em" }} />
-            Filter
-          </Button>
-          <Button
-            variant="outline"
-            color="dark"
-            style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-          >
-            <FaTrash style={{ paddingRight: ".5em" }} />
-            Delete
-          </Button>
-        </div>
-      </div>
-    </>
-  );
-}
+//     </>
+//   );
+// }
 
 // Displays the Table contents
 function InventoryList({ user }) {
@@ -155,12 +64,6 @@ function InventoryList({ user }) {
     getInventory(debouncedTerm);
   }, [debouncedTerm]);
 
-  // useEffect(() => {
-  //   debouncedFetchData(searchTerm, (res) => {
-  //     setElements(res);
-  //   });
-  // }, [searchTerm]);
-
   // get model names and count of each model and display it in the table
   const getInventory = async (searchTerm) => {
     try {
@@ -184,10 +87,17 @@ function InventoryList({ user }) {
               setCurrentCount(currentCount + 1);
               setCheckedItems([...checkedItems, element]);
             } else {
-              setCurrentCount(currentCount - 1);
-              setCheckedItems(
-                checkedItems.filter((checkedItem) => checkedItem !== element)
-              );
+              if (currentCount - 1 < 0) {
+                setCurrentCount(0);
+                setCheckedItems(
+                  checkedItems.filter((checkedItem) => checkedItem !== element)
+                );
+              } else {
+                setCurrentCount(currentCount - 1);
+                setCheckedItems(
+                  checkedItems.filter((checkedItem) => checkedItem !== element)
+                );
+              }
             }
           }}
         />
@@ -195,7 +105,9 @@ function InventoryList({ user }) {
       <td
         style={{ width: "30%" }}
         onClick={() => {
-          navigate(`/inventory/summary/${element.item_model_id}`);
+          navigate(`/inventory/summary/${element.item_model_id}`, {
+            state: { idNum: element.item_model_id },
+          });
         }}
       >
         {element.model_name}
@@ -207,14 +119,98 @@ function InventoryList({ user }) {
   return (
     <>
       <AdminShell user={user}>
-        <InventoryHeader
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          currentCount={currentCount}
-          setCurrentCount={setCurrentCount}
-          setCheckedItems={setCheckedItems}
+        <Input
+          icon={<AiOutlineSearch />}
+          placeholder="Search Item by Model Name"
+          radius="xl"
+          style={{
+            marginBottom: "1em",
+            marginTop: "1em",
+            marginLeft: "1em",
+            width: "98%",
+          }}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.currentTarget.value)}
         />
-        {/* <>{searchTerm}</> */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingBottom: "1.5em",
+          }}
+        >
+          {/* Left side buttons and title */}
+          <div>
+            <h1
+              style={{
+                color: "#F76902",
+                marginTop: ".5em",
+                paddingLeft: ".5em",
+              }}
+            >
+              Inventory
+            </h1>
+          </div>
+
+          {/* Right Side Buttons */}
+          <div
+            style={{
+              paddingRight: ".5em",
+              display: "inline-flex",
+              gap: ".5em",
+              alignItems: "center",
+            }}
+          >
+            <h4 style={{ fontWeight: "500", paddingRight: "1em" }}>
+              {currentCount} Selected{" "}
+            </h4>
+            {/* <Button
+              variant="subtle"
+              color="orange"
+              onClick={() => {
+                if (currentCount < 0) {
+                  setCurrentCount(0);
+                }
+                setCurrentCount(0);
+              }}
+            >
+              Deselect All
+            </Button> */}
+            <Button
+              variant="outline"
+              color="orange"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+              onClick={() => {
+                navigate("/create");
+              }}
+            >
+              Create New Item
+            </Button>
+            <Button
+              variant="outline"
+              color="orange"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
+              Report Incident
+            </Button>
+            <Button
+              variant="outline"
+              color="dark"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
+              <BsFilter style={{ paddingRight: ".5em" }} />
+              Filter
+            </Button>
+            <Button
+              variant="outline"
+              color="dark"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
+            >
+              <FaTrash style={{ paddingRight: ".5em" }} />
+              Delete
+            </Button>
+          </div>
+        </div>
         <Table highlightOnHover>
           <thead>
             <tr>

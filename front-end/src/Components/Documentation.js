@@ -1,11 +1,19 @@
+// Documentation.js
+// Displays the documentation provided for each page
+
+// React Import
 import { React } from "react";
+
+// AdminShell component import
 import AdminShell from "./AdminShell";
 
-function Documentation() {
+// Documentation()
+// Displays the documentation provded for each page
+function Documentation({ user }) {
   return (
     <>
-      {/* Page Title */}
-      <AdminShell>
+      {/* <AdminShell> component that is serves as the top and left navigation fields */}
+      <AdminShell user={user}>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <h1
             style={{
@@ -28,16 +36,14 @@ function Documentation() {
               marginTop: "0",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Condimentum vitae sapien pellentesque habitant morbi tristique
-            senectus et. Arcu odio ut sem nulla pharetra diam sit amet. Faucibus
-            turpis in eu mi bibendum neque. Pretium aenean pharetra magna ac
-            placerat vestibulum lectus mauris. Est ullamcorper eget nulla
-            facilisi. Varius quam quisque id diam vel quam elementum pulvinar.
-            Odio ut enim blandit volutpat maecenas volutpat blandit aliquam
-            etiam. Nam aliquam sem et tortor. Diam quis enim lobortis
-            scelerisque fermentum. Suspendisse ultrices gravida dictum fusce.
+            The Homepage takes users to the Dashboard, where they can see
+            multiple, valuable statistics that not only track and display
+            current data, but also provide all-time statistical data. Users can
+            expand and collapse different sections, whether that be Upcoming
+            Reservations or Overdue Items, the user chooses what information
+            they want to see. The current date is displayed on the top of the
+            page, so users have convienient access for associating the data with
+            the day.
           </p>
 
           <hr
@@ -59,16 +65,16 @@ function Documentation() {
               marginTop: "0",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Condimentum vitae sapien pellentesque habitant morbi tristique
-            senectus et. Arcu odio ut sem nulla pharetra diam sit amet. Faucibus
-            turpis in eu mi bibendum neque. Pretium aenean pharetra magna ac
-            placerat vestibulum lectus mauris. Est ullamcorper eget nulla
-            facilisi. Varius quam quisque id diam vel quam elementum pulvinar.
-            Odio ut enim blandit volutpat maecenas volutpat blandit aliquam
-            etiam. Nam aliquam sem et tortor. Diam quis enim lobortis
-            scelerisque fermentum. Suspendisse ultrices gravida dictum fusce.
+            The Inventory page hosts the entire, available inventory of items
+            and their available number at the IST Cage. Users can interact with
+            the items by selecting their checkbox, or selecting an individual
+            item. There are three buttons that exist at the top of the page:
+            Create New Item, Report Incident, and Delete. The Create New Button
+            allows users to add a new item to the inventory by specifying
+            specific information about it. The Report Incident button allows
+            user to report about an event that happened with an item or items.
+            The Delete button allows user to remove an item from the IST Cage
+            Inventory.
           </p>
 
           <hr

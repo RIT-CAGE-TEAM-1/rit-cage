@@ -1,9 +1,20 @@
+// NewItemInputGroup.js
+// Small component to iteratively create select inputs for easy insertion on other pages
+
+// React Import
 import { useState } from "react";
+
+// Mantine Components Imports
 import { createStyles, Input, Select } from "@mantine/core";
+
+// Icon Imports
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { AiFillInfoCircle } from "react-icons/ai";
+
+// Mantine Hooks Import
 import { useForm } from "@mantine/hooks";
 
+// Styling
 const useStyles = createStyles((theme, _params, getRef) => {
   return {
     inputLabel: {
@@ -32,11 +43,6 @@ function NewItemInputGroup(props) {
   const { inputTitle, options, inputStyles, form } = props;
   const { classes } = useStyles();
 
-  // const data = options.map((option) => ({
-  //   value: { option },
-  //   label: "huh",
-  // }));
-
   return (
     <>
       {/* Container for Input title and information bubble */}
@@ -54,6 +60,7 @@ function NewItemInputGroup(props) {
         style={inputStyles}
         {...form.getInputProps(inputTitle)}
       >
+        {/* Iterative creation of select inputs */}
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

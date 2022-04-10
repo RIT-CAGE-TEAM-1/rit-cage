@@ -104,7 +104,7 @@ function NewItemForm() {
     }
   };
 
-  const onSubmit = async (
+  const onSubmitItem = async (
     category,
     type,
     model,
@@ -121,13 +121,17 @@ function NewItemForm() {
         (obj) => obj.category_name === category
       );
       console.log(categoryObj);
-      console.log("HERE");
+      console.log("1");
 
       const typeObj = returnedTypes.itemTypes.find(
         (obj) => obj.type_name === type
       );
+      console.log(typeObj);
+      console.log("2");
 
       const modelObj = returnedModels.find((obj) => obj.model_name === model);
+      console.log(modelObj);
+      console.log("3");
 
       await api.post("/items", {
         item_category_id: categoryObj.item_category_id,
@@ -136,9 +140,9 @@ function NewItemForm() {
         barcode: "",
         comments: { comments },
         tags: "",
-        available: 1,
+        available: modelObj.count,
         active: 1,
-        location: "dlmsdksd",
+        location: "",
         serials: [
           {
             serial: { serial },
@@ -200,7 +204,8 @@ function NewItemForm() {
         <form
           onSubmit={form.onSubmit((values) => {
             console.log("submitted to DB");
-            onSubmit(
+            console.log("VALUES = " + JSON.stringify(values));
+            onSubmitItem(
               values.Category,
               values.Type,
               values.Name,
@@ -326,6 +331,7 @@ function NewItemForm() {
                       </h5>
                       <TextInput
                         style={{ width: "100%", paddingLeft: "1.3em" }}
+                        id={`Serial${quantityCount}`}
                         placeholder="Number"
                         {...form.getInputProps("Serial")}
                       />
@@ -374,7 +380,7 @@ function NewItemForm() {
                   radius="xl"
                   type="submit"
                   style={{ marginBottom: "5em" }}
-                  onClick={onSubmit}
+                  onClick={onSubmitItem}
                 >
                   Create Item
                 </Button>

@@ -1,37 +1,60 @@
+// CheckoutItemSummary.js
+// Displays the Summary page when clicking on an item
+
+// React imports
+import { useState, useEffect } from "react";
 import React from "react";
 
-// icon imports
+// Icon imports
 import {
   AiOutlineArrowLeft,
   AiFillMinusCircle,
   AiFillPlusCircle,
 } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
+
+// Navigational Imports
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+
+// Mantine Core component imports
 import { Checkbox, Button, createStyles } from "@mantine/core";
-import { useState } from "react";
-import { useEffect } from "react";
-import { ItemAPI } from "../api/Items";
-import { useLocation } from "react-router-dom";
+
+// api.js Imports
 import api from "../api/api";
+import { ItemAPI } from "../api/Items";
+
+// StudentShell component import
 import StudentShell from "./StudentShell";
 
+// CheckoutItemSummary({user})
+// Takes in a {user} to determine if page can be displayed
 function CheckoutItemSummary({ user }) {
-  // setting and getting quantity
+  // Setting and getting quantity
   // const [quantityCount, setQuantityCount] = useState(1);
 
-  // navigation consts
+  // methods to save location
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
 
+  // item states for setting an item, and setting the info of an item
   const [item, setItem] = useState();
   const [itemInfo, setItemInfo] = useState();
 
   // const for itemModelID passed from CheckoutList
   const iModelID = location.state.itemModelId;
 
+  // consts for sending results to the next page
+  const mName = item?.model_name ?? "";
+  const type = itemInfo?.data.availableItem.type_name ?? "";
+  const cat = itemInfo?.data.availableItem.category_name ?? "";
+
+  // .useEffect() calls
+  // Performs items right off the bat
   React.useEffect(() => {
     getItem(params.id);
+    getAvailableItem(params.id);
+    console.log("state info");
+    console.log(itemInfo);
   }, []);
 
   React.useEffect(() => {
@@ -39,6 +62,8 @@ function CheckoutItemSummary({ user }) {
     console.log(item);
   }, [item]);
 
+  // getItem call
+  // Returns an item from the database given a modelId
   const getItem = async (modelId) => {
     try {
       const items = await ItemAPI.getItemModel(modelId);
@@ -49,6 +74,8 @@ function CheckoutItemSummary({ user }) {
     }
   };
 
+  // getAvailableItem call
+  // Returns the selected item
   const getAvailableItem = async (itemModelId) => {
     try {
       const response = await api.get(`/item-models/${itemModelId}/available`);
@@ -58,16 +85,6 @@ function CheckoutItemSummary({ user }) {
       console.log("ERROR IN getAvailableItem: " + error);
     }
   };
-
-  useEffect(() => {
-    getAvailableItem(params.id);
-    console.log("state info");
-    console.log(itemInfo);
-  }, []);
-
-  const mName = item?.model_name ?? "";
-  const type = itemInfo?.data.availableItem.type_name ?? "";
-  const cat = itemInfo?.data.availableItem.category_name ?? "";
 
   // Post the reservation to database
   const onSubmitCheckout = async (username, itemId) => {
@@ -81,8 +98,10 @@ function CheckoutItemSummary({ user }) {
 
   return (
     <>
+      {/* <StudentShell> component */}
+      {/* User input for determining the right person is on the right page */}
       <StudentShell user={user}>
-        {/* Left side buttons and title */}
+        {/* Left side back button and title */}
         <div>
           <AiOutlineArrowLeft
             style={{
@@ -197,7 +216,7 @@ function CheckoutItemSummary({ user }) {
                 />
               </div> */}
 
-              {/* Return Date Section */}
+              {/* Return Date section */}
               <h3
                 style={{
                   color: "#F76902",
@@ -212,6 +231,7 @@ function CheckoutItemSummary({ user }) {
               </h5>
             </div>
 
+            {/* Notification Method section */}
             <h3
               style={{ color: "#F76902", marginTop: "2em", marginBottom: "0" }}
             >
@@ -232,6 +252,8 @@ function CheckoutItemSummary({ user }) {
               style={{ marginTop: "1em", marginLeft: "1em" }}
             />
 
+            {/* "Reserve" <Button> */}
+            {/* Posts to the database for a reserved item(s) */}
             <Button
               color="orange"
               radius="xl"

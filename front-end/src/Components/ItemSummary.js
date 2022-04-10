@@ -1,14 +1,32 @@
-import React from "react";
+// ItemSummary.js
+// Displays the summary information for items that the user clicks on
+
+// React Imports
+import React, { useState } from "react";
+
+// Icon Imports
 import { AiOutlineArrowLeft, AiFillInfoCircle } from "react-icons/ai";
+
+// Navigational Imports
 import { useNavigate, useParams } from "react-router-dom";
+
+// Mantine Component Imports
 import { Select, Checkbox, Table } from "@mantine/core";
-import { useState } from "react";
+
+// API Import
 import { ItemAPI } from "../api/Items";
+
+// AdminShell Component Import
 import AdminShell from "./AdminShell";
 
-function ItemSummary() {
+// ItemSummary({user})
+// ItemSummary takes in user to ensure correct display for appropriate user
+function ItemSummary({ user }) {
+  // Consts for navigation throughout the site
   const navigate = useNavigate();
   const params = useParams();
+
+  // empty rows[] array for storing items
   let rows = [];
 
   const [item, setItem] = useState();
@@ -33,7 +51,7 @@ function ItemSummary() {
 
   return (
     <>
-      <AdminShell>
+      <AdminShell user={user}>
         {/* Left side buttons and title */}
         <div>
           <AiOutlineArrowLeft
@@ -48,7 +66,7 @@ function ItemSummary() {
             cursor="pointer"
           />
 
-          {/* container for title and actions dropdown button */}
+          {/* container for title */}
           <div
             style={{
               display: "flex",
@@ -67,15 +85,6 @@ function ItemSummary() {
             >
               {item?.model_name ?? ""}
             </h1>
-            <Select
-              placeholder="Pick one"
-              clearable
-              data={[
-                { value: "actionOne", label: "First Action" },
-                { value: "actionTwo", label: "Second Action" },
-                { value: "actionThree", label: "Third Action" },
-              ]}
-            />
           </div>
         </div>
 
@@ -169,6 +178,7 @@ function ItemSummary() {
           }}
         />
 
+        {/* Model Description section */}
         <h2
           style={{ paddingTop: ".3em", paddingLeft: ".7em", marginBottom: "0" }}
         >

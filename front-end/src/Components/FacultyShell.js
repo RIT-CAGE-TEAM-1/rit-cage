@@ -1,5 +1,13 @@
+// FacultyShell.js
+// Provides the information bars at the left and top of the screen
+
+// React Import
 import { React } from "react";
+
+// Mantine Component Import
 import { AppShell, Box, Header, Navbar, Text } from "@mantine/core";
+
+// Icon Imports
 import { IoPersonCircle } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
 
@@ -9,6 +17,10 @@ import cage_logo from "../images/ISTCAGE_logo.svg";
 // RIT Logo
 import rit_logo from "../images/RIT_logo.svg";
 
+// FacultyShell({user, children})
+// Takes in "user" to verify the correct user is on the page
+// Takes in "children" to populate the content of the page
+// Displays the information bars at the top and left sides of the screen
 function FacultyShell({ user, children }) {
   return (
     <AppShell
@@ -32,6 +44,7 @@ function FacultyShell({ user, children }) {
           sx={{ borderRight: "none" }}
         >
           <div style={{ paddingBottom: "0" }}>
+            {/* IST Cage Logo */}
             <img
               src={cage_logo}
               alt="IST Cage Icon"
@@ -41,6 +54,7 @@ function FacultyShell({ user, children }) {
                 height: "8%",
               }}
             />
+            {/* Hours of Operation section */}
             <h3>
               <span style={{ color: "#F76902" }}>Hours</span> <br />
               of Operation
@@ -51,6 +65,7 @@ function FacultyShell({ user, children }) {
             <Text>Sunday: Closed</Text>
           </div>
 
+          {/* Contact Information section */}
           <div style={{ marginTop: "0" }}>
             <h3>
               <span style={{ color: "#F76902" }}>Contact</span> <br />
@@ -63,6 +78,7 @@ function FacultyShell({ user, children }) {
             </Text>
           </div>
 
+          {/* Class Kits - Current Kits section */}
           <div style={{ marginTop: "0" }}>
             <h3>
               <span style={{ color: "#F76902" }}>Class</span> <br />
@@ -106,11 +122,12 @@ function FacultyShell({ user, children }) {
                 textAlign: "center",
                 height: 70,
                 cursor: "pointer",
-                justifyContent: "flex-start",
+                justifyContent: "center",
                 alignItems: "center",
                 minWidth: 130,
                 paddingLeft: theme.spacing.sm,
                 paddingRight: theme.spacing.sm,
+                borderBottomLeftRadius: 12,
               })}
             >
               {/* Person Icon */}
@@ -120,7 +137,7 @@ function FacultyShell({ user, children }) {
               <Text color="#FFFFFF">{user.username}</Text>
 
               {/* Dropdown Icon */}
-              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: "1em" }} />
+              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: ".3em" }} />
             </Box>
           </div>
         </Header>

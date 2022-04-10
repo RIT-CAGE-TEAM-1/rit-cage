@@ -1,45 +1,46 @@
-import { React, Component } from "react";
-import { useState } from "react";
+// AdminShell.js
+// Serves as the navigation bar and profile display for Admins
 
+// React imports
+import { React, useState } from "react";
+
+// Mantine Components Imports
 import { AppShell, Box, Header, Navbar, Text, Input } from "@mantine/core";
+
+// Icon Imports
 import { IoPersonCircle } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-import { useLocation, useNavigate } from "react-router-dom";
-
-// Active + Inactive Home Logos
+// SVG Imports
 import home_icon from "../images/home_icon.svg";
 import home_logo_active from "../images/home_logo_active.svg";
-
-// Active + Inactive Inventory Logos
 import inventory_logo from "../images/inventory_logo.svg";
 import inventory_logo_active from "../images/inventory_logo_active.svg";
-
-// Active + Inactive Orders Logos
 import orders_icon from "../images/orders_icon.svg";
 import orders_icon_active from "../images/orders_icon_active.svg";
-
-// Active + Inactive Users Logos
 import users_icon from "../images/users_icon.svg";
 import users_icon_active from "../images/users_icon_active.svg";
-
-// Active + Inactive Help Logos
 import help_icon from "../images/help_icon.svg";
 import help_icon_active from "../images/help_icon_active.svg";
-
-// IST Cage Logo
 import cage_logo from "../images/ISTCAGE_logo.svg";
-
-// RIT Logo
 import rit_logo from "../images/RIT_logo.svg";
 
-// navBar for admin
+// Navigational Imports
+import { useLocation, useNavigate } from "react-router-dom";
+
+// AdminShell(props)
+// takes in props for child components
+// Displays the navigation bar and profile display and corresponding webpage
 function AdminShell(props) {
+  // methods for saving location
   const location = useLocation();
   const navigate = useNavigate();
 
+  // navOptions[]
+  // array of employee navBar pages in active and deactive states
   const navOptions = [
     {
+      // Home icon (active and inactive) and subsequent route
       name: "Home",
       pathname: "/dashboard",
       icon: (
@@ -58,6 +59,7 @@ function AdminShell(props) {
       ),
     },
     {
+      // Iventory icon (active and inactive) and subsequent route
       name: "Inventory",
       pathname: "/inventory",
       icon: (
@@ -76,6 +78,7 @@ function AdminShell(props) {
       ),
     },
     {
+      // Orders icon (active and inactive) and subsequent route
       name: "Orders",
       pathname: "/orders",
       icon: (
@@ -94,6 +97,7 @@ function AdminShell(props) {
       ),
     },
     {
+      // Users icon (active and inactive) and subsequent route
       name: "Users",
       pathname: "/users",
       icon: (
@@ -112,6 +116,7 @@ function AdminShell(props) {
       ),
     },
     {
+      // Help icon (active and inactive) and subsequent route
       name: "Help",
       pathname: "/help",
       icon: (
@@ -134,6 +139,8 @@ function AdminShell(props) {
     },
   ];
 
+  // [opened, setopened] - Boolean state variable
+  // Sets the opened state to true or false depending on it's current state
   const [opened, setOpened] = useState(false);
 
   return (
@@ -157,6 +164,7 @@ function AdminShell(props) {
           // for removing the border to the right of the NavBar
           sx={{ borderRight: "none" }}
         >
+          {/* Containing <div> for the NavBar items */}
           <div style={{ paddingBottom: "2em", alignItems: "center" }}>
             <img
               src={cage_logo}
@@ -169,6 +177,7 @@ function AdminShell(props) {
               }}
             />
 
+            {/* Map function iteratively placing the array of nav items inside of a <Box> */}
             {navOptions.map((navOption) => (
               <div
                 onClick={() => {
@@ -176,6 +185,7 @@ function AdminShell(props) {
                 }}
               >
                 {navOption.pathname === location.pathname ? (
+                  // Containg <Box for nav items
                   <Box
                     sx={(theme) => ({
                       display: "flex",
@@ -217,9 +227,11 @@ function AdminShell(props) {
           </div>
         </Navbar>
       }
+      // Header object
+      // Displays the top portion of the AdminShell
       header={
         <Header height={70} sx={{ borderBottom: "none" }}>
-          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
+          {/* Containg div for logo and profile display */}
           <div
             style={{
               display: "flex",
@@ -248,21 +260,22 @@ function AdminShell(props) {
                 textAlign: "center",
                 height: 70,
                 cursor: "pointer",
-                justifyContent: "flex-start",
+                justifyContent: "center",
                 alignItems: "center",
                 minWidth: 130,
                 paddingLeft: theme.spacing.sm,
                 paddingRight: theme.spacing.sm,
+                borderBottomLeftRadius: 12,
               })}
             >
               {/* Person Icon */}
               <IoPersonCircle size="1.5em" style={{ paddingRight: ".5em" }} />
 
               {/* Profile Username */}
-              <Text color="#FFFFFF">Administrator</Text>
+              <Text color="#FFFFFF">Employee</Text>
 
               {/* Dropdown Icon */}
-              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: "1em" }} />
+              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: ".3em" }} />
             </Box>
           </div>
         </Header>

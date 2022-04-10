@@ -1,13 +1,27 @@
-import { React, useEffect } from "react";
-import { useState } from "react";
+// InventoryList.js
+// Employee view of the inventory list
+
+// React Imports
+import { React, useEffect, useState } from "react";
+
+// Mantine Component Imports
 import { Table, Checkbox, Button, Input } from "@mantine/core";
+
+// Mantine Hook Import
+import { useDebouncedValue } from "@mantine/hooks";
+
+// Icon Imports
 import { FaTrash } from "react-icons/fa";
 import { BsFilter } from "react-icons/bs";
-import api from "../api/api";
-import { ItemAPI } from "../api/Items";
-import { useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { useDebouncedValue } from "@mantine/hooks";
+
+// API Import
+import { ItemAPI } from "../api/Items";
+
+// Navigational Import
+import { useNavigate } from "react-router-dom";
+
+// AdminShell Component Import
 import AdminShell from "./AdminShell";
 
 // Displays the Inventory title
@@ -21,8 +35,6 @@ function InventoryHeader({
   setCheckedItems,
 }) {
   const [selected, setSelected] = useState("All");
-
-  const inventorySelectors = ["All", "Tagged"];
 
   const navigate = useNavigate();
 
@@ -50,31 +62,11 @@ function InventoryHeader({
       >
         {/* Left side buttons and title */}
         <div>
-          <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".5em" }}>
+          <h1
+            style={{ color: "#F76902", marginTop: ".5em", paddingLeft: ".5em" }}
+          >
             Inventory
           </h1>
-
-          {/* Selected / Unselected Buttons */}
-          {inventorySelectors.map((element) =>
-            selected === element ? (
-              <Button
-                variant="subtle"
-                color="dark"
-                onClick={() => setSelected(element)}
-                style={{ borderBottom: "3px solid orange" }}
-              >
-                {element}
-              </Button>
-            ) : (
-              <Button
-                variant="subtle"
-                color="dark"
-                onClick={() => setSelected(element)}
-              >
-                {element}
-              </Button>
-            )
-          )}
         </div>
 
         {/* Right Side Buttons */}
@@ -136,7 +128,7 @@ function InventoryHeader({
 }
 
 // Displays the Table contents
-function InventoryList() {
+function InventoryList({ user }) {
   const [currentCount, setCurrentCount] = useState(0);
   const [elements, setElements] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -146,15 +138,28 @@ function InventoryList() {
   // for selecting multiple items in the list
   const [checkedItems, setCheckedItems] = useState([]);
 
+  // const [userN, setUserN] = useState[user];
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("WHO_AM_I", JSON.Stringify(userN));
+  // }, [userN]);
+
+  // useEffect(() => {
+  //   const data = window.localStorage.getItem("WHO_AM_I");
+  //   if (data !== null) {
+  //     setUserN(JSON.parse(data));
+  //   }
+  // }, []);
+
   useEffect(() => {
     getInventory(debouncedTerm);
   }, [debouncedTerm]);
 
   // useEffect(() => {
-  //   debouncedFetchData(searchTerm, res => {
+  //   debouncedFetchData(searchTerm, (res) => {
   //     setElements(res);
   //   });
-  //  }, [searchTerm]);
+  // }, [searchTerm]);
 
   // get model names and count of each model and display it in the table
   const getInventory = async (searchTerm) => {
@@ -167,26 +172,10 @@ function InventoryList() {
     }
   };
 
-  // const ControlledCheckBox = () => {
-  //   const [checked, setChecked] = useState(false);
-  //   return (
-  //     <Checkbox
-  //       color="orange"
-  //       checked={checked}
-  //       onChange={() => {
-  //         const newVal = !checked;
-  //         setChecked(newVal);
-  //         if (newVal) setCurrentCount(currentCount + 1);
-  //         else setCurrentCount(currentCount - 1);
-  //       }}
-  //     />
-  //   );
-  // };
-
+  // Displays all of the items in a table from the database
   const rows = elements.map((element, index) => (
     <tr key={`${index} - ${element.model_name}}`}>
       <td style={{ width: "2em" }}>
-        {/* <ControlledCheckBox /> */}
         <Checkbox
           color="orange"
           onChange={(e) => {
@@ -217,7 +206,7 @@ function InventoryList() {
 
   return (
     <>
-      <AdminShell>
+      <AdminShell user={user}>
         <InventoryHeader
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -232,12 +221,6 @@ function InventoryList() {
               <th style={{ paddingRight: "0px" }} />
 
               <th>Model Name</th>
-
-              {/* <th>Item Type</th>
-
-            <th>Category</th>
-
-            <th>Location</th> */}
 
               <th>Count</th>
             </tr>

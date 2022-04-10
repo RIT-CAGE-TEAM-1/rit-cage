@@ -1,5 +1,13 @@
+// StudentShell.js
+// Displays the informational bars on the top and left of the screen
+
+// React Import
 import { React } from "react";
+
+// Mantine Component Imports
 import { AppShell, Box, Header, Navbar, Text } from "@mantine/core";
+
+// Icon Imports
 import { IoPersonCircle } from "react-icons/io5";
 import { IoMdArrowDropdown } from "react-icons/io";
 
@@ -9,6 +17,9 @@ import cage_logo from "../images/ISTCAGE_logo.svg";
 // RIT Logo
 import rit_logo from "../images/RIT_logo.svg";
 
+// StudentShell({user, children}})
+// Takes in "user" to store and check permissions
+// Takes in "children" to display content within the component
 function StudentShell({ user, children }) {
   return (
     <AppShell
@@ -31,6 +42,7 @@ function StudentShell({ user, children }) {
           // for removing the border to the right of the NavBar
           sx={{ borderRight: "none" }}
         >
+          {/* IST Cage Logo */}
           <div style={{ paddingBottom: "2em" }}>
             <img
               src={cage_logo}
@@ -42,6 +54,7 @@ function StudentShell({ user, children }) {
                 height: "8%",
               }}
             />
+            {/* Hoursa of Operation section */}
             <h3>
               <span style={{ color: "#F76902" }}>Hours</span> <br />
               of Operation
@@ -52,12 +65,14 @@ function StudentShell({ user, children }) {
             <Text>Sunday: Closed</Text>
           </div>
 
+          {/* Contact Info section */}
           <div>
             <h3>
               <span style={{ color: "#F76902" }}>Contact</span> <br />
               Information
             </h3>
             <hr style={{ width: "1.5em", color: "#F76902", marginLeft: 0 }} />
+            {/* Website link to cad website that opens in a new tab */}
             <Text
               style={{
                 fontStyle: "italic",
@@ -72,6 +87,7 @@ function StudentShell({ user, children }) {
           </div>
         </Navbar>
       }
+      // Header Display
       header={
         <Header height={70} sx={{ borderBottom: "none" }}>
           {/* Handle other responsive styles with MediaQuery component or createStyles function */}
@@ -101,11 +117,12 @@ function StudentShell({ user, children }) {
                 textAlign: "center",
                 height: 70,
                 cursor: "pointer",
-                justifyContent: "flex-start",
+                justifyContent: "center",
                 alignItems: "center",
                 minWidth: 130,
                 paddingLeft: theme.spacing.sm,
                 paddingRight: theme.spacing.sm,
+                borderBottomLeftRadius: 12,
               })}
             >
               {/* Person Icon */}
@@ -115,7 +132,7 @@ function StudentShell({ user, children }) {
               <Text color="#FFFFFF">{user.username}</Text>
 
               {/* Dropdown Icon */}
-              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: "1em" }} />
+              <IoMdArrowDropdown size="1.5em" style={{ paddingLeft: ".3em" }} />
             </Box>
           </div>
         </Header>

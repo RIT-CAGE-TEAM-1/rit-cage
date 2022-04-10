@@ -1,17 +1,31 @@
-import React from "react";
+// Login.js
+// Displays the login page upon site entry
+
+// React Import
+import React, { useEffect, useState } from "react";
+
+// Navigational Links
 import { useNavigate } from "react-router-dom";
 
-// Mantine UI stuff
+// Mantine Component Imports
 import { Box, TextInput, Button } from "@mantine/core";
+
+// Mantine Hooks Import
 import { useForm } from "@mantine/hooks";
 
-// Icons
+// Icon Import
 import { AiOutlineSearch } from "react-icons/ai";
+
+// API Import
 import api from "../api/api";
 
+// Login({setRole, setUser})
+// Upon login, sets the user and  their role to track accesssible pages
 function Login({ setRole, setUser }) {
+  // Const for site navigation
   const navigate = useNavigate();
 
+  // Const for stating initial form values and replacing them
   const form = useForm({
     initialValues: {
       Username: "",
@@ -19,6 +33,12 @@ function Login({ setRole, setUser }) {
     },
   });
 
+  // const for determing if to display error for login items
+  const [validLogin, setValidLogin] = useState(false);
+
+  // const loginUser
+  // Posts username to DB to check if can access
+  // Directs user to specific page depeneding on role type
   const loginUser = async (username) => {
     try {
       const response = await api.post("/users/login", { username: username });
@@ -31,6 +51,12 @@ function Login({ setRole, setUser }) {
         navigate("/dashboard");
       } else if (response.data.user.role === "professor") {
         navigate("/facultyInventory");
+      } else if (
+        response.data.user.role !== "professor" &&
+        response.data.user.role !== "employee" &&
+        response.data.user.role !== "student"
+      ) {
+        setValidLogin(false);
       }
     } catch (error) {
       console.log(error);
@@ -55,7 +81,7 @@ function Login({ setRole, setUser }) {
             alignItems: "center",
           }}
         >
-          {/* Container for left items*/}
+          {/* Container for RIT Text*/}
           <div
             style={{
               display: "flex",
@@ -148,8 +174,13 @@ function Login({ setRole, setUser }) {
               </h3>
               <TextInput
                 placeholder="Username"
-                style={{ margin: "0", width: "50%" }}
+                id="Username_Input_Field"
+                style={{
+                  margin: "0",
+                  width: "50%",
+                }}
                 {...form.getInputProps("Username")}
+                required
               />
             </div>
             {/* Container for password title and input field */}
@@ -179,15 +210,7 @@ function Login({ setRole, setUser }) {
             </div>
 
             {/* Login Button */}
-            <Button
-              color="gray"
-              style={{ marginTop: "1.5em" }}
-              type="submit"
-              // onClick={() => {
-              //   loginUser(Username);
-              //   navigate("/dashboard");
-              // }}
-            >
+            <Button color="gray" style={{ marginTop: "1.5em" }} type="submit">
               Login
             </Button>
 
@@ -253,6 +276,7 @@ function Login({ setRole, setUser }) {
                 marginTop: ".5em",
               }}
             >
+              {/* Contact Info */}
               <span style={{ color: "blue", cursor: "pointer" }}>
                 585-475-HELP [4375]
               </span>{" "}

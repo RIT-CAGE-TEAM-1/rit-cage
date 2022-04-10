@@ -1,27 +1,50 @@
-import { React, useState } from "react";
+// Cart.js
+// Displays when the user click on the Cart button
 
-// StudentShell component
+// React imports
+import { React, useEffect, useState } from "react";
+
+// Navigate import for routing to different pages
+import { useNavigate } from "react-router-dom";
+
+// Components imports
 import StudentShell from "./StudentShell";
 
 // Icons
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-// Navigate import for routing to different pages
-import { useNavigate } from "react-router-dom";
-
-// mantine core component imports
+// Mantine core component imports
 import { Checkbox, Button } from "@mantine/core";
 
+// Mantine dates component imports
 import { DatePicker } from "@mantine/dates";
 
+// API Import
+import api from "../api/api";
+
+// Cart({ user})
+// Displays the display for the cart page
 function Cart({ user }) {
+  // methods for saving location
   const navigate = useNavigate();
+
+  // Post the reservation to database
+  // const onSubmitCheckout = async (username, itemId) => {
+  //   try {
+  //     await api.post("/reservations", { username, itemId });
+  //     console.log("ON SUBMIT SUBMITTED");
+  //   } catch (error) {
+  //     console.log("ERROR IN RESERVING ITEM: " + error);
+  //   }
+  // };
 
   return (
     <>
+      {/* <StudentShell> component */}
+      {/* User input for determining the right person is on the right page */}
       <StudentShell user={user}>
-        {/* Left side back button and title */}
         <div>
+          {/* Back Button */}
           <AiOutlineArrowLeft
             style={{
               paddingLeft: ".5em",
@@ -33,6 +56,7 @@ function Cart({ user }) {
             }}
             cursor="pointer"
           />
+          {/* Title */}
           <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".5em" }}>
             Cart
           </h1>

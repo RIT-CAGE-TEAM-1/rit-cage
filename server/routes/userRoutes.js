@@ -1,13 +1,14 @@
 // CURRENT ROUTE: /api/users~
 
 const router = require('express').Router();
+const UserModel = require('../model/User.model');
 const User = require('../model/User.model');
 
 router.get('/', async (req, res, next) => {
     try {
-        const itemCategories = await ItemCategory.getAll();
+        const users = await User.getAll();
 
-        res.send({ success: true, itemCategories });
+        res.send({ success: true, users });
     } catch (error) {
         next(error);
     }

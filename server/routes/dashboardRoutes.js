@@ -1,3 +1,5 @@
+// CURRENT ROUTE: /api/dashboard~
+
 const router = require('express').Router();
 const pool = require('../model/db');
 const Reservation = require('../model/Reservation.model');

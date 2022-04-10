@@ -2,6 +2,19 @@ const pool = require('./db');
 
 class UserModel {
 
+    static async getAll(conn=null) {
+        try {
+            const mysql = conn? conn : pool;
+
+            const stmt = 'SELECT * FROM user';
+            const results = await mysql.query(stmt);
+
+            return results[0];
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
     static async getIdByUsername(username, conn=null) {
         try {
             const mysql = conn? conn : pool;

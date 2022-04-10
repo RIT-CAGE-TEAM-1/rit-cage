@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
                     item_id: availableItemIds[i]
                 };
                 await ReservationItem.create(newReservationItem, conn);
-                await Item.update(availableItemIds[0], { available: 0 }, conn);
+                await Item.update(availableItemIds[i], { available: 0 }, conn);
             }
 
             await transaction.commit();

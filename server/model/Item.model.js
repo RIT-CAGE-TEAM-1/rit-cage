@@ -92,7 +92,7 @@ class ItemModel {
         } catch (error) { throw new Error(error); }
     }
 
-    static async getOneAvailable(itemModelId, conn=null) {
+    static async getOneAvailableByItemModelId(itemModelId, conn=null) {
         try {
             const mysql = conn? conn : pool;
 

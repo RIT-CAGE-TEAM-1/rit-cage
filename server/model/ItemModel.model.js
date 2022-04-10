@@ -7,10 +7,27 @@ class ItemModelModel {
             const mysql = connection? connection : pool;
 
             const stmt = `SELECT 
-                    item_model.*, 
+                    item_model.*,
                     COUNT(item.item_model_id) AS count 
                 FROM item_model INNER JOIN item 
                 USING(item_model_id) 
+                GROUP BY item.item_model_id;`;
+            const results = await mysql.query(stmt);
+
+            return results[0];
+        } catch (error) { throw new Error(error); }
+    }
+
+    static async getAllAvailable(connection=null) {
+        try {
+            const mysql = connection? connection : pool;
+
+            const stmt = `SELECT 
+                    item_model.*,
+                    COUNT(item.item_model_id) AS count 
+                FROM item_model INNER JOIN item 
+                USING(item_model_id) 
+                WHERE item.available = 1
                 GROUP BY item.item_model_id;`;
             const results = await mysql.query(stmt);
 

@@ -11,12 +11,20 @@ router.post('/', async (req, res, next) => {
     try {
         const conn = await pool.getConnection();
         const transaction = new Transaction(conn);
-        const { username, itemIds } = req.body;
+        const { username, itemModelIds } = req.body;
 
         try {
             await transaction.start();
 
             const userId = await User.getIdByUsername(username, conn);
+
+            const availableItemIds = [];
+            for (let i=0; i<itemModelIds.length; i++) {
+                const availableItem = await Item.getOneAvailableByItemModelId(itemModelIds[i], conn);
+                availableItemIds.push(availableItem.item_id);
+            }
+
+            // return res.send({ success:true, availableItemIds });
 
             const reservation = {};
             reservation.due_date = new Date(new Date().setHours(new Date().getHours() + 1)).toISOString().slice(0, 19).replace('T', ' ');
@@ -26,13 +34,13 @@ router.post('/', async (req, res, next) => {
             reservation.status = "out";
 
             const reservationId = await Reservation.create(reservation, conn);
-            for (let i=0; i<itemIds.length; i++) {
+            for (let i=0; i<availableItemIds.length; i++) {
                 const newReservationItem = {
                     reservation_id: reservationId, 
-                    item_id: itemIds[i]
+                    item_id: availableItemIds[i]
                 };
                 await ReservationItem.create(newReservationItem, conn);
-                await Item.update(itemIds[0], { available: 0 }, conn);
+                await Item.update(availableItemIds[0], { available: 0 }, conn);
             }
 
             await transaction.commit();

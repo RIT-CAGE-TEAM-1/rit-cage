@@ -9,6 +9,7 @@ import Login from "./Components/Login";
 import CheckoutConfiirmation from "./Components/CheckoutConfirmation";
 import Cart from "./Components/Cart";
 import FacultyList from "./Components/FacultyList";
+import { Provider } from "./Context/Context";
 
 import React, { useState, useEffect } from "react";
 
@@ -43,7 +44,7 @@ function App() {
   };
 
   return (
-    <GlobalProvider>
+    <Provider>
       <BrowserRouter>
         <Routes>
           {/* Global Login */}
@@ -102,7 +103,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </GlobalProvider>
+    </Provider>
   );
 }
 

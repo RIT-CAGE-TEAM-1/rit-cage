@@ -2,7 +2,7 @@
 // Displays when the user click on the Cart button
 
 // React imports
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 
 // Navigate import for routing to different pages
 import { useNavigate } from "react-router-dom";
@@ -22,21 +22,31 @@ import { DatePicker } from "@mantine/dates";
 // API Import
 import api from "../api/api";
 
+import { Context } from "../Context/Context";
+
 // Cart({ user})
 // Displays the display for the cart page
 function Cart({ user }) {
   // methods for saving location
   const navigate = useNavigate();
+  
+  // CART CONTEXT STATE ARRAY
+  const { cart } = useContext(Context);
+  console.log('CART: ' + JSON.stringify(cart));
 
   // Post the reservation to database
-  // const onSubmitCheckout = async (username, itemId) => {
-  //   try {
-  //     await api.post("/reservations", { username, itemId });
-  //     console.log("ON SUBMIT SUBMITTED");
-  //   } catch (error) {
-  //     console.log("ERROR IN RESERVING ITEM: " + error);
-  //   }
-  // };
+  const onSubmitCheckout = async (username) => {
+    try {
+      const itemModelIds = cart.map(item => item.item_model_id);
+
+      const response = await api.post("/reservations", { username, itemModelIds });
+      
+      console.log("ON SUBMIT SUBMITTED");
+      console.log('POST /reservations response: ' + JSON.stringify(response.data));
+    } catch (error) {
+      console.log("ERROR IN RESERVING ITEM: " + error);
+    }
+  };
 
   return (
     <>
@@ -137,19 +147,19 @@ function Cart({ user }) {
             radius="xl"
             type="submit"
             style={{ marginTop: "1.5em", width: "30%" }}
-            // onClick={() => {
-            //   onSubmitCheckout(user.username, iModelID).then(() => {
-            //     console.log(user.username);
-            //     console.log(location.state.itemModelId);
-            //     navigate("/checkoutConfirmation", {
-            //       state: {
-            //         name: mName,
-            //         typeN: type,
-            //         category: cat,
-            //       },
-            //     });
-            //   });
-            // }}
+            onClick={() => {
+              onSubmitCheckout(user.username).then(() => {
+                // console.log(user.username);
+                // console.log(location.state.itemModelId);
+                // navigate("/checkoutConfirmation", {
+                //   state: {
+                //     name: mName,
+                //     typeN: type,
+                //     category: cat,
+                //   },
+                // });
+              });
+            }}
           >
             Reserve
           </Button>

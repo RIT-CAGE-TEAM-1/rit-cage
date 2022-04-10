@@ -2,12 +2,12 @@ const pool = require('./db');
 
 class ReservationItemModel {
 
-    static async create(reservationId, itemId, connection=null) {
+    static async create(newReservationItem, connection=null) {
         try {
             const mysql = connection? connection : pool;
 
-            const stmt = 'INSERT INTO reservation_item(reservation_id, item_id) VALUES (?, ?)';
-            await mysql.query(stmt, [ reservationId, itemId ]);
+            const stmt = 'INSERT INTO reservation_item SET ?';
+            await mysql.query(stmt, [ newReservationItem ]);
         } catch (error) {
             throw new Error(error);
         }

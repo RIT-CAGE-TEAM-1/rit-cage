@@ -12,7 +12,7 @@ app.use(function(error, req, res, next) {
     console.error(error.stack);
     console.log(`***** SERVER ERROR *****: ${error}`);
 
-    res.status(500).send({ success: false, error: error.message })
+    res.status(500).send({ success: false, error: error })
 });
 
 app.get('/', (req, res) =>{

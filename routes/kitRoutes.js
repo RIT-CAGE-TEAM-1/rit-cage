@@ -1,4 +1,5 @@
-// CURRENT ROUTE: /api/reservations~
+// CURRENT ROUTE: /api/kits~
+
 const router = require('express').Router();
 const pool = require('../model/db');
 const Reservation = require('../model/Reservation.model');
@@ -7,16 +8,34 @@ const User = require('../model/User.model');
 const Transaction = require('../model/transaction.model');
 const Item = require('../model/Item.model');
 
+/*
+    req.body = {
+        username,
+        comments,
+        class_code,
+        kit_id,
+
+    }
+*/
 router.post('/', async (req, res, next) => {
     try {
+        let stmt = '';
+        let results = null;
+        const { username, itemIds, comments } = req.body;
+
         const conn = await pool.getConnection();
         const transaction = new Transaction(conn);
-        const { username, itemIds } = req.body;
 
         try {
             await transaction.start();
 
             const userId = await User.getIdByUsername(username, conn);
+
+            const newKit = {
+                creator_id: userId, 
+                comments
+            }
+            const kitId = await Kit.create(newKit, conn);
 
             const reservation = {};
             reservation.due_date = new Date(new Date().setHours(new Date().getHours() + 1)).toISOString().slice(0, 19).replace('T', ' ');
@@ -25,18 +44,28 @@ router.post('/', async (req, res, next) => {
             reservation.user_id = userId;
             reservation.status = "out";
 
-            const reservationId = await Reservation.create(reservation, conn);
+            const reservation_id = await Reservation.create(reservation, conn);
+
             for (let i=0; i<itemIds.length; i++) {
+                const kit_instance_id = await Kit.createKitInstance(kitId, conn);
+
                 const newReservationItem = {
-                    reservation_id: reservationId, 
-                    item_id: itemIds[i]
+                    reservation_id, 
+                    item_id: itemIds[0],
+                    kit_instance_id
                 };
                 await ReservationItem.create(newReservationItem, conn);
+
                 await Item.update(itemIds[0], { available: 0 }, conn);
+
+                const newKitInstanceItem = {
+                    kit_instance_id, 
+                    item_id: itemIds[i]
+                };
+                await Kit.createKitInstanceItem(newKitInstanceItem, conn);
             }
 
             await transaction.commit();
-            res.send({ success: true, dueDate: reservation.due_date });
         } catch (error) {
             try {
                 await transaction.rollback();
@@ -44,26 +73,13 @@ router.post('/', async (req, res, next) => {
                 console.log('ERROR: UNABLE TO ROLLBACK TRANSACTION: ' + error)
             }
 
-            next(error); 
+            next(error);
         } finally {
             conn.release();
         }
-    } catch(error) {
-        next(error);
-    }
-});
-
-/*
-SELECT COUNT(*) AS count, DATE_FORMAT(reservation_date, '%Y-%m-%d') AS date FROM reservation WHERE CURDATE() > reservation_date GROUP BY date ORDER BY date DESC;
-*/
-router.get('/', async (req, res, next) => {
-    try {
-        const reservations = await Reservation.getAllReservations();
-
-        res.send({ success: true, reservations });
     } catch (error) {
         next(error);
     }
-})
+});
 
 module.exports = router;

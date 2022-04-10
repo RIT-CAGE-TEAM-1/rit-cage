@@ -14,6 +14,24 @@ class ReservationModel {
             throw new Error(error);
         }
     }
+
+    static async getAllReservations(conn=null) {
+        try {
+            const mysql = conn? conn : pool;
+
+            const stmt = `SELECT 
+                reservation.*,
+                item.*
+            FROM reservation 
+            INNER JOIN reservation_item ON reservation.reservation_id = reservation_item.reservation_id
+            INNER JOIN item ON reservation_item.item_id = item.item_id
+            ORDER BY reservation_date DESC`;
+            
+            const results = await mysql.query(stmt);
+
+            return results[0];
+        } catch (error) { throw new Error(error); }
+    }
     
     static async getRecentsByDay(connection=null) {
         try {

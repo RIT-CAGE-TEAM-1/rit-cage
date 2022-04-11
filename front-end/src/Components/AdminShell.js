@@ -268,9 +268,6 @@ function AdminShell(props) {
                 borderBottomLeftRadius: 12,
               })}
             >
-              {/* Person Icon */}
-              <IoPersonCircle size="1.5em" style={{ paddingRight: ".5em" }} />
-
               {/* Profile Username */}
               <Text color="#FFFFFF">Employee</Text>
 

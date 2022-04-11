@@ -10,14 +10,27 @@ import api from "../api/api";
 
 function AllReservations({ user }) {
   const [reserves, setReserves] = useState();
+  const [displayData, setDisplayData] = useState();
 
   // getItemTypes call
   // returns all of the item types in the database
   const getAllReservations = async () => {
     try {
       const response = await api.get("/reservations");
-      console.log(JSON.stringify("THIS IS RESPONSE" + response.data));
-      setReserves(response.data.users);
+      console.log(
+        JSON.stringify("THIS IS RESPONSE" + JSON.stringify(response.data))
+      );
+      setReserves(response.data.reservations);
+      const responseArray = reserves.map((x) => {
+        return (
+          <tr>
+            <td>{x.reservation_id}</td>
+            <td>{x.item_condition}</td>
+            <td>{x.reservation_date}</td>
+          </tr>
+        );
+      });
+      setDisplayData(responseArray);
     } catch (error) {
       console.log("ERROR: " + error);
     }
@@ -25,18 +38,9 @@ function AllReservations({ user }) {
 
   useEffect(() => {
     getAllReservations();
-
-    // const responseArray = reserves.users.map((x) => {
-    //   return (
-    //     <tr>
-    //       <td>{x.reservation_id}</td>
-    //       <td>{x.item_condition}</td>
-    //       <td>{x.reservation_date}</td>
-    //     </tr>
-    //   );
-    // });
-    // setReserves(responseArray);
   }, []);
+
+  useEffect(() => {}, [reserves]);
 
   return (
     <AdminShell user={user}>
@@ -72,7 +76,7 @@ function AllReservations({ user }) {
               <th>Reservation Date</th>
             </tr>
           </thead>
-          <tbody>{reserves}</tbody>
+          <tbody>{displayData}</tbody>
         </Table>
       </div>
     </AdminShell>

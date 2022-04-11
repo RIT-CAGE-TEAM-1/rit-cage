@@ -2,7 +2,7 @@
 // Employee view of the inventory for reserving/creating a kit
 
 // React Imports
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 
 // Navigational Imports
 import { useNavigate } from "react-router-dom";
@@ -22,61 +22,19 @@ import { FaShoppingCart } from "react-icons/fa";
 
 // Component Imports
 import FacultyShell from "./FacultyShell";
-
-// InventoryHeader({searchTerm, setSearchTerm})
-// Takes in searchTerm variable for inputting a search term and getting results
-function InventoryHeader({ searchTerm, setSearchTerm }) {
-  return (
-    <>
-      <Input
-        icon={<AiOutlineSearch />}
-        placeholder="Search Item by Model Name"
-        radius="xl"
-        style={{
-          marginBottom: "1em",
-          marginTop: "1em",
-          marginLeft: "1em",
-          width: "98%",
-        }}
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.currentTarget.value)}
-      />
-      {/* Containg div for page layout */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          paddingBottom: "1.5em",
-        }}
-      >
-        {/* Title of Page */}
-        <div>
-          <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".3em" }}>
-            Inventory
-          </h1>
-        </div>
-
-        {/* Right side Add to Cart button */}
-        <div>
-          <Button
-            variant="outline"
-            color="orange"
-            style={{ boxShadow: "0px 3px 6px #D3D3D3", marginRight: "1em" }}
-            onClick={() => {}}
-          >
-            Add to Cart
-          </Button>
-        </div>
-      </div>
-    </>
-  );
-}
+import { Context } from "../Context/Context";
 
 function FacultyList({ user }) {
   const [elements, setElements] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm] = useDebouncedValue(searchTerm, 500);
   const navigate = useNavigate();
+
+  const { cart, setCart } = useContext(Context);
+  console.log("CART: " + JSON.stringify(cart));
+
+  // array for checked items in the list
+  const [selectedArray, setSelectedArray] = useState([]);
 
   useEffect(() => {
     getInventory(debouncedTerm);
@@ -92,8 +50,6 @@ function FacultyList({ user }) {
       console.log(err);
     }
   };
-
-  let selectedArray = [];
 
   const rows = elements.map((element, index) => (
     <tr key={`${index} - ${element.model_name}}`}>
@@ -140,6 +96,50 @@ function FacultyList({ user }) {
     <>
       {/* <FacultyShell> component that is serves as the top and left navigation fields */}
       <FacultyShell user={user}>
+        <Input
+          icon={<AiOutlineSearch />}
+          placeholder="Search Item by Model Name"
+          radius="xl"
+          style={{
+            marginBottom: "1em",
+            marginTop: "1em",
+            marginLeft: "1em",
+            width: "98%",
+          }}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.currentTarget.value)}
+        />
+        {/* Containg div for page layout */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingBottom: "1.5em",
+          }}
+        >
+          {/* Title of Page */}
+          <div>
+            <h1 style={{ color: "#F76902", margin: 0, paddingLeft: ".3em" }}>
+              Inventory
+            </h1>
+          </div>
+
+          {/* Right side Add to Cart button */}
+          <div>
+            <Button
+              variant="outline"
+              color="orange"
+              style={{ boxShadow: "0px 3px 6px #D3D3D3", marginRight: "1em" }}
+              onClick={() => {
+                if (selectedArray.length != null) {
+                  setCart(selectedArray);
+                }
+              }}
+            >
+              Add to Cart
+            </Button>
+          </div>
+        </div>
         <div
           style={{
             position: "fixed",
@@ -164,11 +164,6 @@ function FacultyList({ user }) {
             }}
           />
         </div>
-        {/* Search Bar and Title */}
-        <InventoryHeader
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
         {/* Table for inventory */}
         <Table highlightOnHover>
           <thead>

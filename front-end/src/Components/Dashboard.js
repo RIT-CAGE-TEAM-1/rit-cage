@@ -167,6 +167,7 @@ function Dashboard({ user }) {
       const resCountArray = response.data.recentReservationsByDay.map((x) => {
         return x.count;
       });
+
       setRecResDate(resDateArray);
       setRecResCount(resCountArray);
     } catch (error) {
@@ -497,34 +498,9 @@ function Dashboard({ user }) {
                     </h4>
                     <RiArrowDropDownLine />
                   </div>
-                  <h1 style={{ marginTop: "0", marginBottom: "0" }}>18</h1>
-                  <h6
-                    style={{
-                      marginTop: "0",
-                      fontWeight: "100",
-                      paddingLeft: ".5em",
-                    }}
-                  >
-                    3:00PM
-                  </h6>
-                </div>
-
-                {/* Yesterday's Orders HARDCODED */}
-                <div style={{ paddingLeft: "2em" }}>
-                  <div className={classes.flexStartAndCenter}>
-                    <h4
-                      style={{
-                        fontWeight: "100",
-                        paddingRight: ".5em",
-                        marginBottom: "0",
-                        marginTop: "0",
-                      }}
-                    >
-                      Yesterday
-                    </h4>
-                    <RiArrowDropDownLine />
-                  </div>
-                  <h1 style={{ marginTop: "0" }}>25</h1>
+                  <h1 style={{ marginTop: "0", marginBottom: ".5em" }}>
+                    {recResCount}
+                  </h1>
                 </div>
               </div>
 

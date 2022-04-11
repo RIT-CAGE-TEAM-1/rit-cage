@@ -22,7 +22,6 @@ import { FaShoppingCart } from "react-icons/fa";
 
 // Component Imports
 import StudentShell from "./StudentShell";
-import { GlobalContext } from "../Context/GlobalState";
 import { Context } from "../Context/Context";
 
 // CheckoutList({user})
@@ -34,7 +33,7 @@ function CheckoutList({ user }) {
   const [elements, setElements] = useState([]);
   // CART CONTEXT STATE ARRAY
   const { cart, setCart } = useContext(Context);
-  console.log('CART: ' + JSON.stringify(cart));
+  console.log("CART: " + JSON.stringify(cart));
 
   // searching values
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,7 +58,7 @@ function CheckoutList({ user }) {
   };
 
   // array for checked items in the list
-  const [ selectedArray, setSelectedArray ] = useState([]);
+  const [selectedArray, setSelectedArray] = useState([]);
 
   // State variable to set and access whether change has occured to disable/allow Add to Cart Button
   const [addToCartDisabled, setAddToCartDisabled] = useState(false);
@@ -92,7 +91,7 @@ function CheckoutList({ user }) {
             // adding to selectedArray[]
             if (isChecked) {
               // selectedArray.push(element);
-              setSelectedArray([ ...selectedArray, element ])
+              setSelectedArray([...selectedArray, element]);
               // removing from selectedArray[]
             } else if (!isChecked) {
               const newSelectedArray = selectedArray.filter(function (
@@ -163,7 +162,7 @@ function CheckoutList({ user }) {
                   //   return x.model_name;
                   // });
                   // addItemsToList({ selectedArray });
-                  setCart(selectedArray)
+                  setCart(selectedArray);
                 }
               }}
             >

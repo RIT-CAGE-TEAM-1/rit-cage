@@ -24,7 +24,6 @@ import {
 
 import api from "./api/api";
 
-import { GlobalProvider } from "./Context/GlobalState";
 import FacultyCart from "./Components/FacultyCart";
 
 function App() {

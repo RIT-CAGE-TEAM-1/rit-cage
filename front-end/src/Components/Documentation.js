@@ -7,6 +7,9 @@ import { React } from "react";
 // AdminShell component import
 import AdminShell from "./AdminShell";
 
+// Mantine core component imports
+import { Text } from "@mantine/core";
+
 // Documentation()
 // Displays the documentation provded for each page
 function Documentation({ user }) {
@@ -36,14 +39,16 @@ function Documentation({ user }) {
               marginTop: "0",
             }}
           >
-            The Homepage takes users to the Dashboard, where they can see
-            multiple, valuable statistics that not only track and display
-            current data, but also provide all-time statistical data. Users can
-            expand and collapse different sections, whether that be Upcoming
-            Reservations or Overdue Items, the user chooses what information
-            they want to see. The current date is displayed on the top of the
-            page, so users have convienient access for associating the data with
-            the day.
+            <Text>
+              - Displays upcoming reservations - time, model name, serial
+              number, item condition, and rentee
+            </Text>
+            <Text>- Displays overdue items</Text>
+            <Text>
+              - View reports of daily and previous (by hour) orders, active
+              rentees, as well as supporting graphs of peak reservation hours
+              and frequency reserved items.
+            </Text>
           </p>
 
           <hr
@@ -65,16 +70,20 @@ function Documentation({ user }) {
               marginTop: "0",
             }}
           >
-            The Inventory page hosts the entire, available inventory of items
-            and their available number at the IST Cage. Users can interact with
-            the items by selecting their checkbox, or selecting an individual
-            item. There are three buttons that exist at the top of the page:
-            Create New Item, Report Incident, and Delete. The Create New Button
-            allows users to add a new item to the inventory by specifying
-            specific information about it. The Report Incident button allows
-            user to report about an event that happened with an item or items.
-            The Delete button allows user to remove an item from the IST Cage
-            Inventory.
+            <Text>- Displays all items in database</Text>
+            <Text>
+              - View model information including description, keywords, etc
+            </Text>
+            <Text>
+              - View items in a model including action (status), serial number,
+              comments, and time
+            </Text>
+            <Text>
+              - Create new item with its relative category, type, model,
+              optional comment, quantity, and serial numbers; specify
+              availability, active status and class restriction
+            </Text>
+            <Text>- For “Walk-ins,” reservation and carting functionality</Text>
           </p>
 
           <hr
@@ -94,16 +103,7 @@ function Documentation({ user }) {
               marginTop: "0",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Condimentum vitae sapien pellentesque habitant morbi tristique
-            senectus et. Arcu odio ut sem nulla pharetra diam sit amet. Faucibus
-            turpis in eu mi bibendum neque. Pretium aenean pharetra magna ac
-            placerat vestibulum lectus mauris. Est ullamcorper eget nulla
-            facilisi. Varius quam quisque id diam vel quam elementum pulvinar.
-            Odio ut enim blandit volutpat maecenas volutpat blandit aliquam
-            etiam. Nam aliquam sem et tortor. Diam quis enim lobortis
-            scelerisque fermentum. Suspendisse ultrices gravida dictum fusce.
+            <Text>- Lists all upcoming reservations</Text>
           </p>
 
           <hr
@@ -123,16 +123,11 @@ function Documentation({ user }) {
               marginTop: "0",
             }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Condimentum vitae sapien pellentesque habitant morbi tristique
-            senectus et. Arcu odio ut sem nulla pharetra diam sit amet. Faucibus
-            turpis in eu mi bibendum neque. Pretium aenean pharetra magna ac
-            placerat vestibulum lectus mauris. Est ullamcorper eget nulla
-            facilisi. Varius quam quisque id diam vel quam elementum pulvinar.
-            Odio ut enim blandit volutpat maecenas volutpat blandit aliquam
-            etiam. Nam aliquam sem et tortor. Diam quis enim lobortis
-            scelerisque fermentum. Suspendisse ultrices gravida dictum fusce.
+            <Text>- Lists all active user information</Text>
+            <Text>
+              - Displays information regarding role, username, name, email, and
+              UID
+            </Text>
           </p>
         </div>
       </AdminShell>

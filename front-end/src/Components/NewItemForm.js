@@ -82,7 +82,10 @@ function NewItemForm() {
     initialValues: {
       Category: "",
       Type: "",
-      Name: "",
+      Model: "",
+      Serial: "",
+      Condition: "",
+      Comments: "",
     },
   });
 
@@ -389,8 +392,8 @@ function NewItemForm() {
                 <Button
                   color="orange"
                   radius="xl"
-                  type="submit"
                   style={{ marginBottom: "5em" }}
+                  type="submit"
                 >
                   Create Item
                 </Button>

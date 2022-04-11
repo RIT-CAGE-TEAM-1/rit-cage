@@ -21,37 +21,9 @@ import StudentShell from "./StudentShell";
 function CheckoutConfiirmation({ user }) {
   // methods to save location
   const navigate = useNavigate();
-  const location = useLocation();
-  const params = useParams();
-
-  // const [item, setItem] = useState();
-
-  // React.useEffect(() => {
-  //   getItem(params.id);
-  // }, []);
-
-  // React.useEffect(() => {
-  //   console.log("State item");
-  //   console.log(item);
-  // }, [item]);
-
-  // const getItem = async (modelId) => {
-  //   try {
-  //     const items = await ItemAPI.getItemModel(modelId);
-  //     console.log({ items });
-  //     setItem(items);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // { state }
-  // Save the location
-  const { state } = useLocation();
 
   // { name, typeN, category }
   // Used to pass the name, typeN, and cateogry to concurrent page
-  const { name, typeN, category } = state;
 
   return (
     <>
@@ -61,16 +33,19 @@ function CheckoutConfiirmation({ user }) {
         <div style={{ paddingLeft: "1em" }}>
           {/* Checkmark Icon */}
           <IoIosCheckmarkCircle color="#F76902" style={{ fontSize: "60px" }} />
-          {/* Reservation Confirmation info */}
           <h1 style={{ color: "#F76902", marginBottom: "0" }}>
+            Reservation Successful
+          </h1>
+          {/* Reservation Confirmation info */}
+          {/* <h1 style={{ color: "#F76902", marginBottom: "0" }}>
             Reservation Confirmation
           </h1>
 
-          <h3> {name}</h3>
+          <h3> name</h3>
           <h4> 1x</h4>
 
           {/* Container for type  and value */}
-          <div
+          {/* <div
             style={{
               display: "flex",
               justifyContent: "flex-start",
@@ -85,11 +60,10 @@ function CheckoutConfiirmation({ user }) {
             >
               Type:
             </h4>
-            <h4 style={{ fontWeight: "600" }}> {typeN} </h4>
-          </div>
-
+            <h4 style={{ fontWeight: "600" }}> typeN </h4>
+          </div> */}
           {/* Container for Category and value */}
-          <div
+          {/* <div
             style={{
               display: "flex",
               justifyContent: "flex-start",
@@ -100,16 +74,14 @@ function CheckoutConfiirmation({ user }) {
             >
               Category:{" "}
             </h4>
-            <h4 style={{ fontWeight: "600", marginTop: "0" }}>{category}</h4>
-          </div>
-
+            <h4 style={{ fontWeight: "600", marginTop: "0" }}>category</h4>
+          </div>{" "} */}
           {/* Return Date text and value */}
-          <h3 style={{ color: "#F76902", marginBottom: "0" }}>
+          {/* <h3 style={{ color: "#F76902", marginBottom: "0" }}>
             {" "}
             Return Date:{" "}
           </h3>
-          <h4 style={{ marginTop: "0" }}> xxxx </h4>
-
+          <h4 style={{ marginTop: "0" }}> xxxx </h4> */}
           {/* <Button> that returns the user to the inventory list page */}
           <Button
             color="orange"

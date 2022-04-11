@@ -5143,3 +5143,55 @@ update reservation_item
 set item_model_id = (select item_model_id from item where item_id = reservation_item.item_id)
 where item_model_id is null and item_id is not null;
 
+SET SQL_SAFE_UPDATES = 0;
+SET FOREIGN_KEY_CHECKS=0;
+DELETE FROM class WHERE 1=1;
+DELETE FROM class_user WHERE 1=1;
+DELETE FROM kit_restriction WHERE 1=1;
+DELETE FROM item_restriction WHERE 1=1;
+DELETE FROM incident WHERE 1=1;
+SET FOREIGN_KEY_CHECKS=1;
+
+INSERT INTO class (class_code) VALUES ('ISTE-330');
+INSERT INTO class (class_code) VALUES ('ISTE-432');
+INSERT INTO class (class_code) VALUES ('ISTE-434');
+INSERT INTO class (class_code) VALUES ('ISTE-436');
+INSERT INTO class (class_code) VALUES ('ISTE-438');
+INSERT INTO class (class_code) VALUES ('ISTE-470');
+INSERT INTO class (class_code) VALUES ('NSSA-320');
+INSERT INTO class (class_code) VALUES ('NSSA-322');
+INSERT INTO class (class_code) VALUES ('NSSA-244');
+
+INSERT INTO class_user (user_id, class_id)
+select distinct user_id, class_id 
+from user
+cross join class
+order by rand()
+limit 300;
+
+INSERT INTO kit_restriction (kit_id, class_code)
+select kit_id, "NSSA-320" from kit;
+
+insert into item_restriction (item_id, class_code)
+select distinct i.item_id, "NSSA-320"
+from item_model im 
+join item i on i.item_model_id = im.item_model_id
+where model_name = "Cisco Chassis Switch";
+
+insert into incident (user_id, item_id, incident_date, resolved_date, description)
+with user_id as
+(select user_id from user order by rand() limit 1),
+item_id as (
+select item_id from item order by rand() limit 1),
+misc as(
+select DATE(DATE_SUB(SYSDATE(), INTERVAL 4 DAY)) incident_date, DATE(DATE_SUB(SYSDATE(), INTERVAL 2 DAY)) resolved_date, "Returned broken" description FROM DUAL)
+select user_id.user_id, item_id.item_id, misc.incident_date, misc.resolved_date, misc.description from user_id cross join item_id cross join misc;
+
+insert into incident (user_id, item_id, incident_date, resolved_date, description)
+with user_id as
+(select user_id from user order by rand() limit 1),
+item_id as (
+select item_id from item order by rand() limit 1),
+misc as(
+select DATE(DATE_SUB(SYSDATE(), INTERVAL 4 DAY)) incident_date, DATE(DATE_SUB(SYSDATE(), INTERVAL 2 DAY)) resolved_date, "Returned broken" description FROM DUAL)
+select user_id.user_id, item_id.item_id, misc.incident_date, misc.resolved_date, misc.description from user_id cross join item_id cross join misc;

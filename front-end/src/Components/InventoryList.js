@@ -186,29 +186,6 @@ function InventoryList({ user }) {
             >
               Create New Item
             </Button>
-            <Button
-              variant="outline"
-              color="orange"
-              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-            >
-              Report Incident
-            </Button>
-            <Button
-              variant="outline"
-              color="dark"
-              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-            >
-              <BsFilter style={{ paddingRight: ".5em" }} />
-              Filter
-            </Button>
-            <Button
-              variant="outline"
-              color="dark"
-              style={{ boxShadow: "0px 3px 6px #D3D3D3" }}
-            >
-              <FaTrash style={{ paddingRight: ".5em" }} />
-              Delete
-            </Button>
           </div>
         </div>
         <Table highlightOnHover>

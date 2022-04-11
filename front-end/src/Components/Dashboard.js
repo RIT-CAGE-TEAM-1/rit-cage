@@ -396,24 +396,6 @@ function Dashboard({ user }) {
               onClick={() => setUpcomingReservesOpen(!upcomingReservesOpen)}
             />
           </div>
-
-          {/* "Report Incident" and "Item Return" button */}
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              variant="outline"
-              color="orange"
-              style={{ boxShadow: "0px 3px 6px #D3D3D3", marginRight: "1.5em" }}
-            >
-              Report Incident
-            </Button>
-            <Button
-              variant="outline"
-              color="dark"
-              style={{ boxShadow: "0px 3px 6px #D3D3D3", marginRight: "1.5em" }}
-            >
-              Item Return
-            </Button>
-          </div>
         </div>
 
         {/* Container to show/hide contents of the Upcoming Reservaions table rows */}

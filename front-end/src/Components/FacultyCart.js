@@ -67,6 +67,14 @@ function FacultyCart({ user }) {
     }
   };
 
+  //   const onSubmitKit = async () => {
+  //       try {
+  //         const response = await api.post()
+  //       } catch (error) {
+  //           console.log("ERROR CREATING A KIT: " + error)
+  //       }
+  //   }
+
   const { cart } = useContext(Context);
   console.log("CART: " + JSON.stringify(cart));
 
@@ -396,19 +404,9 @@ function FacultyCart({ user }) {
                 width: "30%",
                 display: isKit == true ? "" : "none",
               }}
-              // onClick={() => {
-              //   onSubmitCheckout(user.username, iModelID).then(() => {
-              //     console.log(user.username);
-              //     console.log(location.state.itemModelId);
-              //     navigate("/checkoutConfirmation", {
-              //       state: {
-              //         name: mName,
-              //         typeN: type,
-              //         category: cat,
-              //       },
-              //     });
-              //   });
-              // }}
+              onClick={() => {
+                // onSubmitKit();
+              }}
             >
               Create Kit
             </Button>

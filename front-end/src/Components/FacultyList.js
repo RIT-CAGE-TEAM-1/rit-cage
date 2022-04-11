@@ -43,7 +43,7 @@ function FacultyList({ user }) {
   // get model names and count of each model and display it in the table
   const getInventory = async (searchTerm) => {
     try {
-      const items = await ItemAPI.getItemModels(searchTerm);
+      const items = await ItemAPI.getItemModelsAvailable();
       console.log(items);
       setElements(items);
     } catch (err) {

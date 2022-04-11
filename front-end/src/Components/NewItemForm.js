@@ -146,7 +146,7 @@ function NewItemForm() {
         serials: [
           {
             serial: { serial },
-            item_condition: { condition },
+            item_condition: condition,
           },
         ],
       });

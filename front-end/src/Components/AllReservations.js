@@ -17,9 +17,7 @@ function AllReservations({ user }) {
   const getAllReservations = async () => {
     try {
       const response = await api.get("/reservations");
-      console.log(
-        JSON.stringify("THIS IS RESPONSE" + JSON.stringify(response.data))
-      );
+      console.log("THIS IS RESPONSE" + JSON.stringify(response.data));
       setReserves(response.data.reservations);
       const responseArray = reserves.map((x) => {
         return (
@@ -38,9 +36,7 @@ function AllReservations({ user }) {
 
   useEffect(() => {
     getAllReservations();
-  }, []);
-
-  useEffect(() => {}, [reserves]);
+  }, [reserves]);
 
   return (
     <AdminShell user={user}>

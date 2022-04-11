@@ -185,7 +185,7 @@ function ItemSummary({ user }) {
                 marginBottom: "0",
               }}
             >
-              {itemInformation?.item.available ?? ""} Available
+              {itemInformation?.item.available ?? ""}
             </h3>
           </div>
 

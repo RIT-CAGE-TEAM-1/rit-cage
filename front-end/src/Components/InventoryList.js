@@ -104,11 +104,11 @@ function InventoryList({ user }) {
       </td>
       <td
         style={{ width: "30%" }}
-        onClick={() => {
-          navigate(`/inventory/summary/${element.item_model_id}`, {
-            state: { idNum: element.item_model_id },
-          });
-        }}
+        // onClick={() => {
+        //   navigate(`/inventory/summary/${element.item_model_id}`, {
+        //     state: { idNum: element.item_model_id },
+        //   });
+        // }}
       >
         {element.model_name}
       </td>

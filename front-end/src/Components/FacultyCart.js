@@ -39,16 +39,6 @@ function FacultyCart({ user }) {
   const navigate = useNavigate();
 
   // Post the reservation to database
-  // const onSubmitCheckout = async (username, itemId) => {
-  //   try {
-  //     await api.post("/reservations", { username, itemId });
-  //     console.log("ON SUBMIT SUBMITTED");
-  //   } catch (error) {
-  //     console.log("ERROR IN RESERVING ITEM: " + error);
-  //   }
-  // };
-
-  // Post the reservation to database
   const onSubmitCheckout = async (username) => {
     try {
       const itemModelIds = cart.map((item) => item.item_model_id);
@@ -66,14 +56,6 @@ function FacultyCart({ user }) {
       console.log("ERROR IN RESERVING ITEM: " + error);
     }
   };
-
-  //   const onSubmitKit = async () => {
-  //       try {
-  //         const response = await api.post()
-  //       } catch (error) {
-  //           console.log("ERROR CREATING A KIT: " + error)
-  //       }
-  //   }
 
   const { cart } = useContext(Context);
   console.log("CART: " + JSON.stringify(cart));
@@ -99,6 +81,40 @@ function FacultyCart({ user }) {
       </div>
     );
   });
+
+  const [classRest, setClassRest] = useState("");
+  const [kitComms, setKitComms] = useState("");
+  const userN = user.username;
+
+  const onSubmitKit = async (username) => {
+    try {
+      const itemModelIds = cart.map((item) => item.item_model_id);
+      console.log(
+        "CLASS FOR: " +
+          classRest +
+          ", COMMENTS: " +
+          kitComms +
+          ", USername: " +
+          userN +
+          ", ItemModelIDS: " +
+          itemModelIds
+      );
+
+      const response = await api.post("/kits", {
+        username: username,
+        itemModelIds: itemModelIds,
+        class_code: classRest,
+        comments: kitComms,
+      });
+
+      console.log("RESPONSE " + response);
+
+      console.log("ON SUBMIT SUBMITTED");
+      console.log("POST /kit response: " + JSON.stringify(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // state variable for radio button
   const [isKit, toggleIsKit] = useState(true);
@@ -309,109 +325,111 @@ function FacultyCart({ user }) {
 
           {/* Conditionally Rendered Kit Elements */}
           {/* Container div for which section to display */}
-          {/* <form
-            onSubmit={form.onSubmit((values) =>
-              console.log("RETURNED FROM KIT STUFF: " + JSON.stringify(values))
-            )}
-          > */}
-          <div
-            style={{
-              display: isKit == true ? "" : "none",
-            }}
+          <form
+            onSubmit={form.onSubmit((values) => {
+              setClassRest(values.class);
+              setKitComms(values.comments);
+              console.log("RETURNED FROM KIT STUFF: " + JSON.stringify(values));
+            })}
           >
-            <h3 style={{ color: "#F76902" }}>Kits:</h3>
-            {/* Containing div for Input fields next to each other */}
             <div
               style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                paddingBottom: "1em",
-              }}
-            >
-              <TextInput
-                placeholder="Class Code"
-                label="Class"
-                required
-                style={{ width: "30%" }}
-                //   {...form.getInputProps("class")}
-              />
-              <TextInput
-                placeholder="Kit Name"
-                label="Name"
-                required
-                style={{ paddingLeft: "1em", width: "70%" }}
-                //   {...form.getInputProps("name")}
-              />
-            </div>
-            <TextInput
-              placeholder="Additional Comments"
-              label="Comment"
-              required
-              style={{ paddingBottom: "1em" }}
-              // {...form.getInputProps("comments")}
-            />
-
-            <NumberInput
-              defaultValue={1}
-              placeholder="1"
-              label="Number of Kits"
-              required
-              min={1}
-              style={{ paddingBottom: "2em", width: "22%" }}
-              // {...form.getInputProps("quantity")}
-            />
-
-            {/* Section seperator */}
-            <hr
-              style={{
-                width: "97.5%",
-                color: "#F3F3F3",
-                opacity: "40%",
-              }}
-            />
-
-            <h3
-              style={{
-                color: "#F76902",
-                marginTop: "1em",
-                marginBottom: "0",
-              }}
-            >
-              Notification Method
-            </h3>
-            <h5 style={{ marginTop: ".5em" }}>
-              IST Cage will send notifications regarding reservation
-              confirmations, upcoming item returns, and late items.
-            </h5>
-            <Checkbox
-              label="Email"
-              color="orange"
-              style={{ marginTop: "0", marginLeft: "1em" }}
-            />
-            <Checkbox
-              label="Phone"
-              color="orange"
-              style={{ marginTop: "1em", marginLeft: "1em" }}
-            />
-
-            {/* Conditionally Displayed Create Kit Button */}
-            <Button
-              color="orange"
-              radius="xl"
-              type="submit"
-              style={{
-                marginTop: "1.5em",
-                width: "30%",
                 display: isKit == true ? "" : "none",
               }}
-              onClick={() => {
-                // onSubmitKit();
-              }}
             >
-              Create Kit
-            </Button>
-          </div>
-          {/* </form> */}
+              <h3 style={{ color: "#F76902" }}>Kits:</h3>
+              {/* Containing div for Input fields next to each other */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  paddingBottom: "1em",
+                }}
+              >
+                <TextInput
+                  placeholder="Class Code"
+                  label="Class"
+                  required
+                  style={{ width: "30%" }}
+                  {...form.getInputProps("class")}
+                />
+                <TextInput
+                  placeholder="Kit Name"
+                  label="Name"
+                  required
+                  style={{ paddingLeft: "1em", width: "70%" }}
+                  // {...form.getInputProps("name")}
+                />
+              </div>
+              <TextInput
+                placeholder="Additional Comments"
+                label="Comment"
+                required
+                style={{ paddingBottom: "1em" }}
+                {...form.getInputProps("comments")}
+              />
+
+              <NumberInput
+                defaultValue={1}
+                placeholder="1"
+                label="Number of Kits"
+                required
+                min={1}
+                style={{ paddingBottom: "2em", width: "22%" }}
+                // {...form.getInputProps("quantity")}
+              />
+
+              {/* Section seperator */}
+              <hr
+                style={{
+                  width: "97.5%",
+                  color: "#F3F3F3",
+                  opacity: "40%",
+                }}
+              />
+
+              <h3
+                style={{
+                  color: "#F76902",
+                  marginTop: "1em",
+                  marginBottom: "0",
+                }}
+              >
+                Notification Method
+              </h3>
+              <h5 style={{ marginTop: ".5em" }}>
+                IST Cage will send notifications regarding reservation
+                confirmations, upcoming item returns, and late items.
+              </h5>
+              <Checkbox
+                label="Email"
+                color="orange"
+                style={{ marginTop: "0", marginLeft: "1em" }}
+              />
+              <Checkbox
+                label="Phone"
+                color="orange"
+                style={{ marginTop: "1em", marginLeft: "1em" }}
+              />
+
+              {/* Conditionally Displayed Create Kit Button */}
+              <Button
+                color="orange"
+                radius="xl"
+                type="submit"
+                style={{
+                  marginTop: "1.5em",
+                  width: "30%",
+                  display: isKit == true ? "" : "none",
+                }}
+                onClick={() => {
+                  onSubmitKit().then(navigate("/facultyList"));
+                }}
+              >
+                Create Kit
+              </Button>
+            </div>
+          </form>
         </div>
       </FacultyShell>
     </>

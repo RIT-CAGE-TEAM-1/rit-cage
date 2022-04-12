@@ -88,9 +88,6 @@ function CheckoutConfiirmation({ user }) {
             radius="xl"
             type="submit"
             style={{ marginTop: "1.5em" }}
-            onClick={() => {
-              navigate("/studentList");
-            }}
           >
             Back to Home
           </Button>

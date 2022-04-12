@@ -68,27 +68,24 @@ function FacultyList({ user }) {
             );
             // adding to selectedArray[]
             if (isChecked) {
-              selectedArray.push(element);
+              setSelectedArray([...selectedArray, element]);
               // removing from selectedArray[]
             } else if (!isChecked) {
-              selectedArray = selectedArray.filter(function (
+              const newSelectedArray = selectedArray.filter(function (
                 value,
                 index,
                 arr
               ) {
                 return value != element;
               });
+              setSelectedArray(newSelectedArray);
             }
+
             console.log(JSON.stringify(selectedArray));
           }}
         />
       </td>
       <td>{element.count}</td>
-      {/* // onClick={() => {
-      //   navigate(`/studentList/checkoutForm/${element.item_model_id}`, {
-      //     state: { itemModelId: element.item_model_id },
-      //   });
-      // }} */}
     </tr>
   ));
 
@@ -160,7 +157,7 @@ function FacultyList({ user }) {
               color: "white",
             }}
             onClick={() => {
-              navigate("/facultyCart");
+              navigate("/facultyCart").then();
             }}
           />
         </div>

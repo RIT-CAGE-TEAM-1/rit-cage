@@ -21,10 +21,12 @@ class ReservationModel {
 
             const stmt = `SELECT 
                 reservation.*,
-                item.*
+                item.*,
+                item_model.*
             FROM reservation 
             INNER JOIN reservation_item ON reservation.reservation_id = reservation_item.reservation_id
             INNER JOIN item ON reservation_item.item_id = item.item_id
+            INNER JOIN item_model ON item.item_model_id = item_model.item_model_id
             ORDER BY reservation_date DESC`;
             
             const results = await mysql.query(stmt);
